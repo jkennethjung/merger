@@ -4,6 +4,7 @@ close all;
 echo off;
 
 diary ./gen_data.log
+rng(1);
 
 % 0. Globals
 global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
@@ -21,6 +22,7 @@ unobs_mean = [0; 0];
 unobs_var = [1, 0.25; 0.25, 1];
 alpha = -2;
 
+% 1. Start generating data
 [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, unobs_mean, ...
   unobs_var);
 p = ones(JT, 1); % arbitrary prices for now--fix later
