@@ -8,9 +8,9 @@ rng(1);
 
 % 0. Globals
 global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
-  unobs_mean unobs_var;
+  unobs_mean unobs_var theta data_mat mc mkt_rows;
 
-n_draw = 1e2;
+n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
@@ -21,20 +21,37 @@ beta_var = 1;
 unobs_mean = [0; 0];
 unobs_var = [1, 0.25; 0.25, 1];
 alpha = -2;
+gamma_0 = 0.5;
+gamma_1 = 0.25;
 
-% 1. Start generating data
+% 1. Generate exogenous data
 [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, unobs_mean, ...
   unobs_var);
-p = ones(JT, 1); % arbitrary prices for now--fix later
-data_mat = [j, t, x, sat, wire, p, w, xi, omega];
+p0 = ones(JT, 1); % initial guess 
+data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
+
+% 2. Draw parameters
 beta1 = repmat(beta1_mean, 1, n_draw);
 beta2 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
 beta3 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
 alpha_vec = repmat(alpha, 1, n_draw);
 const = ones(1, n_draw);
 theta = [beta1; beta2; beta3; alpha_vec; const];
+
+% 3. Generate prices
+mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
 [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw);
+p = zeros(JT, 1);
+for t = 1:600
+    mkt_rows = (data_mat(:, 2) == t);
+    p0_t = p0(mkt_rows, 1);
+    [p_t, dPI, flag, output] = fsolve(@foc, p0_t);
+    assert(flag == 1);
+    p(mkt_rows, 1) = p_t;
+end
+data_mat(:, 6) = p;
 full_data_mat = [data_mat, s];
+disp("Share derivatives:")
 disp(ds_dp(1:8,1:8))
 writematrix(full_data_mat, "../output/data.csv");
 
@@ -51,6 +68,15 @@ function [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
     unobs = mvnrnd(unobs_mean, unobs_var, JT);
     xi = unobs(:,1);
     omega = unobs(:,2);
+end
+
+function dPI = foc(p)
+    global data_mat mkt_rows theta n_draw mc;
+    t_mat = data_mat(mkt_rows, [3, 4, 5, 6, 8]);
+    s_t = mkt_shares(t_mat, theta, n_draw);
+    dst_dpt = share_deriv_market(t_mat, theta, n_draw);
+    t_mat(:, 4) = p;
+    dPI = (p - mc(mkt_rows, 1)).*diag(dst_dpt) + s_t;
 end
 
 function [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw)
