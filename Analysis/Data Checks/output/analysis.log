@@ -1,0 +1,81 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
+> output/analysis.log
+  log type:  text
+ opened on:  26 Sep 2020, 16:53:26
+
+. 
+. import delimited using ../temp/data.csv, clear
+(10 vars, 2,400 obs)
+
+. rename v1 j
+
+. rename v2 t
+
+. rename v3 x
+
+. rename v4 sat
+
+. rename v5 wire
+
+. rename v6 p
+
+. rename v7 w
+
+. rename v8 xi
+
+. rename v9 omega
+
+. rename v10 s
+
+. 
+. foreach v in x sat wire p w xi omega s {
+  2.     sum `v'
+  3.     matrix row = r(N), r(mean), r(sd), r(min), r(max)
+  4.     matrix summary_stats = nullmat(summary_stats) \ row
+  5. }
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           x |      2,400    .8058188    .6211158   .0000291    3.45622
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         sat |      2,400          .5    .5001042          0          1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        wire |      2,400          .5    .5001042          0          1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           p |      2,400    2.889083    .6537724   1.758756   7.270868
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           w |      2,400    .8016445     .600155   .0000186    3.24744
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          xi |      2,400   -.0054473    1.003189  -3.630091   3.258934
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       omega |      2,400   -.0361855    .9937776  -4.240944    3.67225
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           s |      2,400    .2467427    .1909191   .0005328   .8921057
+
+. matrix colnames summary_stats = N Mean SD Min Max
+
+. 
+. outtable using ../output/summary_stats, mat(summary_stats) ///
+>   format(%9.0fc %9.2fc %9.2fc %9.2fc %9.2fc)
+
+. 
+. 
+end of do-file
+
+
