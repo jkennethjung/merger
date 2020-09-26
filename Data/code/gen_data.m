@@ -50,7 +50,7 @@ for t = 1:600
     p(mkt_rows, 1) = p_t;
 end
 data_mat(:, 6) = p;
-full_data_mat = [data_mat, s];
+full_data_mat = [data_mat, s, mc];
 disp("Share derivatives:")
 disp(ds_dp(1:8,1:8))
 writematrix(full_data_mat, "../output/data.csv");
