@@ -26,6 +26,8 @@ assert p > mc
 plot p mc
 histogram x
 graph export ../output/hist_x.pdf, replace
+histogram s
+graph export ../output/hist_s.pdf, replace
 twoway scatter p mc 
 graph export ../output/p_mc.pdf, replace
 collapse (sum) s, by(t)
@@ -33,5 +35,5 @@ assert s <= 1
 sum s
 
 outtable using ../output/summary_stats, mat(summary_stats) ///
-  format(%9.0fc %9.2fc %9.2fc %9.2fc %9.2fc nobox)
+  format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc nobox)
 

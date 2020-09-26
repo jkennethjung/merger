@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  26 Sep 2020, 17:44:46
+ opened on:  26 Sep 2020, 17:56:12
 
 . 
 . import delimited using ../temp/data.csv, clear
@@ -113,6 +113,12 @@
 . graph export ../output/hist_x.pdf, replace
 (file ../output/hist_x.pdf written in PDF format)
 
+. histogram s
+(bin=33, start=.00053276, width=.02701736)
+
+. graph export ../output/hist_s.pdf, replace
+(file ../output/hist_s.pdf written in PDF format)
+
 . twoway scatter p mc 
 
 . graph export ../output/p_mc.pdf, replace
@@ -130,7 +136,7 @@
 
 . 
 . outtable using ../output/summary_stats, mat(summary_stats) ///
->   format(%9.0fc %9.2fc %9.2fc %9.2fc %9.2fc nobox)
+>   format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc nobox)
 
 . 
 . 
