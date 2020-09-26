@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  26 Sep 2020, 17:26:58
+ opened on:  26 Sep 2020, 17:44:46
 
 . 
 . import delimited using ../temp/data.csv, clear
@@ -79,6 +79,44 @@
 . matrix colnames summary_stats = N Mean SD Min Max
 
 . assert p > mc
+
+. plot p mc
+
+ 7.27087 +  
+         |                             *
+         |            *     *     *
+         |          *
+         |  
+         |             *             *                 *
+         |           **                                         *
+         |                       *               **
+         |       * *        ** *     *          *                *
+         |                 *  *   ** *             *   *
+    p    |        *      ******   **  **  *  *  *  *  *      **      **  * *
+         |              * ** **** **       ****      *       *        *
+         |      *    ** *  **** *** ********  ** * ****    ******** *
+         |        *   * ****** ** **  ************* ****** ***
+         |      * ** ************* ********************
+         |     **   *****************************
+         |       ***************************
+         |     **********************
+         |  *  ****************
+         | *************
+ 1.75876 + *******
+          +----------------------------------------------------------------+
+          1.23947                       mc                        4.10932
+
+
+. histogram x
+(bin=33, start=.00002911, width=.10473307)
+
+. graph export ../output/hist_x.pdf, replace
+(file ../output/hist_x.pdf written in PDF format)
+
+. twoway scatter p mc 
+
+. graph export ../output/p_mc.pdf, replace
+(file ../output/p_mc.pdf written in PDF format)
 
 . collapse (sum) s, by(t)
 

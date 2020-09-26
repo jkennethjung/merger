@@ -23,6 +23,11 @@ foreach v in x sat wire p w xi omega s mc {
 matrix rownames summary_stats = x sat wire p w xi omega s mc
 matrix colnames summary_stats = N Mean SD Min Max
 assert p > mc
+plot p mc
+histogram x
+graph export ../output/hist_x.pdf, replace
+twoway scatter p mc 
+graph export ../output/p_mc.pdf, replace
 collapse (sum) s, by(t)
 assert s <= 1
 sum s
