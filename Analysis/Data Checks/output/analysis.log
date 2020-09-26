@@ -3,11 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  26 Sep 2020, 16:53:26
+ opened on:  26 Sep 2020, 17:20:49
 
 . 
 . import delimited using ../temp/data.csv, clear
-(10 vars, 2,400 obs)
+(11 vars, 2,400 obs)
 
 . rename v1 j
 
@@ -29,8 +29,10 @@
 
 . rename v10 s
 
+. rename v11 mc
+
 . 
-. foreach v in x sat wire p w xi omega s {
+. foreach v in x sat wire p w xi omega s mc {
   2.     sum `v'
   3.     matrix row = r(N), r(mean), r(sd), r(min), r(max)
   4.     matrix summary_stats = nullmat(summary_stats) \ row
@@ -68,7 +70,23 @@
 -------------+---------------------------------------------------------
            s |      2,400    .2467427    .1909191   .0005328   .8921057
 
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          mc |      2,400    2.044951    .4208522   1.239474   4.109324
+
 . matrix colnames summary_stats = N Mean SD Min Max
+
+. assert p > mc
+
+. collapse (sum) s, by(t)
+
+. assert s <= 1
+
+. sum s
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           s |        600    .9869708    .0087614   .9426511   .9989953
 
 . 
 . outtable using ../output/summary_stats, mat(summary_stats) ///
