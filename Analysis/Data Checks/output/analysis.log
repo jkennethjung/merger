@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  26 Sep 2020, 17:20:49
+ opened on:  26 Sep 2020, 17:26:58
 
 . 
 . import delimited using ../temp/data.csv, clear
@@ -74,6 +74,8 @@
 -------------+---------------------------------------------------------
           mc |      2,400    2.044951    .4208522   1.239474   4.109324
 
+. matrix rownames summary_stats = x sat wire p w xi omega s mc
+
 . matrix colnames summary_stats = N Mean SD Min Max
 
 . assert p > mc
@@ -90,7 +92,7 @@
 
 . 
 . outtable using ../output/summary_stats, mat(summary_stats) ///
->   format(%9.0fc %9.2fc %9.2fc %9.2fc %9.2fc)
+>   format(%9.0fc %9.2fc %9.2fc %9.2fc %9.2fc nobox)
 
 . 
 . 
