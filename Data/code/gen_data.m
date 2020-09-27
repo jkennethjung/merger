@@ -10,7 +10,7 @@ rng(1);
 global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
   unobs_mean unobs_var theta data_mat mc mkt_rows;
 
-n_draw = 1e3;
+n_draw = 1e4;
 J = 4;
 T = 600;
 JT = J*T;
