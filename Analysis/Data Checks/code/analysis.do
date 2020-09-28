@@ -30,6 +30,7 @@ histogram s
 graph export ../output/hist_s.pdf, replace
 twoway scatter p mc 
 graph export ../output/p_mc.pdf, replace
+list j t if s == 0
 collapse (sum) s, by(t)
 assert s <= 1
 sum s
