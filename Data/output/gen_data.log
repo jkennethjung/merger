@@ -3,11 +3,11 @@ opts =
 
   fsolve options:
 
-   Options used by current Algorithm ('levenberg-marquardt'):
-   (Other available algorithms: 'trust-region', 'trust-region-dogleg')
+   Options used by current Algorithm ('trust-region-dogleg'):
+   (Other available algorithms: 'levenberg-marquardt', 'trust-region')
 
    Set properties:
-                   Algorithm: 'levenberg-marquardt'
+                   Algorithm: 'trust-region-dogleg'
 
    Default properties:
               CheckGradients: 0
@@ -15,8 +15,9 @@ opts =
     FiniteDifferenceStepSize: 'sqrt(eps)'
         FiniteDifferenceType: 'forward'
            FunctionTolerance: 1.0000e-06
-      MaxFunctionEvaluations: '200*numberOfVariables'
+      MaxFunctionEvaluations: '100*numberOfVariables'
                MaxIterations: 400
+         OptimalityTolerance: 1.0000e-06
                    OutputFcn: []
                      PlotFcn: []
     SpecifyObjectiveGradient: 0
@@ -24,10 +25,9 @@ opts =
                     TypicalX: 'ones(numberOfVariables,1)'
                  UseParallel: 0
 
-   Options not used by current Algorithm ('levenberg-marquardt')
+   Options not used by current Algorithm ('trust-region-dogleg')
    Default properties:
     JacobianMultiplyFcn: []
-    OptimalityTolerance: 1.0000e-06
     SubproblemAlgorithm: 'factorization'
 
 
@@ -991,1764 +991,14 @@ as measured by the value of the function tolerance, and
 the problem appears regular as measured by the gradient.
 
 
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved.
-
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
-
-
-Equation solved, fsolve stalled.
-
-fsolve stopped because the relative size of the current step is less than the
-value of the step size tolerance and the vector of function values
-is near zero as measured by the value of the function tolerance.
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
 
 WARNING! Price could not be solved for the following market:
-   388
+   138
 
 
 Equation solved.
@@ -2919,6 +1169,1761 @@ as measured by the value of the function tolerance, and
 the problem appears regular as measured by the gradient.
 
 
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   163
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   280
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   308
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   385
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+
 Equation solved.
 
 fsolve completed because the vector of function values is near zero
@@ -3981,6 +3986,16 @@ Equation solved.
 fsolve completed because the vector of function values is near zero
 as measured by the value of the function tolerance, and
 the problem appears regular as measured by the gradient.
+
+
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   564
 
 
 Equation solved.
@@ -4237,10 +4252,10 @@ the problem appears regular as measured by the gradient.
 Share derivatives:
   Columns 1 through 7
 
-   -0.0957    0.0000    0.0206    0.0248         0         0         0
-    0.0000   -0.0000    0.0000    0.0000         0         0         0
-    0.0206    0.0000   -0.3475    0.1635         0         0         0
-    0.0248    0.0000    0.1635   -0.3848         0         0         0
+   -0.0650    0.0235    0.0098    0.0120         0         0         0
+    0.0235   -0.2964    0.0647    0.0790         0         0         0
+    0.0098    0.0647   -0.2978    0.1212         0         0         0
+    0.0120    0.0790    0.1212   -0.3366         0         0         0
          0         0         0         0   -0.3400    0.1311    0.0375
          0         0         0         0    0.1311   -0.3217    0.0342
          0         0         0         0    0.0375    0.0342   -0.1774

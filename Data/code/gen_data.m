@@ -15,7 +15,7 @@ n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
-opts = optimoptions('fsolve', 'Algorithm', 'levenberg-marquardt')
+opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg')
 
 beta1_mean  = 1;
 beta_mean = 4;
