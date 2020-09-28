@@ -10,7 +10,7 @@ rng(1);
 global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
   unobs_mean unobs_var theta data_mat mc mkt_rows;
 
-n_draw = 1e4;
+n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
@@ -74,7 +74,7 @@ function dPI = foc(p)
     global data_mat mkt_rows theta n_draw mc;
     t_mat = data_mat(mkt_rows, [3, 4, 5, 6, 8]);
     s_t = mkt_shares(t_mat, theta, n_draw);
-    dst_dpt = share_deriv_market(t_mat, theta, n_draw);
+    [dst_dpt, ~, ~] = share_deriv_market(t_mat, theta, n_draw);
     t_mat(:, 4) = p;
     dPI = (p - mc(mkt_rows, 1)).*diag(dst_dpt) + s_t;
 end
@@ -87,26 +87,33 @@ function [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw)
         t_mat = data_mat(t_rows, [3, 4, 5, 6, 8]);
         s_t = mkt_shares(t_mat, theta, n_draw);
         s(t_rows, 1) = s_t;
-        dst_dpt = share_deriv_market(t_mat, theta, n_draw);
+        [dst_dpt, ~, ~] = share_deriv_market(t_mat, theta, n_draw);
         ds_dp = blkdiag(ds_dp, dst_dpt);
     end
     ds_dp = ds_dp(2:(JT + 1), 2:(JT + 1));
 end
 
-function dst_dpt = share_deriv_market(t_mat, theta, n_draw)
+function [dst_dpt, Lambda_t, Gamma_t] = share_deriv_market(t_mat, theta, n_draw)
     [s_t, sigma_t] = mkt_shares(t_mat, theta, n_draw);
+    alpha = theta(4,1);
     t_size = size(t_mat);
     J_t = t_size(1);
     dst_dpt = zeros(J_t, J_t);
-    alpha = theta(4,1);
+    Lambda_t = zeros(J_t, J_t);
+    Gamma_t = zeros(J_t, J_t);
     for i = 1:n_draw
         sigma_it = sigma_t(:,i);
-        dsigmait_dpt = -alpha*sigma_it*sigma_it';
-        dsigma_own = alpha*sigma_it .* (1 - sigma_it);
+        Gamma_it = alpha*sigma_it*sigma_it';
+        Lambda_it = alpha*sigma_it;
+        dsigma_own = Lambda_it .* (1 - sigma_it);
         dsigma_own = diag(dsigma_own);
-        dsigmait_dpt = dsigmait_dpt .* (ones(J_t) - eye(J_t)) + dsigma_own;
+        dsigmait_dpt = -Gamma_it .* (ones(J_t) - eye(J_t)) + dsigma_own;
+        Gamma_t = Gamma_t + Gamma_it; 
+        Lambda_t = Lambda_t + Lambda_it; 
         dst_dpt = dst_dpt + dsigmait_dpt;
     end
+    Gamma_t = Gamma_t / n_draw;
+    Lambda_t = Lambda_t / n_draw;
     dst_dpt = dst_dpt / n_draw;
 end
 
