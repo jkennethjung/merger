@@ -42,7 +42,7 @@ theta = [beta1; beta2; beta3; alpha_vec; const];
 
 % 3. Generate prices
 mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
-[s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw);
+[s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
 p = zeros(JT, 1);
 for t = 1:600
     mkt_rows = (data_mat(:, 2) == t);
@@ -56,6 +56,7 @@ for t = 1:600
     p(mkt_rows, 1) = p_t;
 end
 data_mat(:, 6) = p;
+[s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % final shares 
 full_data_mat = [data_mat, s, mc];
 disp("Share derivatives:")
 disp(ds_dp(1:8,1:8))
