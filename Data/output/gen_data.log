@@ -1,11 +1,37 @@
 
-Equation solved.
+opts = 
 
-fsolve completed because the vector of function values is near zero
-as measured by the value of the function tolerance, and
-the problem appears regular as measured by the gradient.
+  fsolve options:
+
+   Options used by current Algorithm ('levenberg-marquardt'):
+   (Other available algorithms: 'trust-region', 'trust-region-dogleg')
+
+   Set properties:
+                   Algorithm: 'levenberg-marquardt'
 
+   Default properties:
+              CheckGradients: 0
+                     Display: 'final'
+    FiniteDifferenceStepSize: 'sqrt(eps)'
+        FiniteDifferenceType: 'forward'
+           FunctionTolerance: 1.0000e-06
+      MaxFunctionEvaluations: '200*numberOfVariables'
+               MaxIterations: 400
+                   OutputFcn: []
+                     PlotFcn: []
+    SpecifyObjectiveGradient: 0
+               StepTolerance: 1.0000e-06
+                    TypicalX: 'ones(numberOfVariables,1)'
+                 UseParallel: 0
 
+   Options not used by current Algorithm ('levenberg-marquardt')
+   Default properties:
+    JacobianMultiplyFcn: []
+    OptimalityTolerance: 1.0000e-06
+    SubproblemAlgorithm: 'factorization'
+
+
+
 Equation solved.
 
 fsolve completed because the vector of function values is near zero
@@ -2713,6 +2739,16 @@ Equation solved.
 fsolve completed because the vector of function values is near zero
 as measured by the value of the function tolerance, and
 the problem appears regular as measured by the gradient.
+
+
+Equation solved, fsolve stalled.
+
+fsolve stopped because the relative size of the current step is less than the
+value of the step size tolerance and the vector of function values
+is near zero as measured by the value of the function tolerance.
+
+WARNING! Price could not be solved for the following market:
+   388
 
 
 Equation solved.

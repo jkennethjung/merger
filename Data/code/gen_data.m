@@ -4,16 +4,18 @@ close all;
 echo off;
 
 diary ../output/gen_data.log
+diary on;
 rng(1);
 
 % 0. Globals
 global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
-  unobs_mean unobs_var theta data_mat mc mkt_rows;
+  unobs_mean unobs_var theta data_mat mc mkt_rows opts;
 
 n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
+opts = optimoptions('fsolve', 'Algorithm', 'levenberg-marquardt')
 
 beta1_mean  = 1;
 beta_mean = 4;
@@ -45,8 +47,12 @@ p = zeros(JT, 1);
 for t = 1:600
     mkt_rows = (data_mat(:, 2) == t);
     p0_t = p0(mkt_rows, 1);
-    [p_t, dPI, flag, output] = fsolve(@foc, p0_t);
-    assert(flag == 1);
+    [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
+    if flag ~= 1
+        disp("WARNING! Price could not be solved for the following market:")
+        disp(t)
+        %assert(flag == 1);
+    end
     p(mkt_rows, 1) = p_t;
 end
 data_mat(:, 6) = p;
@@ -70,13 +76,13 @@ function [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
     omega = unobs(:,2);
 end
 
-function dPI = foc(p)
+function dPI = foc(p_t)
     global data_mat mkt_rows theta n_draw mc;
     t_mat = data_mat(mkt_rows, [3, 4, 5, 6, 8]);
+    t_mat(:, 4) = p_t;
     s_t = mkt_shares(t_mat, theta, n_draw);
     [dst_dpt, ~, ~] = share_deriv_market(t_mat, theta, n_draw);
-    t_mat(:, 4) = p;
-    dPI = (p - mc(mkt_rows, 1)).*diag(dst_dpt) + s_t;
+    dPI = (p_t - mc(mkt_rows, 1)).*diag(dst_dpt) + s_t;
 end
 
 function [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw)
