@@ -8,7 +8,9 @@ T = 600;
 JT = J*T;
 
 
-full_data_mat = importdata("../output/data.csv");
+full_data_mat = readmatrix("../output/data.csv");
+%full_data_mat = cell2mat(struct2cell(full_data_mat));
+
 
 full_data_mat = [full_data_mat, delta(full_data_mat, JT, T,J)];
 full_data_mat = [full_data_mat, within_group_share(full_data_mat, JT, T)];
@@ -17,24 +19,28 @@ full_data_mat = [full_data_mat, opponent(full_data_mat, JT)];
 
 
 
-%[j, t, x, sat, wire, p, w, xi, omega, s, delta, wgs, lnwgs, lnwgs*sat, lnwgs*wire]
+%[j, t, x, sat, wire, p, w, xi, omega, s, mc, delta, wgs, lnwgs, lnwgs*sat, lnwgs*wire]
 
-mat = full_data_mat(:,[11, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17]);
-tbl = array2table(mat,'VariableNames', {'delta','x','sat','wire','price','w','lnwgs', 'lnwgs*sat','lnwgs*wire', 'x_opp','w_opp'});
+mat = full_data_mat(:,[12, 3, 4, 5, 6, 7, 14, 15, 16, 17, 18]);
+tbl = array2table(mat,'VariableNames', {'delta','x','sat','wire','price','w','lnwgs', 'lnwgs_sat','lnwgs_wire', 'x_opp','w_opp'});
 
 writetable(tbl, "../output/data_misspecified.csv");
 
 %OLS
 ols = fitlm(tbl, 'delta~x+sat+wire+price', 'Intercept',false);
 
-%IV
+ols
+
+%IV (Conduct 2SLS manually)
 IV1 = fitlm(tbl, 'price~x+w+sat+wire', 'Intercept',false);
 phat = predict(IV1,tbl);
 phat = array2table(phat, 'VariableNames',{'phat'});
 tbl2 = [tbl, phat];
 IV2 = fitlm(tbl2, 'delta~x+sat+wire+phat', 'Intercept',false);
 
-%Nested Logit
+IV2
+
+%Nested Logit1 (correlation is identical across groups)
 NL1 = fitlm(tbl, 'price~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 phat_NL = predict(NL1,tbl);
 phat_NL = array2table(phat_NL, 'VariableNames',{'phat'});
@@ -45,9 +51,27 @@ lnwgshat = predict(NL2,tbl3);
 lnwgshat = array2table([lnwgshat,lnwgshat .* tbl.sat, lnwgshat .* tbl.wire], 'VariableNames',{'lnwgshat','lnwgshat_s','lnwgshat_w'});
 tbl4 = [tbl3, lnwgshat];
 
-NL3 = fitlm(tbl4, 'delta~x+sat+wire+phat+lnwgshat_s+lnwgshat_w', 'Intercept',false);
+NL3 = fitlm(tbl4, 'delta~x+sat+wire+phat+lnwgshat', 'Intercept',false);
 
 
+NL3
+
+
+%Nested Logit2 (allow correlation to be different across groups)
+NL4 = fitlm(tbl, 'lnwgs_sat~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
+ls_new = predict(NL4,tbl);
+ls_new = array2table(ls_new, 'VariableNames',{'ls_hat'});
+
+
+NL5 = fitlm(tbl, 'lnwgs_wire~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
+lw_new = predict(NL5,tbl);
+lw_new = array2table(lw_new, 'VariableNames',{'lw_hat'});
+tbl5 = [tbl3, ls_new, lw_new];
+
+NL6 = fitlm(tbl5, 'delta~x+sat+wire+phat+ls_hat + lw_hat', 'Intercept',false);
+
+
+NL6
 
 
 % calculate delta = ln(s_j) - ln(s_0)

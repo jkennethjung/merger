@@ -1,27 +1,37 @@
 clear
 
-use ../output/misspecified.dta
-
+cd ../output
+import delimited data_misspecified
+cd ../code
 
 regress delta x sat wire price, noconst
 
+/* Simple 2SLS method */
 ivregress 2sls delta x sat wire (price = w), noconst
 
 
+/* Nested logit (manually conduct 2SLS) */
+quietly {
+	regress price x sat wire w x_opp w_opp, noconst
+	_predict phat
+
+	regress lnwgs_sat x sat wire w x_opp w_opp, noconst
+	_predict lnwgssathat
+
+	regress lnwgs_wire x sat wire w x_opp w_opp, noconst
+	_predict lnwgswirehat
+}
+regress delta x sat wire phat lnwgssathat lnwgswirehat, noconst
 
 
-ivregress 2sls delta x sat wire (lnwgssat lnwgswire price = w x_opp w_opp), noconst
+/* Nested Logit */
 
-regress price x sat wire w x_opp w_opp
-_predict phat
+ivregress 2sls delta x sat wire (price lnwgs_sat lnwgs_wire = w x_opp w_opp), noconst 
 
-regress lnwgssat x sat wire w x_opp w_opp, noconst
-_predict lnwgssathat
 
-regress lnwgswire x sat wire w x_opp w_opp, noconst
-_predict lnwgswirehat
+/* 
 
-regress delta x sat wire price lnwgssathat lnwgswirehat, noconst
+/* Somewhat cheating */
 
 regress lnwgs x sat wire w x_opp w_opp, noconst
 _predict lnwgshat
@@ -29,5 +39,7 @@ _predict lnwgshat
 gen ls = lnwgshat*sat 
 gen lw = lnwgshat*wire
 
-regress delta x sat wire price ls lw, noconst
+regress delta x sat wire price ls lw, noconst        
+
+*/
 
