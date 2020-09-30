@@ -1,32 +1,65 @@
-clear
+clear all
+
 
 cd ../output
 import delimited data_misspecified
 cd ../code
 
-regress delta x sat wire price, noconst
+/* (1) OLS */
 
-/* Simple 2SLS method */
-ivregress 2sls delta x sat wire (price = w), noconst
+eststo: regress delta x sat wire price, noconst 
 
 
-/* Nested logit (manually conduct 2SLS) */
-quietly {
+/* (2) Simple 2SLS method */
+eststo: ivregress 2sls delta x sat wire (price = w), noconst
+
+/* (3) Nested Logit */
+
+
+/* (3-i) Nested Logit (assuming correlation coeffs are identical) */
+
+eststo: ivregress 2sls delta x sat wire (price lnwgs = w x_opp w_opp), noconst
+
+/*
+qui{
 	regress price x sat wire w x_opp w_opp, noconst
 	_predict phat
 
+	regress lnwgs x sat wire w x_opp w_opp, noconst
+	_predict lnwgshat
+}
+regress delta x sat wire phat lnwgshat, noconst        
+
+*/
+
+
+/* (3-ii)Nested Logit (using ivreg command) */
+
+eststo: ivregress 2sls delta x sat wire (price lnwgs_sat lnwgs_wire = w x_opp w_opp), noconst first
+
+
+/* (3-ii') Nested logit (manually conduct 2SLS) */
+quietly {
+	regress price x sat wire w x_opp w_opp, noconst
+	_predict phat_
+	
 	regress lnwgs_sat x sat wire w x_opp w_opp, noconst
 	_predict lnwgssathat
 
 	regress lnwgs_wire x sat wire w x_opp w_opp, noconst
 	_predict lnwgswirehat
 }
-regress delta x sat wire phat lnwgssathat lnwgswirehat, noconst
+/* eststo: regress delta x sat wire phat_ lnwgssathat lnwgswirehat, noconst */
+ 
+
+ 
+/*  output tex code for the table of estimated coefficients
+
+esttab using misspecified.tex, label title(Regression table\label{tab1})
+
+*/
 
 
-/* Nested Logit */
-
-ivregress 2sls delta x sat wire (price lnwgs_sat lnwgs_wire = w x_opp w_opp), noconst 
 
 
 /* 

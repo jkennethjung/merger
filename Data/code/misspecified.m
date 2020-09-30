@@ -43,21 +43,21 @@ IV2
 %Nested Logit1 (correlation is identical across groups)
 NL1 = fitlm(tbl, 'price~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 phat_NL = predict(NL1,tbl);
-phat_NL = array2table(phat_NL, 'VariableNames',{'phat'});
-tbl3 = [tbl, phat];
+phat_NL = array2table(phat_NL, 'VariableNames',{'phat_NL'});
+tbl3 = [tbl, phat_NL];
 
 NL2 = fitlm(tbl, 'lnwgs~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 lnwgshat = predict(NL2,tbl3);
 lnwgshat = array2table([lnwgshat,lnwgshat .* tbl.sat, lnwgshat .* tbl.wire], 'VariableNames',{'lnwgshat','lnwgshat_s','lnwgshat_w'});
 tbl4 = [tbl3, lnwgshat];
 
-NL3 = fitlm(tbl4, 'delta~x+sat+wire+phat+lnwgshat', 'Intercept',false);
+NL3 = fitlm(tbl4, 'delta~x+sat+wire+phat_NL+lnwgshat', 'Intercept',false);
 
 
 NL3
 
 
-%Nested Logit2 (allow correlation to be different across groups)
+%Nested Logit 2 (allow correlation to be different across groups)
 NL4 = fitlm(tbl, 'lnwgs_sat~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 ls_new = predict(NL4,tbl);
 ls_new = array2table(ls_new, 'VariableNames',{'ls_hat'});
@@ -68,7 +68,7 @@ lw_new = predict(NL5,tbl);
 lw_new = array2table(lw_new, 'VariableNames',{'lw_hat'});
 tbl5 = [tbl3, ls_new, lw_new];
 
-NL6 = fitlm(tbl5, 'delta~x+sat+wire+phat+ls_hat + lw_hat', 'Intercept',false);
+NL6 = fitlm(tbl5, 'delta~x+sat+wire+phat_NL+ls_hat + lw_hat', 'Intercept',false);
 
 
 NL6
