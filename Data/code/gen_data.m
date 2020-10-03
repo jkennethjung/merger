@@ -15,7 +15,9 @@ n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
-opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg')
+% fsolve algorithm: choose from 'levenberg-marquardt' or 'trust-region-dogleg'
+opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg');
+
 
 beta1_mean  = 1;
 beta_mean = 4;
@@ -29,8 +31,6 @@ gamma_1 = 0.25;
 % 1. Generate exogenous data
 [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, unobs_mean, ...
   unobs_var);
-p0 = ones(JT, 1); % initial guess 
-data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
 
 % 2. Draw parameters
 beta1 = repmat(beta1_mean, 1, n_draw);
@@ -42,9 +42,11 @@ theta = [beta1; beta2; beta3; alpha_vec; const];
 
 % 3. Generate prices
 mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
+p0 = mc; % initial guess (no markup); 
+data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
 [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
 p = zeros(JT, 1);
-for t = 1:600
+for t = 1:T
     mkt_rows = (data_mat(:, 2) == t);
     p0_t = p0(mkt_rows, 1);
     [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
@@ -57,9 +59,24 @@ for t = 1:600
 end
 data_mat(:, 6) = p;
 [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % final shares 
-full_data_mat = [data_mat, s, mc];
-disp("Share derivatives:")
-disp(ds_dp(1:8,1:8))
+ds_dp_own = diag(ds_dp);
+own_price_e = ds_dp_own ./s .* p;
+div_ratio = repmat([0], 1, J);
+% for now, diversion ratios for own products are 1 instead of outside option
+for t = 1:T
+    mkt_rows = (data_mat(:, 2) == t);
+    dst_dpt = ds_dp(mkt_rows, mkt_rows);
+    dst_dpt_own = ds_dp_own(mkt_rows, 1); 
+    div_ratio_t = zeros(J); 
+    for j = 1:J
+        for k = 1:J
+            div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
+        end
+    end
+    div_ratio = [div_ratio; div_ratio_t];
+end
+div_ratio = div_ratio(2:(JT + 1), :);
+full_data_mat = [data_mat, s, mc, own_price_e, div_ratio];
 writematrix(full_data_mat, "../output/data.csv");
 
 diary off;
