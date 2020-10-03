@@ -169,7 +169,7 @@ function [dst_dpt, Lambda_t, Gamma_t] = share_deriv_market(t_mat, theta, n_draw)
         dsigma_own = diag(dsigma_own);
         dsigmait_dpt = -Gamma_it .* (ones(J_t) - eye(J_t)) + dsigma_own;
         Gamma_t = Gamma_t + Gamma_it; 
-        Lambda_t = Lambda_t + Lambda_it; 
+        Lambda_t = Lambda_t + diag(Lambda_it); 
         dst_dpt = dst_dpt + dsigmait_dpt;
     end
     Gamma_t = Gamma_t / n_draw;
