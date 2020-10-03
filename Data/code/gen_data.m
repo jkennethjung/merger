@@ -8,16 +8,17 @@ diary on;
 rng(1);
 
 % 0. Globals
-global n_draw J T JT beta1_mean beta_mean beta_var alpha gamma0 gamma1 ...
-  unobs_mean unobs_var theta data_mat mc mkt_rows opts;
+global PRICING n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
+  gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts;
 
+PRICING = 'fsolve' % choose from 'fsolve' or 'zeta'
 n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
+H_t = eye(J); % ownership matrix 
 % fsolve algorithm: choose from 'levenberg-marquardt' or 'trust-region-dogleg'
 opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg');
-
 
 beta1_mean  = 1;
 beta_mean = 4;
@@ -42,19 +43,26 @@ theta = [beta1; beta2; beta3; alpha_vec; const];
 
 % 3. Generate prices
 mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
-p0 = mc; % initial guess (no markup); 
+p0 = 1.2*mc; % initial guess (no markup); 
 data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
 [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
 p = zeros(JT, 1);
 for t = 1:T
     mkt_rows = (data_mat(:, 2) == t);
     p0_t = p0(mkt_rows, 1);
-    [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
-    if flag ~= 1
-        disp("WARNING! Price could not be solved for the following market:")
-        disp(t)
-        %assert(flag == 1);
-    end
+    if strcmp(PRICING, 'fsolve')
+        [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
+        if flag ~= 1
+            disp("WARNING! Price could not be solved for the following market:")
+            disp(t)
+            %assert(flag == 1);
+        end
+    elseif strcmp(PRICING, 'zeta')
+        p_t = iterate_zeta(p0_t);
+    else
+        disp('PRICING must take a valid value');
+        assert(strcmp(PRICING, 'zeta') | strcmp(PRICING, 'fsolve'));
+    end 
     p(mkt_rows, 1) = p_t;
 end
 data_mat(:, 6) = p;
@@ -103,6 +111,34 @@ function dPI = foc(p_t)
     dPI = (p_t - mc(mkt_rows, 1)).*diag(dst_dpt) + s_t;
 end
 
+function p = iterate_zeta(p0_t)
+    tol = 1e-8;
+    max_iter = 1e3;
+    diff = 1;
+    i = 0;
+    while abs(diff) > tol & i < max_iter
+        p = p_zeta(p0_t);
+        p0_t = p;
+        diff = p - p0_t; 
+        i = i + 1;
+    end
+    if i >= max_iter
+        disp('WARNING: Zeta fixed point iteration exceeds max iterations.');
+    end
+end 
+
+function p = p_zeta(p_t)
+    global data_mat mkt_rows theta n_draw mc H_t;
+    t_mat = data_mat(mkt_rows, [3, 4, 5, 6, 8]);
+    t_mat(:, 4) = p_t;
+    c_t = mc(mkt_rows, 1);
+    s_t = mkt_shares(t_mat, theta, n_draw);
+    [dst_dpt, Lambda_t, Gamma_t] = share_deriv_market(t_mat, theta, n_draw);
+    invLambda_t = Lambda_t^-1;
+    zeta_t = invLambda_t*(H_t .* Gamma_t)*(p_t - c_t) - invLambda_t*s_t;
+    p = c_t + zeta_t; 
+end
+
 function [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw)
     s = zeros(JT, 1);
     ds_dp = [0];
@@ -133,7 +169,7 @@ function [dst_dpt, Lambda_t, Gamma_t] = share_deriv_market(t_mat, theta, n_draw)
         dsigma_own = diag(dsigma_own);
         dsigmait_dpt = -Gamma_it .* (ones(J_t) - eye(J_t)) + dsigma_own;
         Gamma_t = Gamma_t + Gamma_it; 
-        Lambda_t = Lambda_t + Lambda_it; 
+        Lambda_t = Lambda_t + diag(Lambda_it); 
         dst_dpt = dst_dpt + dsigmait_dpt;
     end
     Gamma_t = Gamma_t / n_draw;

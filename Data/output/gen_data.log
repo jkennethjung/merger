@@ -1,4 +1,9 @@
 
+PRICING =
+
+    'fsolve'
+
+
 Equation solved.
 
 fsolve completed because the vector of function values is near zero
