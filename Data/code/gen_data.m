@@ -11,7 +11,7 @@ rng(1);
 global PRICING n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
   gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts;
 
-PRICING = 'zeta' % choose from 'fsolve' or 'zeta'
+PRICING = 'fsolve' % choose from 'fsolve' or 'zeta'
 n_draw = 1e3;
 J = 4;
 T = 600;
@@ -43,7 +43,7 @@ theta = [beta1; beta2; beta3; alpha_vec; const];
 
 % 3. Generate prices
 mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
-p0 = mc; % initial guess (no markup); 
+p0 = 1.2*mc; % initial guess (no markup); 
 data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
 [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
 p = zeros(JT, 1);
