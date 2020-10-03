@@ -2,18 +2,43 @@ set more off
 clear
 log using ../output/analysis.log, replace
 
-import delimited using ../temp/data.csv, clear
-rename v1 j
-rename v2 t
-rename v3 x
-rename v4 sat
-rename v5 wire
-rename v6 p
-rename v7 w
-rename v8 xi
-rename v9 omega
-rename v10 s
-rename v11 mc
+foreach method in fsolve zeta {
+    import delimited using ../temp/data_`method'.csv, clear
+    rename v1 j
+    rename v2 t
+    rename v3 x
+    rename v4 sat
+    rename v5 wire
+    rename v6 p
+    rename v7 w
+    rename v8 xi
+    rename v9 omega
+    rename v10 s
+    rename v11 mc
+    save ../temp/data_`method'.dta, replace
+}
+
+use ../temp/data_fsolve.dta, clear
+rename p p_fsolve
+rename s s_fsolve
+merge 1:1 j t x using ../temp/data_zeta.dta, assert(3) keep(3) ///
+    keepusing(p s)
+rename p p_zeta
+rename s s_zeta
+reg p_zeta p_fsolve
+corr p_zeta p_fsolve
+gen p_diff = p_zeta - p_fsolve
+reg s_zeta s_fsolve
+corr s_zeta s_fsolve
+gen s_diff = s_zeta - s_fsolve
+summ *_diff
+
+gen mu_fsolve = p_fsolve - mc
+gen mu_zeta = p_zeta - mc
+sum mu_*
+
+gen p = p_fsolve
+gen s = s_fsolve
 
 foreach v in x sat wire p w xi omega s mc {
     sum `v'
@@ -22,7 +47,7 @@ foreach v in x sat wire p w xi omega s mc {
 }
 matrix rownames summary_stats = x sat wire p w xi omega s mc
 matrix colnames summary_stats = N Mean SD Min Max
-assert p > mc
+*assert p > mc
 plot p mc
 histogram x
 graph export ../output/hist_x.pdf, replace

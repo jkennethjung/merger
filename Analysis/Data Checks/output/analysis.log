@@ -3,33 +3,128 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  28 Sep 2020, 17:09:09
+ opened on:   3 Oct 2020, 19:15:34
 
 . 
-. import delimited using ../temp/data.csv, clear
-(11 vars, 2,400 obs)
+. foreach method in fsolve zeta {
+  2.     import delimited using ../temp/data_`method'.csv, clear
+  3.     rename v1 j
+  4.     rename v2 t
+  5.     rename v3 x
+  6.     rename v4 sat
+  7.     rename v5 wire
+  8.     rename v6 p
+  9.     rename v7 w
+ 10.     rename v8 xi
+ 11.     rename v9 omega
+ 12.     rename v10 s
+ 13.     rename v11 mc
+ 14.     save ../temp/data_`method'.dta, replace
+ 15. }
+(16 vars, 2,400 obs)
+(note: file ../temp/data_fsolve.dta not found)
+file ../temp/data_fsolve.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/data_zeta.dta not found)
+file ../temp/data_zeta.dta saved
 
-. rename v1 j
+. 
+. use ../temp/data_fsolve.dta, clear
 
-. rename v2 t
+. rename p p_fsolve
 
-. rename v3 x
+. rename s s_fsolve
 
-. rename v4 sat
+. merge 1:1 j t x using ../temp/data_zeta.dta, assert(3) keep(3) ///
+>     keepusing(p s)
 
-. rename v5 wire
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  (_merge==3)
+    -----------------------------------------
 
-. rename v6 p
+. rename p p_zeta
 
-. rename v7 w
+. rename s s_zeta
 
-. rename v8 xi
+. reg p_zeta p_fsolve
 
-. rename v9 omega
+      Source |       SS           df       MS      Number of obs   =     2,400
+-------------+----------------------------------   F(1, 2398)      =  14277.88
+       Model |  363.801491         1  363.801491   Prob > F        =    0.0000
+    Residual |  61.1012234     2,398  .025480076   R-squared       =    0.8562
+-------------+----------------------------------   Adj R-squared   =    0.8561
+       Total |  424.902714     2,399  .177116596   Root MSE        =    .15962
 
-. rename v10 s
+------------------------------------------------------------------------------
+      p_zeta |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    p_fsolve |   .9993657   .0083636   119.49   0.000     .9829651    1.015766
+       _cons |   -.190036   .0231196    -8.22   0.000    -.2353724   -.1446996
+------------------------------------------------------------------------------
 
-. rename v11 mc
+. corr p_zeta p_fsolve
+(obs=2,400)
+
+             |   p_zeta p_fsolve
+-------------+------------------
+      p_zeta |   1.0000
+    p_fsolve |   0.9253   1.0000
+
+
+. gen p_diff = p_zeta - p_fsolve
+
+. reg s_zeta s_fsolve
+
+      Source |       SS           df       MS      Number of obs   =     2,400
+-------------+----------------------------------   F(1, 2398)      =  60083.67
+       Model |  75.1456111         1  75.1456111   Prob > F        =    0.0000
+    Residual |  2.99913727     2,398  .001250683   R-squared       =    0.9616
+-------------+----------------------------------   Adj R-squared   =    0.9616
+       Total |  78.1447484     2,399  .032573884   Root MSE        =    .03536
+
+------------------------------------------------------------------------------
+      s_zeta |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    s_fsolve |    1.44247   .0058848   245.12   0.000      1.43093     1.45401
+       _cons |  -.0623293   .0013083   -47.64   0.000    -.0648948   -.0597639
+------------------------------------------------------------------------------
+
+. corr s_zeta s_fsolve
+(obs=2,400)
+
+             |   s_zeta s_fsolve
+-------------+------------------
+      s_zeta |   1.0000
+    s_fsolve |   0.9806   1.0000
+
+
+. gen s_diff = s_zeta - s_fsolve
+
+. summ *_diff
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      p_diff |      2,400   -.1917718    .1595917  -1.152738  -.0011506
+      s_diff |      2,400    .0197084     .064788   -.187529   .2846172
+
+. 
+. gen mu_fsolve = p_fsolve - mc
+
+. gen mu_zeta = p_zeta - mc
+
+. sum mu_*
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   mu_fsolve |      2,400    .6917718    .1595917   .5011506   1.652738
+     mu_zeta |      2,400          .5    6.14e-08   .4999998   .5000002
+
+. 
+. gen p = p_fsolve
+
+. gen s = s_fsolve
 
 . 
 . foreach v in x sat wire p w xi omega s mc {
@@ -52,7 +147,7 @@
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           p |      2,400    3.093665    1.977399   1.849239   16.96387
+           p |      2,400    2.736723    .3896661   1.849239   4.610475
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -68,7 +163,7 @@
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           s |      2,400    .1804308    .1253509   6.58e-13   .6921549
+           s |      2,400    .1854086    .1226959   .0012276   .6733597
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -78,31 +173,30 @@
 
 . matrix colnames summary_stats = N Mean SD Min Max
 
-. assert p > mc
-
+. *assert p > mc
 . plot p mc
 
- 16.9639 +  
-         |            *
-         |          *
-         |        * *   **  *  **               *
-         |      * *  ***  ** *** **  *
-         |         *   *******  *
-         |    *  *     *  *    *  *
-         |    **     ** *    *  * *  **
-         |  *    *  *         *      *            *             *
-         |     *                                 *
-    p    |       * * * * **    *    *    *
-         |         * *
-         |  
-         |  
-         |  
-         |  
-         |  
-         |                                             *         ** ***  * *
-         |            *     * *   **  **  **************** *******
-         |     **********************************
- 1.84924 + ********************
+ 4.61047 +  
+         |                                                                 *
+         |                                                               *
+         |                                                           **
+         |                                                      *** *
+         |                                                   ****
+         |                                            **   ***
+         |                                         * *****
+         |                                      *******
+         |                  *        * *  **********
+    p    |            *          *** * **********
+         |         **  *  ** *****************
+         |       *** *** * ***************
+         |      * *  ******************
+         |      ********************
+         |     ******************
+         |    ***************
+         | *** ************
+         | ************
+         | *********
+ 1.84924 + *****
           +----------------------------------------------------------------+
           1.23947                       mc                        4.10932
 
@@ -114,7 +208,7 @@
 (file ../output/hist_x.pdf written in PDF format)
 
 . histogram s
-(bin=33, start=6.583e-13, width=.02097439)
+(bin=33, start=.00122764, width=.02036764)
 
 . graph export ../output/hist_s.pdf, replace
 (file ../output/hist_s.pdf written in PDF format)
@@ -134,7 +228,7 @@
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           s |        600    .7217233    .1384852   3.11e-07   .9450245
+           s |        600    .7416345    .1025016   .3476709   .9450245
 
 . 
 . outtable using ../output/summary_stats, mat(summary_stats) ///
