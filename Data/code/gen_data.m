@@ -8,11 +8,10 @@ diary on;
 rng(1);
 
 % 0. Globals
-global PRICING n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
-  gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts;
+global n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
+  gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts ...
+  j t x sat wire w xi omega;
 
-PRICING = 'zeta' % choose from 'fsolve' or 'zeta'
-n_draw = 1e3;
 J = 4;
 T = 600;
 JT = J*T;
@@ -26,68 +25,75 @@ beta_var = 1;
 unobs_mean = [0; 0];
 unobs_var = [1, 0.25; 0.25, 1];
 alpha = -2;
-gamma_0 = 0.5;
-gamma_1 = 0.25;
+gamma0 = 0.5;
+gamma1 = 0.25;
 
 % 1. Generate exogenous data
 [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, unobs_mean, ...
   unobs_var);
 
-% 2. Draw parameters
-beta1 = repmat(beta1_mean, 1, n_draw);
-beta2 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
-beta3 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
-alpha_vec = repmat(alpha, 1, n_draw);
-const = ones(1, n_draw);
-theta = [beta1; beta2; beta3; alpha_vec; const];
-
-% 3. Generate prices
-mc = exp(gamma_0*ones(JT,1) + gamma_1*w + omega/8);
-p0 = 1.2*mc; % initial guess (no markup); 
-data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
-[s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
-p = zeros(JT, 1);
-for t = 1:T
-    mkt_rows = (data_mat(:, 2) == t);
-    p0_t = p0(mkt_rows, 1);
-    if strcmp(PRICING, 'fsolve')
-        [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
-        if flag ~= 1
-            disp("WARNING! Price could not be solved for the following market:")
-            disp(t)
-            %assert(flag == 1);
-        end
-    elseif strcmp(PRICING, 'zeta')
-        p_t = iterate_zeta(p0_t);
-    else
-        disp('PRICING must take a valid value');
-        assert(strcmp(PRICING, 'zeta') | strcmp(PRICING, 'fsolve'));
-    end 
-    p(mkt_rows, 1) = p_t;
-end
-data_mat(:, 6) = p;
-[s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % final shares 
-ds_dp_own = diag(ds_dp);
-own_price_e = ds_dp_own ./s .* p;
-div_ratio = repmat([0], 1, J);
-% for now, diversion ratios for own products are 1 instead of outside option
-for t = 1:T
-    mkt_rows = (data_mat(:, 2) == t);
-    dst_dpt = ds_dp(mkt_rows, mkt_rows);
-    dst_dpt_own = ds_dp_own(mkt_rows, 1); 
-    div_ratio_t = zeros(J); 
-    for j = 1:J
-        for k = 1:J
-            div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
-        end
-    end
-    div_ratio = [div_ratio; div_ratio_t];
-end
-div_ratio = div_ratio(2:(JT + 1), :);
-full_data_mat = [data_mat, s, mc, own_price_e, div_ratio];
-writematrix(full_data_mat, "../output/data.csv");
-
+% 2. Generate endogenous data
+n_draw = 1e3;
+full_data_mat = simulate('zeta', '../output/fsolve_1e3.csv');
 diary off;
+
+function full_data_mat = simulate(PRICING, save_as)
+    global n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
+      gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts ...
+      j t x sat wire w xi omega;
+    % A. Draw parameters
+    beta1 = repmat(beta1_mean, 1, n_draw);
+    beta2 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
+    beta3 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
+    alpha_vec = repmat(alpha, 1, n_draw);
+    const = ones(1, n_draw);
+    theta = [beta1; beta2; beta3; alpha_vec; const];
+
+    % B. Generate prices
+    mc = exp(gamma0*ones(JT,1) + gamma1*w + omega/8);
+    p0 = 1.2*mc; % initial guess (no markup); 
+    data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
+    [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
+    p = zeros(JT, 1);
+    for t = 1:T
+        mkt_rows = (data_mat(:, 2) == t);
+        p0_t = p0(mkt_rows, 1);
+        if strcmp(PRICING, 'fsolve')
+            [p_t, dPI, flag, output] = fsolve(@foc, p0_t, opts);
+            if flag ~= 1
+                disp("WARNING! Price could not be solved for the following market:")
+                disp(t)
+            end
+        elseif strcmp(PRICING, 'zeta')
+            p_t = iterate_zeta(p0_t);
+        else
+            disp('PRICING must take a valid value');
+            assert(strcmp(PRICING, 'zeta') | strcmp(PRICING, 'fsolve'));
+        end 
+        p(mkt_rows, 1) = p_t;
+    end
+    data_mat(:, 6) = p;
+    [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % final shares 
+    ds_dp_own = diag(ds_dp);
+    own_price_e = ds_dp_own ./s .* p;
+    div_ratio = repmat([0], 1, J);
+    % for now, diversion ratios for own products are 1 instead of outside option
+    for t = 1:T
+        mkt_rows = (data_mat(:, 2) == t);
+        dst_dpt = ds_dp(mkt_rows, mkt_rows);
+        dst_dpt_own = ds_dp_own(mkt_rows, 1); 
+        div_ratio_t = zeros(J); 
+        for j = 1:J
+            for k = 1:J
+                div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
+            end
+        end
+        div_ratio = [div_ratio; div_ratio_t];
+    end
+    div_ratio = div_ratio(2:(JT + 1), :);
+    full_data_mat = [data_mat, s, mc, own_price_e, div_ratio];
+    writematrix(full_data_mat, save_as);
+end
 
 function [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
   unobs_mean, unobs_var)
