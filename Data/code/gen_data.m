@@ -10,7 +10,7 @@ rng(1);
 % 0. Globals
 global n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
   gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts ...
-  j t x sat wire w xi omega;
+  j_vec t_vec x sat wire w xi omega;
 
 J = 4;
 T = 600;
@@ -29,18 +29,25 @@ gamma0 = 0.5;
 gamma1 = 0.25;
 
 % 1. Generate exogenous data
-[j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, unobs_mean, ...
-  unobs_var);
+[j_vec, t_vec, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
+  unobs_mean, unobs_var);
 
 % 2. Generate endogenous data
+n_draw = 1e2;
+df = simulate('fsolve', '../output/fsolve_100.csv');
+n_draw = 2e2;
+df = simulate('fsolve', '../output/fsolve_200.csv');
+n_draw = 5e2;
+df = simulate('fsolve', '../output/fsolve_500.csv');
 n_draw = 1e3;
-full_data_mat = simulate('zeta', '../output/fsolve_1e3.csv');
+df = simulate('fsolve', '../output/fsolve_1000.csv');
+df = simulate('zeta', '../output/zeta_1000.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
     global n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
       gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts ...
-      j t x sat wire w xi omega;
+      j_vec t_vec x sat wire w xi omega;
     % A. Draw parameters
     beta1 = repmat(beta1_mean, 1, n_draw);
     beta2 = normrnd(beta_mean, sqrt(beta_var), 1, n_draw);
@@ -52,7 +59,7 @@ function full_data_mat = simulate(PRICING, save_as)
     % B. Generate prices
     mc = exp(gamma0*ones(JT,1) + gamma1*w + omega/8);
     p0 = 1.2*mc; % initial guess (no markup); 
-    data_mat = [j, t, x, sat, wire, p0, w, xi, omega];
+    data_mat = [j_vec, t_vec, x, sat, wire, p0, w, xi, omega];
     [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
     p = zeros(JT, 1);
     for t = 1:T
@@ -95,10 +102,10 @@ function full_data_mat = simulate(PRICING, save_as)
     writematrix(full_data_mat, save_as);
 end
 
-function [j, t, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
+function [j_vec, t_vec, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
   unobs_mean, unobs_var)
-    j = repmat((1:J)', T, 1);
-    t = repelem((1:T)', J);
+    j_vec = repmat((1:J)', T, 1);
+    t_vec = repelem((1:T)', J);
     x = abs(normrnd(0, 1, JT, 1));
     sat = repmat([1; 1; 0; 0], T, 1);
     wire = ones(JT, 1) - sat;
