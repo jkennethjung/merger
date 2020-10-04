@@ -3,11 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   3 Oct 2020, 21:45:26
+ opened on:   3 Oct 2020, 23:49:45
 
 . 
-. foreach method in fsolve zeta {
-  2.     import delimited using ../temp/data_`method'.csv, clear
+. foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
+  2.     import delimited using ../temp/`file'.csv, clear
   3.     rename v1 j
   4.     rename v2 t
   5.     rename v3 x
@@ -19,118 +19,88 @@
  11.     rename v9 omega
  12.     rename v10 s
  13.     rename v11 mc
- 14.     save ../temp/data_`method'.dta, replace
+ 14.     save ../temp/`file'.dta, replace
  15. }
 (16 vars, 2,400 obs)
-(note: file ../temp/data_fsolve.dta not found)
-file ../temp/data_fsolve.dta saved
+(note: file ../temp/fsolve_100.dta not found)
+file ../temp/fsolve_100.dta saved
 (16 vars, 2,400 obs)
-(note: file ../temp/data_zeta.dta not found)
-file ../temp/data_zeta.dta saved
+(note: file ../temp/fsolve_200.dta not found)
+file ../temp/fsolve_200.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/fsolve_500.dta not found)
+file ../temp/fsolve_500.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/fsolve_1000.dta not found)
+file ../temp/fsolve_1000.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/zeta_1000.dta not found)
+file ../temp/zeta_1000.dta saved
 
 . 
-. use ../temp/data_fsolve.dta, clear
+. use ../temp/fsolve_100.dta, clear
 
-. rename p p_fsolve
+. rename p p_f100 
 
-. rename s s_fsolve
+. rename s s_f100
 
-. merge 1:1 j t x using ../temp/data_zeta.dta, assert(3) keep(3) ///
->     keepusing(p s)
+. merge 1:1 j t x using ../temp/fsolve_200.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
 
     Result                           # of obs.
     -----------------------------------------
     not matched                             0
-    matched                             2,400  (_merge==3)
+    matched                             2,400  
     -----------------------------------------
 
-. rename p p_zeta
+. rename p p_f200
 
-. rename s s_zeta
+. rename s s_f200
 
-. reg p_zeta p_fsolve
+. merge 1:1 j t x using ../temp/fsolve_500.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
 
-      Source |       SS           df       MS      Number of obs   =     2,400
--------------+----------------------------------   F(1, 2398)      >  99999.00
-       Model |  364.285284         1  364.285284   Prob > F        =    0.0000
-    Residual |  5.5856e-06     2,398  2.3293e-09   R-squared       =    1.0000
--------------+----------------------------------   Adj R-squared   =    1.0000
-       Total |   364.28529     2,399  .151848808   Root MSE        =    4.8e-05
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
 
-------------------------------------------------------------------------------
-      p_zeta |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-    p_fsolve |    1.00003   2.53e-06  4.0e+05   0.000     1.000025    1.000035
-       _cons |  -.0000761   6.99e-06   -10.89   0.000    -.0000898   -.0000624
-------------------------------------------------------------------------------
+. rename p p_f500
 
-. corr p_zeta p_fsolve
-(obs=2,400)
+. rename s s_f500
 
-             |   p_zeta p_fsolve
--------------+------------------
-      p_zeta |   1.0000
-    p_fsolve |   1.0000   1.0000
+. merge 1:1 j t x using ../temp/fsolve_1000.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
 
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
 
-. gen p_diff = p_zeta - p_fsolve
+. rename p p_f1000
 
-. reg s_zeta s_fsolve
+. rename s s_f1000
 
-      Source |       SS           df       MS      Number of obs   =     2,400
--------------+----------------------------------   F(1, 2398)      >  99999.00
-       Model |  36.1154315         1  36.1154315   Prob > F        =    0.0000
-    Residual |  4.1102e-09     2,398  1.7140e-12   R-squared       =    1.0000
--------------+----------------------------------   Adj R-squared   =    1.0000
-       Total |  36.1154315     2,399  .015054369   Root MSE        =    1.3e-06
+. merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
 
-------------------------------------------------------------------------------
-      s_zeta |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-    s_fsolve |   1.000003   2.18e-07  4.6e+06   0.000     1.000003    1.000003
-       _cons |  -6.82e-07   4.84e-08   -14.07   0.000    -7.77e-07   -5.87e-07
-------------------------------------------------------------------------------
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
 
-. corr s_zeta s_fsolve
-(obs=2,400)
+. rename p p_z1000
 
-             |   s_zeta s_fsolve
--------------+------------------
-      s_zeta |   1.0000
-    s_fsolve |   1.0000   1.0000
-
-
-. gen s_diff = s_zeta - s_fsolve
-
-. summ *_diff
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-      p_diff |      2,400    6.03e-06    .0000497  -4.77e-07   .0012624
-      s_diff |      2,400   -1.14e-07    1.36e-06  -.0000279   7.42e-06
+. rename s s_z1000
 
 . 
-. gen mu_fsolve = p_fsolve - mc
-
-. gen mu_zeta = p_zeta - mc
-
-. sum mu_*
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-   mu_fsolve |      2,400    .6917718    .1595917   .5011506   1.652738
-     mu_zeta |      2,400    .6917778    .1595858   .5011721   1.652738
-
-. 
-. gen p = p_fsolve
-
-. gen s = s_fsolve
-
-. 
-. foreach v in x sat wire p w xi omega s mc {
+. foreach v in x sat wire w xi omega mc {
   2.     sum `v'
   3.     matrix row = r(N), r(mean), r(sd), r(min), r(max)
-  4.     matrix summary_stats = nullmat(summary_stats) \ row
+  4.     matrix exog_stats = nullmat(exog_stats) \ row
   5. }
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -147,10 +117,6 @@ file ../temp/data_zeta.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           p |      2,400    2.736723    .3896661   1.849239   4.610475
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
            w |      2,400    .8016445     .600155   .0000186    3.24744
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -163,77 +129,244 @@ file ../temp/data_zeta.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           s |      2,400    .1854086    .1226959   .0012276   .6733597
+          mc |      2,400    2.044951    .4208522   1.239474   4.109324
+
+. matrix rownames exog_stats = x sat wire w xi omega mc
+
+. matrix colnames exog_stats = N Mean SD Min Max
+
+. outtable using ../output/exog_stats, mat(exog_stats) ///
+>   format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc nobox)
+
+. 
+. foreach suff in f100 f200 f500 f1000 z1000 {
+  2.     gen mu_`suff' = p_`suff' - mc
+  3.     foreach v in p mu {
+  4.         summ `v'_`suff'
+  5.         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
+  6.         matrix endog_stats = nullmat(endog_stats), col
+  7.     }
+  8. }
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          mc |      2,400    2.044951    .4208522   1.239474   4.109324
+      p_f100 |      2,400    2.744953    .3897018   1.851048    4.61061
 
-. matrix rownames summary_stats = x sat wire p w xi omega s mc
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     mu_f100 |      2,400    .7000016    .1644271   .5011096   1.666923
 
-. matrix colnames summary_stats = N Mean SD Min Max
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      p_f200 |      2,400     2.73126    .3898319   1.846063   4.610384
 
-. *assert p > mc
-. plot p mc
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     mu_f200 |      2,400    .6863085    .1581363   .5010605   1.652358
 
- 4.61047 +  
-         |                                                                 *
-         |                                                               *
-         |                                                           **
-         |                                                      *** *
-         |                                                   ****
-         |                                            **   ***
-         |                                         * *****
-         |                                      *******
-         |                  *        * *  **********
-    p    |            *          *** * **********
-         |         **  *  ** *****************
-         |       *** *** * ***************
-         |      * *  ******************
-         |      ********************
-         |     ******************
-         |    ***************
-         | *** ************
-         | ************
-         | *********
- 1.84924 + *****
-          +----------------------------------------------------------------+
-          1.23947                       mc                        4.10932
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      p_f500 |      2,400    2.736167    .3896751   1.849624   4.610445
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     mu_f500 |      2,400    .6912163    .1588906   .5011215   1.646176
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     p_f1000 |      2,400    2.739301    .3895752   1.849136   4.610495
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    mu_f1000 |      2,400    .6943496    .1608491   .5011706   1.654471
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     p_z1000 |      2,400    2.734638    .3898275   1.847271   4.610464
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    mu_z1000 |      2,400    .6896866    .1583495   .5011401   1.641283
+
+. 
+. matrix bottom = 1 \ 1 \ 1
+
+. matrix bottom = bottom, bottom
+
+. foreach v in p mu {
+  2.     corr `v'_f200 `v'_f100
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_f200 - `v'_f100)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             |   p_f200   p_f100
+-------------+------------------
+      p_f200 |   1.0000
+      p_f100 |   0.9996   1.0000
 
 
-. histogram x
-(bin=33, start=.00002911, width=.10473307)
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .0138682    .0114391   .0000212   .0681703
+(obs=2,400)
 
-. graph export ../output/hist_x.pdf, replace
-(file ../output/hist_x.pdf written in PDF format)
+             |  mu_f200  mu_f100
+-------------+------------------
+     mu_f200 |   1.0000
+     mu_f100 |   0.9982   1.0000
 
-. histogram s
-(bin=33, start=.00122764, width=.02036764)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .0138682    .0114391   .0000212   .0681703
+
+. foreach v in p mu {
+  2.     corr `v'_f500 `v'_f200
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_f500 - `v'_f200)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             |   p_f500   p_f200
+-------------+------------------
+      p_f500 |   1.0000
+      p_f200 |   0.9999   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .0051185    .0043988   2.38e-06   .0231683
+(obs=2,400)
+
+             |  mu_f500  mu_f200
+-------------+------------------
+     mu_f500 |   1.0000
+     mu_f200 |   0.9996   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .0051185    .0043988   2.38e-06   .0231683
+
+. foreach v in p mu {
+  2.     corr `v'_f1000 `v'_f500
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_f1000 - `v'_f500)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             |  p_f1000   p_f500
+-------------+------------------
+     p_f1000 |   1.0000
+      p_f500 |   1.0000   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .0033956    .0031517   4.53e-06    .021853
+(obs=2,400)
+
+             | mu_f1000  mu_f500
+-------------+------------------
+    mu_f1000 |   1.0000
+     mu_f500 |   0.9998   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .0033956    .0031517   4.53e-06    .021853
+
+. foreach v in p mu {
+  2.     corr `v'_z1000 `v'_f1000
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_z1000 - `v'_f1000)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             |  p_z1000  p_f1000
+-------------+------------------
+     p_z1000 |   1.0000
+     p_f1000 |   0.9999   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .0047072     .003999   4.77e-06   .0303359
+(obs=2,400)
+
+             | mu_z1000 mu_f1000
+-------------+------------------
+    mu_z1000 |   1.0000
+    mu_f1000 |   0.9998   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .0047072     .003999   4.77e-06   .0303359
+
+. 
+. matrix endog_stats = endog_stats \ bottom
+
+. mat li endog_stats
+
+endog_stats[7,10]
+           c1         c1         c1         c1         c1         c1
+r1  2.7449528  .70000156  2.7312597  .68630846  2.7361675  .69121625
+r2  .38970183  .16442711  .38983192  .15813628  .38967506  .15889056
+r3  1.8510476   .5011096   1.846063  .50106049  1.8496242  .50112152
+r4  4.6106105  1.6669227  4.6103845  1.6523577  4.6104455  1.6461765
+r1          1          1   .9995535  .99815195  .99992944  .99958422
+r2          1          1  .01386818  .01386818  .00511851  .00511851
+r3          1          1  .06817031  .06817031  .02316833  .02316833
+
+           c1         c1         c1         c1
+r1  2.7393008  .69434961  2.7346378   .6896866
+r2  .38957518  .16084906  .38982754  .15834949
+r3  1.8491362  .50117064  1.8472714  .50114012
+r4  4.6104946  1.6544713  4.6104641  1.6412827
+r1  .99996168   .9998472  .99994619  .99980059
+r2  .00339556  .00339556  .00470716  .00470716
+r3  .02185297  .02185297   .0303359   .0303359
+
+. matrix rownames endog_stats = Correlation MeanDiff MaxDiff 
+
+. matrix colnames endog_stats = Price Markup Price Markup Price Markup ///
+>   Price Markup Price Markup 
+
+. outtable using ../output/endog_stats, mat(endog_stats) ///
+>   format(%9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc ///
+>   %9.3fc %9.3fc nobox)
+
+. 
+. histogram s_z1000
+(bin=33, start=.00123734, width=.02041006)
 
 . graph export ../output/hist_s.pdf, replace
 (file ../output/hist_s.pdf written in PDF format)
 
-. twoway scatter p mc 
+. twoway scatter p_z1000 mc 
 
 . graph export ../output/p_mc.pdf, replace
 (file ../output/p_mc.pdf written in PDF format)
 
-. list j t if s == 0
-
-. collapse (sum) s, by(t)
-
-. assert s <= 1
-
-. sum s
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-           s |        600    .7416345    .1025016   .3476709   .9450245
-
 . 
-. outtable using ../output/summary_stats, mat(summary_stats) ///
->   format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc nobox)
-
 . 
 . 
 end of do-file

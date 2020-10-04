@@ -4,7 +4,10 @@ rm -rf ../temp/
 
 mkdir ../output/
 mkdir ../temp/
-ln -s ../../../Data/output/data_fsolve.csv ../temp/data_fsolve.csv
-ln -s ../../../Data/output/data_zeta.csv ../temp/data_zeta.csv
+ln -s ../../../Data/output/fsolve_100.csv ../temp/fsolve_100.csv
+ln -s ../../../Data/output/fsolve_200.csv ../temp/fsolve_200.csv
+ln -s ../../../Data/output/fsolve_500.csv ../temp/fsolve_500.csv
+ln -s ../../../Data/output/fsolve_1000.csv ../temp/fsolve_1000.csv
+ln -s ../../../Data/output/zeta_1000.csv ../temp/zeta_1000.csv
 
 stata analysis.do 
