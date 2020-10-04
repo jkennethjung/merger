@@ -46,11 +46,11 @@ foreach v in x sat wire w xi omega mc {
 matrix rownames exog_stats = x sat wire w xi omega mc
 matrix colnames exog_stats = N Mean SD Min Max
 outtable using ../output/exog_stats, mat(exog_stats) ///
-  format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc nobox)
+  format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc) nobox 
 
 foreach suff in f100 f200 f500 f1000 z1000 {
     gen mu_`suff' = p_`suff' - mc
-    foreach v in p mu {
+    foreach v in p mu s {
         summ `v'_`suff'
         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
         matrix endog_stats = nullmat(endog_stats), col
@@ -58,8 +58,8 @@ foreach suff in f100 f200 f500 f1000 z1000 {
 }
 
 matrix bottom = 1 \ 1 \ 1
-matrix bottom = bottom, bottom
-foreach v in p mu {
+matrix bottom = bottom, bottom, bottom
+foreach v in p mu s {
     corr `v'_f200 `v'_f100
     matrix col = r(rho)  
     gen d`v'= abs(`v'_f200 - `v'_f100)
@@ -68,7 +68,7 @@ foreach v in p mu {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p mu {
+foreach v in p mu s {
     corr `v'_f500 `v'_f200
     matrix col = r(rho)  
     gen d`v'= abs(`v'_f500 - `v'_f200)
@@ -77,7 +77,7 @@ foreach v in p mu {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p mu {
+foreach v in p mu s {
     corr `v'_f1000 `v'_f500
     matrix col = r(rho)  
     gen d`v'= abs(`v'_f1000 - `v'_f500)
@@ -86,7 +86,7 @@ foreach v in p mu {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p mu {
+foreach v in p mu s {
     corr `v'_z1000 `v'_f1000
     matrix col = r(rho)  
     gen d`v'= abs(`v'_z1000 - `v'_f1000)
@@ -96,14 +96,13 @@ foreach v in p mu {
     drop d`v'
 }
 
-matrix endog_stats = endog_stats \ bottom
 mat li endog_stats
+mat li bottom 
+matrix endog_stats = endog_stats \ bottom
 matrix rownames endog_stats = Correlation MeanDiff MaxDiff 
-matrix colnames endog_stats = Price Markup Price Markup Price Markup ///
-  Price Markup Price Markup 
-outtable using ../output/endog_stats, mat(endog_stats) ///
-  format(%9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc %9.3fc ///
-  %9.3fc %9.3fc nobox)
+matrix colnames endog_stats = Price Markup Share Price Markup Share ///
+  Price Markup Share Price Markup Share Price Markup Share  
+outtable using ../output/endog_stats, mat(endog_stats) format(%9.3fc) nobox
 
 histogram s_z1000
 graph export ../output/hist_s.pdf, replace
