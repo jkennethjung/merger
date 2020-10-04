@@ -99,7 +99,7 @@ foreach v in p mu s {
 mat li endog_stats
 mat li bottom 
 matrix endog_stats = endog_stats \ bottom
-matrix rownames endog_stats = Correlation MeanDiff MaxDiff 
+matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 matrix colnames endog_stats = Price Markup Share Price Markup Share ///
   Price Markup Share Price Markup Share Price Markup Share  
 outtable using ../output/endog_stats, mat(endog_stats) format(%9.3fc) nobox

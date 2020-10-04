@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   4 Oct 2020, 00:00:34
+ opened on:   4 Oct 2020, 00:07:17
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
@@ -427,7 +427,7 @@ r3   .0303359   .0303359  .01404572
 
 . matrix endog_stats = endog_stats \ bottom
 
-. matrix rownames endog_stats = Correlation MeanDiff MaxDiff 
+. matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 
 . matrix colnames endog_stats = Price Markup Share Price Markup Share ///
 >   Price Markup Share Price Markup Share Price Markup Share  
