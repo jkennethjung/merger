@@ -11,7 +11,7 @@ rng(1);
 global PRICING n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
   gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts;
 
-PRICING = 'fsolve' % choose from 'fsolve' or 'zeta'
+PRICING = 'zeta' % choose from 'fsolve' or 'zeta'
 n_draw = 1e3;
 J = 4;
 T = 600;
@@ -118,8 +118,8 @@ function p = iterate_zeta(p0_t)
     i = 0;
     while abs(diff) > tol & i < max_iter
         p = p_zeta(p0_t);
-        p0_t = p;
         diff = p - p0_t; 
+        p0_t = p;
         i = i + 1;
     end
     if i >= max_iter
