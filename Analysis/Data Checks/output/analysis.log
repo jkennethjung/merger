@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   4 Oct 2020, 00:07:17
+ opened on:   4 Oct 2020, 00:09:40
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
@@ -432,7 +432,7 @@ r3   .0303359   .0303359  .01404572
 . matrix colnames endog_stats = Price Markup Share Price Markup Share ///
 >   Price Markup Share Price Markup Share Price Markup Share  
 
-. outtable using ../output/endog_stats, mat(endog_stats) format(%9.3fc) nobox
+. outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
 . 
 . histogram s_z1000
