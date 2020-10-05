@@ -2,7 +2,8 @@ set more off
 clear
 log using ../output/analysis.log, replace
 
-foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
+foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
+	data_fsolve_lm lm_1000 lm_1000_badguess {
     import delimited using ../temp/`file'.csv, clear
     rename v1 j
     rename v2 t
@@ -37,6 +38,21 @@ merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_z1000
 rename s s_z1000
+merge 1:1 j t x using ../temp/lm_1000.dta, assert(3) keep(3) ///
+    keepusing(p s) nogen
+rename p p_lm1000
+rename s s_lm1000
+merge 1:1 j t x using ../temp/data_fsolve_lm.dta, assert(3) keep(3) ///
+    keepusing(p s) nogen
+rename p p_lm
+rename s s_lm
+merge 1:1 j t x using ../temp/lm_1000_badguess.dta, assert(3) keep(3) ///
+    keepusing(p s) nogen
+rename p p_bg
+rename s s_bg
+
+assert p_lm == p_bg
+assert s_lm == s_bg
 
 foreach v in x sat wire w xi omega mc {
     sum `v'

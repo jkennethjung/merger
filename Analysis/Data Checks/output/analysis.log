@@ -3,10 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   4 Oct 2020, 00:09:40
+ opened on:   5 Oct 2020, 16:33:34
 
 . 
-. foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
+. foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
+>         data_fsolve_lm lm_1000 lm_1000_badguess {
   2.     import delimited using ../temp/`file'.csv, clear
   3.     rename v1 j
   4.     rename v2 t
@@ -36,6 +37,15 @@ file ../temp/fsolve_1000.dta saved
 (16 vars, 2,400 obs)
 (note: file ../temp/zeta_1000.dta not found)
 file ../temp/zeta_1000.dta saved
+(11 vars, 2,400 obs)
+(note: file ../temp/data_fsolve_lm.dta not found)
+file ../temp/data_fsolve_lm.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/lm_1000.dta not found)
+file ../temp/lm_1000.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/lm_1000_badguess.dta not found)
+file ../temp/lm_1000_badguess.dta saved
 
 . 
 . use ../temp/fsolve_100.dta, clear
@@ -95,6 +105,50 @@ file ../temp/zeta_1000.dta saved
 . rename p p_z1000
 
 . rename s s_z1000
+
+. merge 1:1 j t x using ../temp/lm_1000.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
+
+. rename p p_lm1000
+
+. rename s s_lm1000
+
+. merge 1:1 j t x using ../temp/data_fsolve_lm.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
+
+. rename p p_lm
+
+. rename s s_lm
+
+. merge 1:1 j t x using ../temp/lm_1000_badguess.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                             2,400  
+    -----------------------------------------
+
+. rename p p_bg
+
+. rename s s_bg
+
+. 
+. assert p_lm == p_bg
+
+. assert s_lm == s_bg
 
 . 
 . foreach v in x sat wire w xi omega mc {
