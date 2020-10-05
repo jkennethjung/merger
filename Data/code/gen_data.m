@@ -100,6 +100,8 @@ function full_data_mat = simulate(PRICING, save_as)
     div_ratio = div_ratio(2:(JT + 1), :);
     full_data_mat = [data_mat, s, mc, own_price_e, div_ratio];
     writematrix(full_data_mat, save_as);
+    disp("Variance-covariance matrix: ");
+    cov(beta2, beta3)
 end
 
 function [j_vec, t_vec, x, sat, wire, w, xi, omega] = draw_chars(J, T, JT, ...
