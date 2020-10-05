@@ -3,7 +3,7 @@ clear
 log using ../output/analysis.log, replace
 
 foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
-	data_fsolve_lm lm_1000 lm_1000_badguess {
+	lm_1000 lm_1000_badguess {
     import delimited using ../temp/`file'.csv, clear
     rename v1 j
     rename v2 t
@@ -42,17 +42,10 @@ merge 1:1 j t x using ../temp/lm_1000.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_lm1000
 rename s s_lm1000
-merge 1:1 j t x using ../temp/data_fsolve_lm.dta, assert(3) keep(3) ///
-    keepusing(p s) nogen
-rename p p_lm
-rename s s_lm
 merge 1:1 j t x using ../temp/lm_1000_badguess.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_bg
 rename s s_bg
-
-assert p_lm == p_bg
-assert s_lm == s_bg
 
 foreach v in x sat wire w xi omega mc {
     sum `v'
@@ -64,7 +57,7 @@ matrix colnames exog_stats = N Mean SD Min Max
 outtable using ../output/exog_stats, mat(exog_stats) ///
   format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc) nobox 
 
-foreach suff in f100 f200 f500 f1000 z1000 {
+foreach suff in f200 f500 f1000 z1000 {
     gen mu_`suff' = p_`suff' - mc
     foreach v in p mu s {
         summ `v'_`suff'
@@ -75,15 +68,6 @@ foreach suff in f100 f200 f500 f1000 z1000 {
 
 matrix bottom = 1 \ 1 \ 1
 matrix bottom = bottom, bottom, bottom
-foreach v in p mu s {
-    corr `v'_f200 `v'_f100
-    matrix col = r(rho)  
-    gen d`v'= abs(`v'_f200 - `v'_f100)
-    summ d`v'
-    matrix col = col \ r(mean) \ r(max)
-    matrix bottom = bottom, col
-    drop d`v'
-}
 foreach v in p mu s {
     corr `v'_f500 `v'_f200
     matrix col = r(rho)  
@@ -117,7 +101,7 @@ mat li bottom
 matrix endog_stats = endog_stats \ bottom
 matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 matrix colnames endog_stats = Price Markup Share Price Markup Share ///
-  Price Markup Share Price Markup Share Price Markup Share  
+  Price Markup Share Price Markup Share  
 outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
 histogram s_z1000

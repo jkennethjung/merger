@@ -3,11 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   5 Oct 2020, 16:33:34
+ opened on:   5 Oct 2020, 17:01:43
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
->         data_fsolve_lm lm_1000 lm_1000_badguess {
+>         lm_1000 lm_1000_badguess {
   2.     import delimited using ../temp/`file'.csv, clear
   3.     rename v1 j
   4.     rename v2 t
@@ -37,9 +37,6 @@ file ../temp/fsolve_1000.dta saved
 (16 vars, 2,400 obs)
 (note: file ../temp/zeta_1000.dta not found)
 file ../temp/zeta_1000.dta saved
-(11 vars, 2,400 obs)
-(note: file ../temp/data_fsolve_lm.dta not found)
-file ../temp/data_fsolve_lm.dta saved
 (16 vars, 2,400 obs)
 (note: file ../temp/lm_1000.dta not found)
 file ../temp/lm_1000.dta saved
@@ -119,19 +116,6 @@ file ../temp/lm_1000_badguess.dta saved
 
 . rename s s_lm1000
 
-. merge 1:1 j t x using ../temp/data_fsolve_lm.dta, assert(3) keep(3) ///
->     keepusing(p s) nogen
-
-    Result                           # of obs.
-    -----------------------------------------
-    not matched                             0
-    matched                             2,400  
-    -----------------------------------------
-
-. rename p p_lm
-
-. rename s s_lm
-
 . merge 1:1 j t x using ../temp/lm_1000_badguess.dta, assert(3) keep(3) ///
 >     keepusing(p s) nogen
 
@@ -144,11 +128,6 @@ file ../temp/lm_1000_badguess.dta saved
 . rename p p_bg
 
 . rename s s_bg
-
-. 
-. assert p_lm == p_bg
-
-. assert s_lm == s_bg
 
 . 
 . foreach v in x sat wire w xi omega mc {
@@ -193,7 +172,7 @@ file ../temp/lm_1000_badguess.dta saved
 >   format(%9.0fc %9.2fc %9.2fc %9.5fc %9.2fc) nobox 
 
 . 
-. foreach suff in f100 f200 f500 f1000 z1000 {
+. foreach suff in f200 f500 f1000 z1000 {
   2.     gen mu_`suff' = p_`suff' - mc
   3.     foreach v in p mu s {
   4.         summ `v'_`suff'
@@ -201,18 +180,6 @@ file ../temp/lm_1000_badguess.dta saved
   6.         matrix endog_stats = nullmat(endog_stats), col
   7.     }
   8. }
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-      p_f100 |      2,400    2.744953    .3897018   1.851048    4.61061
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-     mu_f100 |      2,400    .7000016    .1644271   .5011096   1.666923
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-      s_f100 |      2,400    .1900707    .1239075   .0015282   .6711953
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -266,49 +233,6 @@ file ../temp/lm_1000_badguess.dta saved
 . matrix bottom = 1 \ 1 \ 1
 
 . matrix bottom = bottom, bottom, bottom
-
-. foreach v in p mu s {
-  2.     corr `v'_f200 `v'_f100
-  3.     matrix col = r(rho)  
-  4.     gen d`v'= abs(`v'_f200 - `v'_f100)
-  5.     summ d`v'
-  6.     matrix col = col \ r(mean) \ r(max)
-  7.     matrix bottom = bottom, col
-  8.     drop d`v'
-  9. }
-(obs=2,400)
-
-             |   p_f200   p_f100
--------------+------------------
-      p_f200 |   1.0000
-      p_f100 |   0.9996   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          dp |      2,400    .0138682    .0114391   .0000212   .0681703
-(obs=2,400)
-
-             |  mu_f200  mu_f100
--------------+------------------
-     mu_f200 |   1.0000
-     mu_f100 |   0.9982   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .0138682    .0114391   .0000212   .0681703
-(obs=2,400)
-
-             |   s_f200   s_f100
--------------+------------------
-      s_f200 |   1.0000
-      s_f100 |   0.9958   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          ds |      2,400    .0101022    .0065102   5.09e-07    .023591
 
 . foreach v in p mu s {
   2.     corr `v'_f500 `v'_f200
@@ -442,49 +366,38 @@ file ../temp/lm_1000_badguess.dta saved
 . 
 . mat li endog_stats
 
-endog_stats[4,15]
+endog_stats[4,12]
            c1         c1         c1         c1         c1         c1
-r1  2.7449528  .70000156  .19007065  2.7312597  .68630846    .186055
-r2  .38970183  .16442711  .12390746  .38983192  .15813628  .12416357
-r3  1.8510476   .5011096  .00152819   1.846063  .50106049   .0011036
-r4  4.6106105  1.6669227  .67119533  4.6103845  1.6523577   .6771971
+r1  2.7312597  .68630846    .186055  2.7361675  .69121625  .18508804
+r2  .38983192  .15813628  .12416357  .38967506  .15889056  .12282645
+r3   1.846063  .50106049   .0011036  1.8496242  .50112152  .00119532
+r4  4.6103845  1.6523577   .6771971  4.6104455  1.6461765  .67402768
 
            c1         c1         c1         c1         c1         c1
-r1  2.7361675  .69121625  .18508804  2.7393008  .69434961  .18518413
-r2  .38967506  .15889056  .12282645  .38957518  .16084906   .1217747
-r3  1.8496242  .50112152  .00119532  1.8491362  .50117064  .00121424
-r4  4.6104455  1.6461765  .67402768  4.6104946  1.6544713  .67509216
-
-           c1         c1         c1
-r1  2.7346378   .6896866  .18537744
-r2  .38982754  .15834949  .12343821
-r3  1.8472714  .50114012  .00123734
-r4  4.6104641  1.6412827  .67476922
+r1  2.7393008  .69434961  .18518413  2.7346378   .6896866  .18537744
+r2  .38957518  .16084906   .1217747  .38982754  .15834949  .12343821
+r3  1.8491362  .50117064  .00121424  1.8472714  .50114012  .00123734
+r4  4.6104946  1.6544713  .67509216  4.6104641  1.6412827  .67476922
 
 . mat li bottom 
 
-bottom[3,15]
+bottom[3,12]
            c1         c1         c1         c1         c1         c1
-r1          1          1          1   .9995535  .99815195  .99583086
-r2          1          1          1  .01386818  .01386818  .01010225
-r3          1          1          1  .06817031  .06817031  .02359095
+r1          1          1          1  .99992944  .99958422  .99972209
+r2          1          1          1  .00511851  .00511851  .00234615
+r3          1          1          1  .02316833  .02316833  .01208159
 
            c1         c1         c1         c1         c1         c1
-r1  .99992944  .99958422  .99972209  .99996168   .9998472  .99985365
-r2  .00511851  .00511851  .00234615  .00339556  .00339556  .00164362
-r3  .02316833  .02316833  .01208159  .02185297  .02185297  .01169723
-
-           c1         c1         c1
-r1  .99994619  .99980059  .99967697
-r2  .00470716  .00470716  .00263222
-r3   .0303359   .0303359  .01404572
+r1  .99996168   .9998472  .99985365  .99994619  .99980059  .99967697
+r2  .00339556  .00339556  .00164362  .00470716  .00470716  .00263222
+r3  .02185297  .02185297  .01169723   .0303359   .0303359  .01404572
 
 . matrix endog_stats = endog_stats \ bottom
 
 . matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 
 . matrix colnames endog_stats = Price Markup Share Price Markup Share ///
->   Price Markup Share Price Markup Share Price Markup Share  
+>   Price Markup Share Price Markup Share  
 
 . outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
