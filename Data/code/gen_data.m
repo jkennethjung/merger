@@ -17,7 +17,7 @@ T = 600;
 JT = J*T;
 H_t = eye(J); % ownership matrix 
 % fsolve algorithm: choose from 'levenberg-marquardt' or 'trust-region-dogleg'
-opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg');
+opts = optimoptions('fsolve', 'Algorithm', 'levenberg-marquardt');
 
 beta1_mean  = 1;
 beta_mean = 4;
@@ -34,13 +34,13 @@ gamma1 = 0.25;
 
 % 2. Generate endogenous data
 n_draw = 1e2;
-df = simulate('fsolve', '../output/fsolve_100.csv');
+df = simulate('fsolve', '../output/lm_100.csv');
 n_draw = 2e2;
-df = simulate('fsolve', '../output/fsolve_200.csv');
+df = simulate('fsolve', '../output/lm_200.csv');
 n_draw = 5e2;
-df = simulate('fsolve', '../output/fsolve_500.csv');
+df = simulate('fsolve', '../output/lm_500.csv');
 n_draw = 1e3;
-df = simulate('fsolve', '../output/fsolve_1000.csv');
+df = simulate('fsolve', '../output/lm_1000.csv');
 df = simulate('zeta', '../output/zeta_1000.csv');
 diary off;
 
