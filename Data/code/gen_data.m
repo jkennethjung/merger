@@ -33,12 +33,12 @@ gamma1 = 0.25;
   unobs_mean, unobs_var);
 
 % 2. Generate endogenous data
-n_draw = 1e2;
-df = simulate('fsolve', '../output/lm_100.csv');
-n_draw = 2e2;
-df = simulate('fsolve', '../output/lm_200.csv');
-n_draw = 5e2;
-df = simulate('fsolve', '../output/lm_500.csv');
+%n_draw = 1e2;
+%df = simulate('fsolve', '../output/lm_100.csv');
+%n_draw = 2e2;
+%df = simulate('fsolve', '../output/lm_200.csv');
+%n_draw = 5e2;
+%df = simulate('fsolve', '../output/lm_500.csv');
 n_draw = 1e3;
 df = simulate('fsolve', '../output/lm_1000.csv');
 df = simulate('zeta', '../output/zeta_1000.csv');
@@ -58,7 +58,7 @@ function full_data_mat = simulate(PRICING, save_as)
 
     % B. Generate prices
     mc = exp(gamma0*ones(JT,1) + gamma1*w + omega/8);
-    p0 = 1.2*mc; % initial guess (no markup); 
+    p0 = ones(JT, 1); %1.2*mc; % initial guess (no markup); 
     data_mat = [j_vec, t_vec, x, sat, wire, p0, w, xi, omega];
     [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % initial guess
     p = zeros(JT, 1);
