@@ -96,13 +96,49 @@ foreach v in p mu s {
     drop d`v'
 }
 
-mat li endog_stats
-mat li bottom 
 matrix endog_stats = endog_stats \ bottom
 matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 matrix colnames endog_stats = Price Markup Share Price Markup Share ///
   Price Markup Share Price Markup Share  
 outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
+
+gen mu_lm1000 = p_lm1000 - mc
+gen mu_bg = p_bg - mc
+foreach suff in z1000 lm1000 bg {
+    foreach v in p mu s {
+        summ `v'_`suff'
+        matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
+        matrix endog_lm_stats = nullmat(endog_lm_stats), col
+    }
+}
+
+matrix bottom = 1 \ 1 \ 1
+matrix bottom = bottom, bottom, bottom
+foreach v in p mu s {
+    corr `v'_z1000 `v'_lm1000
+    matrix col = r(rho)  
+    gen d`v'= abs(`v'_z1000 - `v'_lm1000)
+    summ d`v'
+    matrix col = col \ r(mean) \ r(max)
+    matrix bottom = bottom, col
+    drop d`v'
+}
+foreach v in p mu s {
+    corr `v'_lm1000 `v'_bg
+    matrix col = r(rho)  
+    gen d`v'= abs(`v'_lm1000 - `v'_bg)
+    summ d`v'
+    matrix col = col \ r(mean) \ r(max)
+    matrix bottom = bottom, col
+    drop d`v'
+}
+
+matrix endog_lm_stats = endog_lm_stats \ bottom
+matrix rownames endog_lm_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
+matrix colnames endog_lm_stats = Price Markup Share Price Markup Share ///
+  Price Markup Share 
+outtable using ../output/endog_lm_stats, mat(endog_lm_stats) format(%9.2fc) nobox
+
 
 histogram s_z1000
 graph export ../output/hist_s.pdf, replace

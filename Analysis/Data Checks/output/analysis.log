@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   5 Oct 2020, 17:01:43
+ opened on:   5 Oct 2020, 18:25:40
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
@@ -364,34 +364,6 @@ file ../temp/lm_1000_badguess.dta saved
           ds |      2,400    .0026322    .0023632   2.20e-07   .0140457
 
 . 
-. mat li endog_stats
-
-endog_stats[4,12]
-           c1         c1         c1         c1         c1         c1
-r1  2.7312597  .68630846    .186055  2.7361675  .69121625  .18508804
-r2  .38983192  .15813628  .12416357  .38967506  .15889056  .12282645
-r3   1.846063  .50106049   .0011036  1.8496242  .50112152  .00119532
-r4  4.6103845  1.6523577   .6771971  4.6104455  1.6461765  .67402768
-
-           c1         c1         c1         c1         c1         c1
-r1  2.7393008  .69434961  .18518413  2.7346378   .6896866  .18537744
-r2  .38957518  .16084906   .1217747  .38982754  .15834949  .12343821
-r3  1.8491362  .50117064  .00121424  1.8472714  .50114012  .00123734
-r4  4.6104946  1.6544713  .67509216  4.6104641  1.6412827  .67476922
-
-. mat li bottom 
-
-bottom[3,12]
-           c1         c1         c1         c1         c1         c1
-r1          1          1          1  .99992944  .99958422  .99972209
-r2          1          1          1  .00511851  .00511851  .00234615
-r3          1          1          1  .02316833  .02316833  .01208159
-
-           c1         c1         c1         c1         c1         c1
-r1  .99996168   .9998472  .99985365  .99994619  .99980059  .99967697
-r2  .00339556  .00339556  .00164362  .00470716  .00470716  .00263222
-r3  .02185297  .02185297  .01169723   .0303359   .0303359  .01404572
-
 . matrix endog_stats = endog_stats \ bottom
 
 . matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
@@ -401,6 +373,159 @@ r3  .02185297  .02185297  .01169723   .0303359   .0303359  .01404572
 
 . outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
+. 
+. gen mu_lm1000 = p_lm1000 - mc
+
+. gen mu_bg = p_bg - mc
+
+. foreach suff in z1000 lm1000 bg {
+  2.     foreach v in p mu s {
+  3.         summ `v'_`suff'
+  4.         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
+  5.         matrix endog_lm_stats = nullmat(endog_lm_stats), col
+  6.     }
+  7. }
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     p_z1000 |      2,400    2.734638    .3898275   1.847271   4.610464
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    mu_z1000 |      2,400    .6896866    .1583495   .5011401   1.641283
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     s_z1000 |      2,400    .1853774    .1234382   .0012373   .6747692
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    p_lm1000 |      2,400    2.761251    .6684573   1.849136   16.44304
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   mu_lm1000 |      2,400    .7162993    .5774516   .5011897   14.81734
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    s_lm1000 |      2,400    .1846074    .1207644   1.19e-11   .6244287
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        p_bg |      2,400    3.093665    1.977399   1.849239   16.96387
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       mu_bg |      2,400    1.048714    1.961847   .5011721   15.21924
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        s_bg |      2,400    .1804308    .1253509   6.58e-13   .6921549
+
+. 
+. matrix bottom = 1 \ 1 \ 1
+
+. matrix bottom = bottom, bottom, bottom
+
+. foreach v in p mu s {
+  2.     corr `v'_z1000 `v'_lm1000
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_z1000 - `v'_lm1000)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             |  p_z1000 p_lm1000
+-------------+------------------
+     p_z1000 |   1.0000
+    p_lm1000 |   0.6146   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .0266434    .5277024   .0000134   13.18713
+(obs=2,400)
+
+             | mu_z1000 mu_lm1~0
+-------------+------------------
+    mu_z1000 |   1.0000
+   mu_lm1000 |   0.4377   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .0266434    .5277024   .0000134   13.18713
+(obs=2,400)
+
+             |  s_z1000 s_lm1000
+-------------+------------------
+     s_z1000 |   1.0000
+    s_lm1000 |   0.9791   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          ds |      2,400    .0038949    .0247902   4.84e-08   .6747692
+
+. foreach v in p mu s {
+  2.     corr `v'_lm1000 `v'_bg
+  3.     matrix col = r(rho)  
+  4.     gen d`v'= abs(`v'_lm1000 - `v'_bg)
+  5.     summ d`v'
+  6.     matrix col = col \ r(mean) \ r(max)
+  7.     matrix bottom = bottom, col
+  8.     drop d`v'
+  9. }
+(obs=2,400)
+
+             | p_lm1000     p_bg
+-------------+------------------
+    p_lm1000 |   1.0000
+        p_bg |   0.1643   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          dp |      2,400    .3694484    1.973993   3.34e-06   13.73545
+(obs=2,400)
+
+             | mu_lm1~0    mu_bg
+-------------+------------------
+   mu_lm1000 |   1.0000
+       mu_bg |   0.1146   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         dmu |      2,400    .3694484    1.973993   3.34e-06   13.73545
+(obs=2,400)
+
+             | s_lm1000     s_bg
+-------------+------------------
+    s_lm1000 |   1.0000
+        s_bg |   0.9137   1.0000
+
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          ds |      2,400    .0110069    .0502913   1.07e-10   .6896765
+
+. 
+. matrix endog_lm_stats = endog_lm_stats \ bottom
+
+. matrix rownames endog_lm_stats = Mean SD Min Max Correlation MeanDiff MaxDiff
+>  
+
+. matrix colnames endog_lm_stats = Price Markup Share Price Markup Share ///
+>   Price Markup Share 
+
+. outtable using ../output/endog_lm_stats, mat(endog_lm_stats) format(%9.2fc) n
+> obox
+
+. 
 . 
 . histogram s_z1000
 (bin=33, start=.00123734, width=.02041006)
