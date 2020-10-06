@@ -3,11 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   5 Oct 2020, 18:25:40
+ opened on:   6 Oct 2020, 17:00:02
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
->         lm_1000 lm_1000_badguess {
+>         lm_1000 lm_1000_badguess zeta_1000_tol {
   2.     import delimited using ../temp/`file'.csv, clear
   3.     rename v1 j
   4.     rename v2 t
@@ -43,6 +43,9 @@ file ../temp/lm_1000.dta saved
 (16 vars, 2,400 obs)
 (note: file ../temp/lm_1000_badguess.dta not found)
 file ../temp/lm_1000_badguess.dta saved
+(16 vars, 2,400 obs)
+(note: file ../temp/zeta_1000_tol.dta not found)
+file ../temp/zeta_1000_tol.dta saved
 
 . 
 . use ../temp/fsolve_100.dta, clear
@@ -90,7 +93,13 @@ file ../temp/lm_1000_badguess.dta saved
 
 . rename s s_f1000
 
-. merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
+. /*
+> merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
+>     keepusing(p s) nogen
+> rename p p_z1000
+> rename s s_z1000
+> */
+. merge 1:1 j t x using ../temp/zeta_1000_tol.dta, assert(3) keep(3) ///
 >     keepusing(p s) nogen
 
     Result                           # of obs.
@@ -219,15 +228,15 @@ file ../temp/lm_1000_badguess.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     p_z1000 |      2,400    2.734638    .3898275   1.847271   4.610464
+     p_z1000 |      2,400    2.736729    .3896778   1.849239   4.610496
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_z1000 |      2,400    .6896866    .1583495   .5011401   1.641283
+    mu_z1000 |      2,400    .6917778    .1595858   .5011721   1.652738
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     s_z1000 |      2,400    .1853774    .1234382   .0012373   .6747692
+     s_z1000 |      2,400    .1854085    .1226962   .0012276   .6733597
 
 . 
 . matrix bottom = 1 \ 1 \ 1
@@ -334,34 +343,34 @@ file ../temp/lm_1000_badguess.dta saved
              |  p_z1000  p_f1000
 -------------+------------------
      p_z1000 |   1.0000
-     p_f1000 |   0.9999   1.0000
+     p_f1000 |   1.0000   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          dp |      2,400    .0047072     .003999   4.77e-06   .0303359
+          dp |      2,400    .0026759     .002667   9.54e-07   .0240104
 (obs=2,400)
 
              | mu_z1000 mu_f1000
 -------------+------------------
     mu_z1000 |   1.0000
-    mu_f1000 |   0.9998   1.0000
+    mu_f1000 |   0.9999   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         dmu |      2,400    .0047072     .003999   4.77e-06   .0303359
+         dmu |      2,400    .0026759     .002667   9.54e-07   .0240104
 (obs=2,400)
 
              |  s_z1000  s_f1000
 -------------+------------------
      s_z1000 |   1.0000
-     s_f1000 |   0.9997   1.0000
+     s_f1000 |   0.9999   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          ds |      2,400    .0026322    .0023632   2.20e-07   .0140457
+          ds |      2,400    .0013151    .0014581   2.76e-07   .0097985
 
 . 
 . matrix endog_stats = endog_stats \ bottom
@@ -388,15 +397,15 @@ file ../temp/lm_1000_badguess.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     p_z1000 |      2,400    2.734638    .3898275   1.847271   4.610464
+     p_z1000 |      2,400    2.736729    .3896778   1.849239   4.610496
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_z1000 |      2,400    .6896866    .1583495   .5011401   1.641283
+    mu_z1000 |      2,400    .6917778    .1595858   .5011721   1.652738
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     s_z1000 |      2,400    .1853774    .1234382   .0012373   .6747692
+     s_z1000 |      2,400    .1854085    .1226962   .0012276   .6733597
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -441,34 +450,34 @@ file ../temp/lm_1000_badguess.dta saved
              |  p_z1000 p_lm1000
 -------------+------------------
      p_z1000 |   1.0000
-    p_lm1000 |   0.6146   1.0000
+    p_lm1000 |   0.6144   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          dp |      2,400    .0266434    .5277024   .0000134   13.18713
+          dp |      2,400    .0246204    .5278019   3.34e-06   13.19378
 (obs=2,400)
 
              | mu_z1000 mu_lm1~0
 -------------+------------------
     mu_z1000 |   1.0000
-   mu_lm1000 |   0.4377   1.0000
+   mu_lm1000 |   0.4359   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         dmu |      2,400    .0266434    .5277024   .0000134   13.18713
+         dmu |      2,400    .0246204    .5278019   3.34e-06   13.19378
 (obs=2,400)
 
              |  s_z1000 s_lm1000
 -------------+------------------
      s_z1000 |   1.0000
-    s_lm1000 |   0.9791   1.0000
+    s_lm1000 |   0.9793   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          ds |      2,400    .0038949    .0247902   4.84e-08   .6747692
+          ds |      2,400    .0025753    .0247096   1.38e-07   .6733597
 
 . foreach v in p mu s {
   2.     corr `v'_lm1000 `v'_bg
@@ -528,7 +537,7 @@ file ../temp/lm_1000_badguess.dta saved
 . 
 . 
 . histogram s_z1000
-(bin=33, start=.00123734, width=.02041006)
+(bin=33, start=.00122764, width=.02036764)
 
 . graph export ../output/hist_s.pdf, replace
 (file ../output/hist_s.pdf written in PDF format)

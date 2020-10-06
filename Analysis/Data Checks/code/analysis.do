@@ -3,7 +3,7 @@ clear
 log using ../output/analysis.log, replace
 
 foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
-	lm_1000 lm_1000_badguess {
+	lm_1000 lm_1000_badguess zeta_1000_tol {
     import delimited using ../temp/`file'.csv, clear
     rename v1 j
     rename v2 t
@@ -34,7 +34,13 @@ merge 1:1 j t x using ../temp/fsolve_1000.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_f1000
 rename s s_f1000
+/*
 merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
+    keepusing(p s) nogen
+rename p p_z1000
+rename s s_z1000
+*/
+merge 1:1 j t x using ../temp/zeta_1000_tol.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_z1000
 rename s s_z1000
