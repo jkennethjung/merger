@@ -40,8 +40,8 @@ gamma1 = 0.25;
 %n_draw = 5e2;
 %df = simulate('fsolve', '../output/lm_500.csv');
 n_draw = 1e3;
-df = simulate('fsolve', '../output/lm_1000.csv');
-df = simulate('zeta', '../output/zeta_1000.csv');
+%df = simulate('fsolve', '../output/lm_1000.csv');
+df = simulate('zeta', '../output/zeta_1000_tol.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
@@ -131,7 +131,7 @@ function p = iterate_zeta(p0_t)
     max_iter = 1e3;
     diff = 1;
     i = 0;
-    while abs(diff) > tol & i < max_iter
+    while max(abs(diff)) > tol & i < max_iter
         p = p_zeta(p0_t);
         diff = p - p0_t; 
         p0_t = p;
