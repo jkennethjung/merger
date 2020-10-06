@@ -4,6 +4,6 @@ rm -rf ../temp/
 
 mkdir ../output/
 mkdir ../temp/
-ln -s ../../../Data/output/*.csv ../temp/
+ln -s ../../../Data/output/* ../temp/
 
 stata analysis.do 

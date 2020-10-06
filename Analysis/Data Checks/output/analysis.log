@@ -3,12 +3,11 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   6 Oct 2020, 17:00:02
+ opened on:   6 Oct 2020, 18:11:20
 
 . 
-. foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 ///
->         lm_1000 lm_1000_badguess zeta_1000_tol {
-  2.     import delimited using ../temp/`file'.csv, clear
+. foreach file in fsolve_200 fsolve_500 fsolve_1000 zeta_1000 data_fei {
+  2.     import delimited using ../temp/output_1006/`file'.csv, clear
   3.     rename v1 j
   4.     rename v2 t
   5.     rename v3 x
@@ -20,11 +19,13 @@
  11.     rename v9 omega
  12.     rename v10 s
  13.     rename v11 mc
- 14.     save ../temp/`file'.dta, replace
- 15. }
-(16 vars, 2,400 obs)
-(note: file ../temp/fsolve_100.dta not found)
-file ../temp/fsolve_100.dta saved
+ 14.     rename v12 e_p_own
+ 15.     rename v13 dr1
+ 16.     rename v14 dr2
+ 17.     rename v15 dr3
+ 18.     rename v16 dr4
+ 19.     save ../temp/`file'.dta, replace
+ 20. }
 (16 vars, 2,400 obs)
 (note: file ../temp/fsolve_200.dta not found)
 file ../temp/fsolve_200.dta saved
@@ -38,22 +39,10 @@ file ../temp/fsolve_1000.dta saved
 (note: file ../temp/zeta_1000.dta not found)
 file ../temp/zeta_1000.dta saved
 (16 vars, 2,400 obs)
-(note: file ../temp/lm_1000.dta not found)
-file ../temp/lm_1000.dta saved
-(16 vars, 2,400 obs)
-(note: file ../temp/lm_1000_badguess.dta not found)
-file ../temp/lm_1000_badguess.dta saved
-(16 vars, 2,400 obs)
-(note: file ../temp/zeta_1000_tol.dta not found)
-file ../temp/zeta_1000_tol.dta saved
+(note: file ../temp/data_fei.dta not found)
+file ../temp/data_fei.dta saved
 
 . 
-. use ../temp/fsolve_100.dta, clear
-
-. rename p p_f100 
-
-. rename s s_f100
-
 . merge 1:1 j t x using ../temp/fsolve_200.dta, assert(3) keep(3) ///
 >     keepusing(p s) nogen
 
@@ -66,6 +55,8 @@ file ../temp/zeta_1000_tol.dta saved
 . rename p p_f200
 
 . rename s s_f200
+
+. drop dr*
 
 . merge 1:1 j t x using ../temp/fsolve_500.dta, assert(3) keep(3) ///
 >     keepusing(p s) nogen
@@ -93,14 +84,8 @@ file ../temp/zeta_1000_tol.dta saved
 
 . rename s s_f1000
 
-. /*
-> merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
->     keepusing(p s) nogen
-> rename p p_z1000
-> rename s s_z1000
-> */
-. merge 1:1 j t x using ../temp/zeta_1000_tol.dta, assert(3) keep(3) ///
->     keepusing(p s) nogen
+. merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
+>     keepusing(p s dr*) nogen
 
     Result                           # of obs.
     -----------------------------------------
@@ -112,8 +97,10 @@ file ../temp/zeta_1000_tol.dta saved
 
 . rename s s_z1000
 
-. merge 1:1 j t x using ../temp/lm_1000.dta, assert(3) keep(3) ///
->     keepusing(p s) nogen
+. rename dr* dr*_z1000
+
+. merge 1:1 j t x using ../temp/data_fei.dta, assert(3) keep(3) ///
+>     keepusing(p s dr*) nogen
 
     Result                           # of obs.
     -----------------------------------------
@@ -121,22 +108,72 @@ file ../temp/zeta_1000_tol.dta saved
     matched                             2,400  
     -----------------------------------------
 
-. rename p p_lm1000
+. rename p p_fei
 
-. rename s s_lm1000
+. rename s s_fei
 
-. merge 1:1 j t x using ../temp/lm_1000_badguess.dta, assert(3) keep(3) ///
->     keepusing(p s) nogen
+. rename dr* dr*_fei
 
-    Result                           # of obs.
-    -----------------------------------------
-    not matched                             0
-    matched                             2,400  
-    -----------------------------------------
+. 
+. foreach v in dr1 dr2 dr3 dr4 {
+  2.     di "Diversion ratio correlation:"
+  3.     corr `v'_fei `v'_z1000
+  4.     gen d`v'= abs(`v'_fei - `v'_z1000)
+  5.     di "Diversion ratio absolute difference, summary statistics:"
+  6.     summ d`v'
+  7. }
+Diversion ratio correlation:
+(obs=2,400)
 
-. rename p p_bg
+             |  dr1_fei dr1_z1~i
+-------------+------------------
+     dr1_fei |   1.0000
+dr1_z1000_~i |   0.9907   1.0000
 
-. rename s s_bg
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr1 |      2,400     .006673    .0377908   3.73e-06   .6099932
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr2_fei dr2_z1~i
+-------------+------------------
+     dr2_fei |   1.0000
+dr2_z1000_~i |   0.9881   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr2 |      2,400     .006772    .0429472   1.03e-06    .882375
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr3_fei dr3_z1~i
+-------------+------------------
+     dr3_fei |   1.0000
+dr3_z1000_~i |   0.9848   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr3 |      2,400    .0062049    .0478722   1.35e-06   .8339779
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr4_fei dr4_z1~i
+-------------+------------------
+     dr4_fei |   1.0000
+dr4_z1000_~i |   0.9895   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr4 |      2,400    .0051879    .0394811   1.43e-06   .8260676
 
 . 
 . foreach v in x sat wire w xi omega mc {
@@ -192,51 +229,51 @@ file ../temp/zeta_1000_tol.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-      p_f200 |      2,400     2.73126    .3898319   1.846063   4.610384
+      p_f200 |      2,400     2.73467     .666158  -7.206781   11.15362
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     mu_f200 |      2,400    .6863085    .1581363   .5010605   1.652358
+     mu_f200 |      2,400     .689719    .6041581  -10.17455   9.203022
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-      s_f200 |      2,400     .186055    .1241636   .0011036   .6771971
+      s_f200 |      2,400    .1856289    .1298475   5.46e-11          1
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-      p_f500 |      2,400    2.736167    .3896751   1.849624   4.610445
+      p_f500 |      2,400    2.710053    .7201651  -8.086759    10.0044
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     mu_f500 |      2,400    .6912163    .1588906   .5011215   1.646176
+     mu_f500 |      2,400    .6651017    .6726018  -11.05453   7.592346
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-      s_f500 |      2,400     .185088    .1228265   .0011953   .6740277
+      s_f500 |      2,400    .1852538    .1341224   1.11e-11          1
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     p_f1000 |      2,400    2.739301    .3895752   1.849136   4.610495
+     p_f1000 |      2,400    2.749682    .6358716  -6.323802   10.68719
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_f1000 |      2,400    .6943496    .1608491   .5011706   1.654471
+    mu_f1000 |      2,400    .7047306    .5674314  -9.292399   8.736591
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     s_f1000 |      2,400    .1851841    .1217747   .0012142   .6750922
+     s_f1000 |      2,400    .1856897    .1265793   2.50e-10          1
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     p_z1000 |      2,400    2.736729    .3896778   1.849239   4.610496
+     p_z1000 |      2,400    2.735646     .389747    1.84959    4.61045
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_z1000 |      2,400    .6917778    .1595858   .5011721   1.652738
+    mu_z1000 |      2,400    .6906944    .1586004   .5011263     1.6528
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     s_z1000 |      2,400    .1854085    .1226962   .0012276   .6733597
+     s_z1000 |      2,400    .1853932    .1231484   .0012218   .6750148
 
 . 
 . matrix bottom = 1 \ 1 \ 1
@@ -257,34 +294,34 @@ file ../temp/zeta_1000_tol.dta saved
              |   p_f500   p_f200
 -------------+------------------
       p_f500 |   1.0000
-      p_f200 |   0.9999   1.0000
+      p_f200 |   0.7274   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          dp |      2,400    .0051185    .0043988   2.38e-06   .0231683
+          dp |      2,400    .0376351     .513516   .0000253   15.79464
 (obs=2,400)
 
              |  mu_f500  mu_f200
 -------------+------------------
      mu_f500 |   1.0000
-     mu_f200 |   0.9996   1.0000
+     mu_f200 |   0.6803   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         dmu |      2,400    .0051185    .0043988   2.38e-06   .0231683
+         dmu |      2,400    .0376351     .513516   .0000253   15.79464
 (obs=2,400)
 
              |   s_f500   s_f200
 -------------+------------------
       s_f500 |   1.0000
-      s_f200 |   0.9997   1.0000
+      s_f200 |   0.9723   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          ds |      2,400    .0023462     .002386   1.12e-08   .0120816
+          ds |      2,400    .0033438    .0311863          0   .9999945
 
 . foreach v in p mu s {
   2.     corr `v'_f1000 `v'_f500
@@ -300,34 +337,34 @@ file ../temp/zeta_1000_tol.dta saved
              |  p_f1000   p_f500
 -------------+------------------
      p_f1000 |   1.0000
-      p_f500 |   1.0000   1.0000
+      p_f500 |   0.5552   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          dp |      2,400    .0033956    .0031517   4.53e-06    .021853
+          dp |      2,400    .0597031    .6422231   .0001321   16.91549
 (obs=2,400)
 
              | mu_f1000  mu_f500
 -------------+------------------
     mu_f1000 |   1.0000
-     mu_f500 |   0.9998   1.0000
+     mu_f500 |   0.4715   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         dmu |      2,400    .0033956    .0031517   4.53e-06    .021853
+         dmu |      2,400    .0597031     .642223   .0001321   16.91549
 (obs=2,400)
 
              |  s_f1000   s_f500
 -------------+------------------
      s_f1000 |   1.0000
-      s_f500 |   0.9999   1.0000
+      s_f500 |   0.9588   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          ds |      2,400    .0016436    .0016706   1.43e-06   .0116972
+          ds |      2,400    .0054247     .037784          0    .999994
 
 . foreach v in p mu s {
   2.     corr `v'_z1000 `v'_f1000
@@ -343,34 +380,34 @@ file ../temp/zeta_1000_tol.dta saved
              |  p_z1000  p_f1000
 -------------+------------------
      p_z1000 |   1.0000
-     p_f1000 |   1.0000   1.0000
+     p_f1000 |   0.5273   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          dp |      2,400    .0026759     .002667   9.54e-07   .0240104
+          dp |      2,400    .0458804    .5412557   6.91e-06   9.971264
 (obs=2,400)
 
              | mu_z1000 mu_f1000
 -------------+------------------
     mu_z1000 |   1.0000
-    mu_f1000 |   0.9999   1.0000
+    mu_f1000 |   0.2904   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         dmu |      2,400    .0026759     .002667   9.54e-07   .0240104
+         dmu |      2,400    .0458804    .5412557   6.91e-06   9.971264
 (obs=2,400)
 
              |  s_z1000  s_f1000
 -------------+------------------
      s_z1000 |   1.0000
-     s_f1000 |   0.9999   1.0000
+     s_f1000 |   0.9569   1.0000
 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-          ds |      2,400    .0013151    .0014581   2.76e-07   .0097985
+          ds |      2,400    .0045957    .0365454   3.39e-07   .8630435
 
 . 
 . matrix endog_stats = endog_stats \ bottom
@@ -383,161 +420,8 @@ file ../temp/zeta_1000_tol.dta saved
 . outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
 . 
-. gen mu_lm1000 = p_lm1000 - mc
-
-. gen mu_bg = p_bg - mc
-
-. foreach suff in z1000 lm1000 bg {
-  2.     foreach v in p mu s {
-  3.         summ `v'_`suff'
-  4.         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
-  5.         matrix endog_lm_stats = nullmat(endog_lm_stats), col
-  6.     }
-  7. }
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-     p_z1000 |      2,400    2.736729    .3896778   1.849239   4.610496
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-    mu_z1000 |      2,400    .6917778    .1595858   .5011721   1.652738
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-     s_z1000 |      2,400    .1854085    .1226962   .0012276   .6733597
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-    p_lm1000 |      2,400    2.761251    .6684573   1.849136   16.44304
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-   mu_lm1000 |      2,400    .7162993    .5774516   .5011897   14.81734
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-    s_lm1000 |      2,400    .1846074    .1207644   1.19e-11   .6244287
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        p_bg |      2,400    3.093665    1.977399   1.849239   16.96387
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-       mu_bg |      2,400    1.048714    1.961847   .5011721   15.21924
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        s_bg |      2,400    .1804308    .1253509   6.58e-13   .6921549
-
-. 
-. matrix bottom = 1 \ 1 \ 1
-
-. matrix bottom = bottom, bottom, bottom
-
-. foreach v in p mu s {
-  2.     corr `v'_z1000 `v'_lm1000
-  3.     matrix col = r(rho)  
-  4.     gen d`v'= abs(`v'_z1000 - `v'_lm1000)
-  5.     summ d`v'
-  6.     matrix col = col \ r(mean) \ r(max)
-  7.     matrix bottom = bottom, col
-  8.     drop d`v'
-  9. }
-(obs=2,400)
-
-             |  p_z1000 p_lm1000
--------------+------------------
-     p_z1000 |   1.0000
-    p_lm1000 |   0.6144   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          dp |      2,400    .0246204    .5278019   3.34e-06   13.19378
-(obs=2,400)
-
-             | mu_z1000 mu_lm1~0
--------------+------------------
-    mu_z1000 |   1.0000
-   mu_lm1000 |   0.4359   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .0246204    .5278019   3.34e-06   13.19378
-(obs=2,400)
-
-             |  s_z1000 s_lm1000
--------------+------------------
-     s_z1000 |   1.0000
-    s_lm1000 |   0.9793   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          ds |      2,400    .0025753    .0247096   1.38e-07   .6733597
-
-. foreach v in p mu s {
-  2.     corr `v'_lm1000 `v'_bg
-  3.     matrix col = r(rho)  
-  4.     gen d`v'= abs(`v'_lm1000 - `v'_bg)
-  5.     summ d`v'
-  6.     matrix col = col \ r(mean) \ r(max)
-  7.     matrix bottom = bottom, col
-  8.     drop d`v'
-  9. }
-(obs=2,400)
-
-             | p_lm1000     p_bg
--------------+------------------
-    p_lm1000 |   1.0000
-        p_bg |   0.1643   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          dp |      2,400    .3694484    1.973993   3.34e-06   13.73545
-(obs=2,400)
-
-             | mu_lm1~0    mu_bg
--------------+------------------
-   mu_lm1000 |   1.0000
-       mu_bg |   0.1146   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .3694484    1.973993   3.34e-06   13.73545
-(obs=2,400)
-
-             | s_lm1000     s_bg
--------------+------------------
-    s_lm1000 |   1.0000
-        s_bg |   0.9137   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-          ds |      2,400    .0110069    .0502913   1.07e-10   .6896765
-
-. 
-. matrix endog_lm_stats = endog_lm_stats \ bottom
-
-. matrix rownames endog_lm_stats = Mean SD Min Max Correlation MeanDiff MaxDiff
->  
-
-. matrix colnames endog_lm_stats = Price Markup Share Price Markup Share ///
->   Price Markup Share 
-
-. outtable using ../output/endog_lm_stats, mat(endog_lm_stats) format(%9.2fc) n
-> obox
-
-. 
-. 
 . histogram s_z1000
-(bin=33, start=.00122764, width=.02036764)
+(bin=33, start=.00122176, width=.02041797)
 
 . graph export ../output/hist_s.pdf, replace
 (file ../output/hist_s.pdf written in PDF format)
