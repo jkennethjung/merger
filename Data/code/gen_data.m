@@ -17,7 +17,7 @@ T = 600;
 JT = J*T;
 H_t = eye(J); % ownership matrix 
 % fsolve algorithm: choose from 'levenberg-marquardt' or 'trust-region-dogleg'
-opts = optimoptions('fsolve', 'Algorithm', 'levenberg-marquardt');
+opts = optimoptions('fsolve', 'Algorithm', 'trust-region-dogleg');
 
 beta1_mean  = 1;
 beta_mean = 4;
@@ -33,16 +33,15 @@ gamma1 = 0.25;
   unobs_mean, unobs_var);
 
 % 2. Generate endogenous data
-%n_draw = 1e2;
-%df = simulate('fsolve', '../output/lm_100.csv');
-%n_draw = 2e2;
-%df = simulate('fsolve', '../output/lm_200.csv');
-%n_draw = 5e2;
-%df = simulate('fsolve', '../output/lm_500.csv');
-n_draw = 1e3;
-%df = simulate('fsolve', '../output/lm_1000.csv');
 ZETA_TOL = 1e-10;
-df = simulate('zeta', '../output/zeta_1000_tol.csv');
+
+n_draw = 2e2;
+df = simulate('fsolve', '../output/fsolve_200.csv');
+n_draw = 5e2;
+df = simulate('fsolve', '../output/fsolve_500.csv');
+n_draw = 1e3;
+df = simulate('fsolve', '../output/fsolve_1000.csv');
+df = simulate('zeta', '../output/zeta_1000.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
@@ -81,19 +80,22 @@ function full_data_mat = simulate(PRICING, save_as)
         p(mkt_rows, 1) = p_t;
     end
     data_mat(:, 6) = p;
-    [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); % final shares 
+    [s, ds_dp] = gen_shares(data_mat, theta, T, JT, n_draw); 
     ds_dp_own = diag(ds_dp);
     own_price_e = ds_dp_own ./s .* p;
     div_ratio = repmat([0], 1, J);
-    % for now, diversion ratios for own products are 1 instead of outside option
+    ds0_dj = sum(ds_dp, 2); 
+    Dj0 = - ds0_dj ./ diag(ds_dp);
     for t = 1:T
         mkt_rows = (data_mat(:, 2) == t);
         dst_dpt = ds_dp(mkt_rows, mkt_rows);
         dst_dpt_own = ds_dp_own(mkt_rows, 1); 
-        div_ratio_t = zeros(J); 
+        div_ratio_t = diag(Dj0(mkt_rows, :)); 
         for j = 1:J
             for k = 1:J
-                div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
+                if k~= j
+                    div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
+                end
             end
         end
         div_ratio = [div_ratio; div_ratio_t];
