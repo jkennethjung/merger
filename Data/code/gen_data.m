@@ -8,7 +8,7 @@ diary on;
 rng(1);
 
 % 0. Globals
-global n_draw J T JT H_t beta1_mean beta_mean beta_var alpha ...
+global n_draw ZETA_TOL J T JT H_t beta1_mean beta_mean beta_var alpha ...
   gamma0 gamma1 unobs_mean unobs_var theta data_mat mc mkt_rows opts ...
   j_vec t_vec x sat wire w xi omega;
 
@@ -41,6 +41,7 @@ gamma1 = 0.25;
 %df = simulate('fsolve', '../output/lm_500.csv');
 n_draw = 1e3;
 %df = simulate('fsolve', '../output/lm_1000.csv');
+ZETA_TOL = 1e-10;
 df = simulate('zeta', '../output/zeta_1000_tol.csv');
 diary off;
 
@@ -127,7 +128,8 @@ function dPI = foc(p_t)
 end
 
 function p = iterate_zeta(p0_t)
-    tol = 1e-8;
+    global ZETA_TOL;
+    tol = ZETA_TOL;
     max_iter = 1e3;
     diff = 1;
     i = 0;
