@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:   6 Oct 2020, 18:11:20
+ opened on:   6 Oct 2020, 18:36:26
 
 . 
 . foreach file in fsolve_200 fsolve_500 fsolve_1000 zeta_1000 data_fei {
@@ -112,68 +112,13 @@ file ../temp/data_fei.dta saved
 
 . rename s s_fei
 
-. rename dr* dr*_fei
+. rename dr1 dr1_fei
 
-. 
-. foreach v in dr1 dr2 dr3 dr4 {
-  2.     di "Diversion ratio correlation:"
-  3.     corr `v'_fei `v'_z1000
-  4.     gen d`v'= abs(`v'_fei - `v'_z1000)
-  5.     di "Diversion ratio absolute difference, summary statistics:"
-  6.     summ d`v'
-  7. }
-Diversion ratio correlation:
-(obs=2,400)
+. rename dr2 dr2_fei
 
-             |  dr1_fei dr1_z1~i
--------------+------------------
-     dr1_fei |   1.0000
-dr1_z1000_~i |   0.9907   1.0000
+. rename dr3 dr3_fei
 
-Diversion ratio absolute difference, summary statistics:
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        ddr1 |      2,400     .006673    .0377908   3.73e-06   .6099932
-Diversion ratio correlation:
-(obs=2,400)
-
-             |  dr2_fei dr2_z1~i
--------------+------------------
-     dr2_fei |   1.0000
-dr2_z1000_~i |   0.9881   1.0000
-
-Diversion ratio absolute difference, summary statistics:
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        ddr2 |      2,400     .006772    .0429472   1.03e-06    .882375
-Diversion ratio correlation:
-(obs=2,400)
-
-             |  dr3_fei dr3_z1~i
--------------+------------------
-     dr3_fei |   1.0000
-dr3_z1000_~i |   0.9848   1.0000
-
-Diversion ratio absolute difference, summary statistics:
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        ddr3 |      2,400    .0062049    .0478722   1.35e-06   .8339779
-Diversion ratio correlation:
-(obs=2,400)
-
-             |  dr4_fei dr4_z1~i
--------------+------------------
-     dr4_fei |   1.0000
-dr4_z1000_~i |   0.9895   1.0000
-
-Diversion ratio absolute difference, summary statistics:
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-        ddr4 |      2,400    .0051879    .0394811   1.43e-06   .8260676
+. rename dr4 dr4_fei
 
 . 
 . foreach v in x sat wire w xi omega mc {
@@ -430,6 +375,93 @@ Diversion ratio absolute difference, summary statistics:
 
 . graph export ../output/p_mc.pdf, replace
 (file ../output/p_mc.pdf written in PDF format)
+
+. 
+. foreach v in dr1 dr2 dr3 dr4 {
+  2.     di "Diversion ratio correlation:"
+  3.     corr `v'_fei `v'_z1000
+  4.     gen d`v'= abs(`v'_fei - `v'_z1000)
+  5.     di "Diversion ratio absolute difference, summary statistics:"
+  6.     summ d`v'
+  7.     drop d`v'
+  8. }
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr1_fei dr1~1000
+-------------+------------------
+     dr1_fei |   1.0000
+   dr1_z1000 |   0.9907   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr1 |      2,400     .006673    .0377908   3.73e-06   .6099932
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr2_fei dr2~1000
+-------------+------------------
+     dr2_fei |   1.0000
+   dr2_z1000 |   0.9881   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr2 |      2,400     .006772    .0429472   1.03e-06    .882375
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr3_fei dr3~1000
+-------------+------------------
+     dr3_fei |   1.0000
+   dr3_z1000 |   0.9848   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr3 |      2,400    .0062049    .0478722   1.35e-06   .8339779
+Diversion ratio correlation:
+(obs=2,400)
+
+             |  dr4_fei dr4~1000
+-------------+------------------
+     dr4_fei |   1.0000
+   dr4_z1000 |   0.9895   1.0000
+
+Diversion ratio absolute difference, summary statistics:
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        ddr4 |      2,400    .0051879    .0394811   1.43e-06   .8260676
+
+. 
+. collapse (mean) dr*, by(j)
+
+. list *_fei
+
+     +-----------------------------------------------+
+     |   dr1_fei     dr2_fei     dr3_fei     dr4_fei |
+     |-----------------------------------------------|
+  1. | -.3243445    .3139082    .1816123     .180135 |
+  2. |   .315812   -.3244905    .1784101    .1812873 |
+  3. |  .1860677    .1825288   -.3184838    .3129197 |
+  4. |  .1856702    .1868335    .3098289   -.3176674 |
+     +-----------------------------------------------+
+
+. list *_z1000
+
+     +-----------------------------------------------+
+     | dr1_z1000   dr2_z1000   dr3_z1000   dr4_z1000 |
+     |-----------------------------------------------|
+  1. | -.3279104    .3098476    .1811254    .1811166 |
+  2. |  .3135436   -.3266135    .1778816    .1819613 |
+  3. |  .1865485    .1810616   -.3162072    .3161827 |
+  4. |  .1861707    .1852183    .3118811   -.3167299 |
+     +-----------------------------------------------+
 
 . 
 . 

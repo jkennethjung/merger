@@ -45,15 +45,10 @@ merge 1:1 j t x using ../temp/data_fei.dta, assert(3) keep(3) ///
     keepusing(p s dr*) nogen
 rename p p_fei
 rename s s_fei
-rename dr* dr*_fei
-
-foreach v in dr1 dr2 dr3 dr4 {
-    di "Diversion ratio correlation:"
-    corr `v'_fei `v'_z1000
-    gen d`v'= abs(`v'_fei - `v'_z1000)
-    di "Diversion ratio absolute difference, summary statistics:"
-    summ d`v'
-}
+rename dr1 dr1_fei
+rename dr2 dr2_fei
+rename dr3 dr3_fei
+rename dr4 dr4_fei
 
 foreach v in x sat wire w xi omega mc {
     sum `v'
@@ -114,5 +109,18 @@ histogram s_z1000
 graph export ../output/hist_s.pdf, replace
 twoway scatter p_z1000 mc 
 graph export ../output/p_mc.pdf, replace
+
+foreach v in dr1 dr2 dr3 dr4 {
+    di "Diversion ratio correlation:"
+    corr `v'_fei `v'_z1000
+    gen d`v'= abs(`v'_fei - `v'_z1000)
+    di "Diversion ratio absolute difference, summary statistics:"
+    summ d`v'
+    drop d`v'
+}
+
+collapse (mean) dr*, by(j)
+list *_fei
+list *_z1000
 
 
