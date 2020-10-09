@@ -66,7 +66,6 @@ updated_results = updated_problem.solve(
 print(updated_results)
 results = updated_results
 
-'''
 # #### (b) When estimating jointly with supply
 
 # instruments
@@ -102,6 +101,7 @@ results_supply = problem.solve(
 )
 print(results_supply)
 
+'''
 # update the results with optimal instruments
 instrument_results = results_supply.compute_optimal_instruments(method='approximate')
 updated_problem = instrument_results.to_problem()
