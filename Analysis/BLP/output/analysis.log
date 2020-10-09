@@ -3,7 +3,7 @@ Problem Results Summary:
 GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Weighting Matrix  Covariance Matrix
 Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares   Condition Number  Condition Number 
 ----  ---------  -------------  ---------------  ---------------  -------  ----------------  -----------------
- 2    +2.9E-21     +4.8E-10        -1.9E-04         +4.8E-04         0         +1.4E+02          +2.5E+17     
+ 2    +4.9E-20     +2.4E-09        -1.2E-03         +4.3E-04         0         +1.4E+02          +4.0E+16     
 ==============================================================================================================
 
 Cumulative Statistics:
@@ -11,7 +11,7 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:45       Yes          2            17          45492       143518   
+ 00:00:48       No           1            28          42665       141872   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):

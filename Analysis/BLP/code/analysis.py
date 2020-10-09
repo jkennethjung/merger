@@ -3,7 +3,6 @@
 
 # In[1]:
 
-
 import pyblp
 import numpy as np
 import pandas as pd
@@ -19,16 +18,15 @@ pyblp.options.verbose = False
 
 
 # import the csv file
+
 import csv
 data = list(csv.reader(open('../temp/zeta_1000.csv')))
-product_data = pd.DataFrame()
 column_name = ['product_ids', 'market_ids', 'quality', 'satellite', 'wired', 'prices', 'obs_cost','unobs_demand','unobs_cost','shares', 'marginal_cost','price_elasticity','D1','D2','D3','D4']
+product_data = pd.DataFrame(data, columns = column_name)
 
 # create the data frame
-product_data[column_name] = data
 product_data = product_data.astype('float')
 product_data['firm_ids'] = product_data['product_ids']
-
 
 # ## 5 Estimate the Correctly Specified Model
 # ### 5 (8) Report a table with the estimates of the demand parameters and standard error
