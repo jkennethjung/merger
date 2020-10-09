@@ -26,8 +26,8 @@ product_data['firm_ids'] = product_data['product_ids']
 # blp instrument
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
-n_ZD = 2
-demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + quality'), product_data)
+n_ZD = 1
+demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('0 + quality'), product_data)
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
@@ -44,20 +44,17 @@ supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost
 assert( n_ZS * 2 == len(supply_instruments[0]))
 for j in range(0, 2*n_ZD):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
-#supply_instruments = supply_instruments[:,3]
-#supply_instruments.reshape((len(supply_instruments),1))
-#product_data['supply_instruments0'] = supply_instruments
 product_data.head()
 product_data.describe()
 
 # product_formulation
-X1_formulation = pyblp.Formulation('0 + quality + prices')
+X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
 integration = pyblp.Integration('product', size = 5)
-problem = pyblp.Problem(product_formulations, product_data, integration=integration)
+problem = pyblp.Problem(product_formulations, product_data, integration=integration, costs_type = 'log')
 # play with these: can also try l-bfgs-b
 opti = pyblp.Optimization('bfgs', {'gtol': 1e-6})
 results = problem.solve(sigma=np.ones([2,2]), optimization=opti)
