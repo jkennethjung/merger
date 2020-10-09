@@ -23,22 +23,30 @@ product_data['firm_ids'] = product_data['product_ids']
 # ### 5 (8) Report a table with the estimates of the demand parameters and standard error
 # #### (a) When estimating demand alone
 
-#demand_instruments.shape
-
 # blp instrument
-demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('quality + satellite + wired'), product_data)
-pd.DataFrame(demand_instruments).describe()
+short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
+print(short_df)
+n_ZD = 2
+demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + quality'), product_data)
+print(demand_instruments[0:10,:])
 
-demand_instruments = demand_instruments[:,5]
-demand_instruments = demand_instruments.reshape((len(demand_instruments),1))
-product_data['demand_instruments0'] = demand_instruments[:,0]
-# product_data['demand_instruments1'] = demand_instruments[:,1]
+# own characteristics will be collinear with X1 because each firm only has one 
+# product. hence we drop half of these "instruments"
+assert(n_ZD * 2 == len(demand_instruments[0]))
+for j in range(0, n_ZD):
+    assert(sum(demand_instruments[:,j]) == 0)
+demand_instruments = demand_instruments[:, n_ZD:(2*n_ZD)]
+for j in range(0, n_ZD):
+    product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
-supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('obs_cost'), product_data)
-supply_instruments = supply_instruments[:,3]
-supply_instruments.reshape((len(supply_instruments),1))
-product_data['supply_instruments0'] = supply_instruments
-
+n_ZS = 2
+supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
+assert( n_ZS * 2 == len(supply_instruments[0]))
+for j in range(0, 2*n_ZD):
+    product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
+#supply_instruments = supply_instruments[:,3]
+#supply_instruments.reshape((len(supply_instruments),1))
+#product_data['supply_instruments0'] = supply_instruments
 product_data.head()
 product_data.describe()
 
@@ -48,10 +56,11 @@ X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
-integration = pyblp.Integration('product', size= 17)
+integration = pyblp.Integration('product', size = 5)
 problem = pyblp.Problem(product_formulations, product_data, integration=integration)
-opti = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-20})
-results = problem.solve(sigma=1*np.eye(2), optimization=opti)
+# play with these: can also try l-bfgs-b
+opti = pyblp.Optimization('bfgs', {'gtol': 1e-6})
+results = problem.solve(sigma=np.ones([2,2]), optimization=opti)
 print(results)
 
 # update the results with optimal instruments
