@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 import pyblp
 import numpy as np
 import pandas as pd
@@ -14,31 +12,18 @@ pyblp.options.verbose = False
 
 # ### Loading the simulated data
 
-# In[32]:
-
-
-# import the csv file
-
 import csv
 data = list(csv.reader(open('../temp/zeta_1000.csv')))
 column_name = ['product_ids', 'market_ids', 'quality', 'satellite', 'wired', 'prices', 'obs_cost','unobs_demand','unobs_cost','shares', 'marginal_cost','price_elasticity','D1','D2','D3','D4']
 product_data = pd.DataFrame(data, columns = column_name)
-
-# create the data frame
 product_data = product_data.astype('float')
 product_data['firm_ids'] = product_data['product_ids']
 
 # ## 5 Estimate the Correctly Specified Model
 # ### 5 (8) Report a table with the estimates of the demand parameters and standard error
-# 
 # #### (a) When estimating demand alone
 
-# In[33]:
-
 #demand_instruments.shape
-
-# In[34]:
-
 
 # blp instrument
 demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('quality + satellite + wired'), product_data)
@@ -54,58 +39,20 @@ supply_instruments = supply_instruments[:,3]
 supply_instruments.reshape((len(supply_instruments),1))
 product_data['supply_instruments0'] = supply_instruments
 
-
-# ### quadratic_instruments
-# quadratic_instruments = pyblp.build_differentiation_instruments(
-#     pyblp.Formulation('0 + quality + satellite + wired'),
-#     product_data,
-#     version='quadratic'
-# )
-# 
-# ### local instruments
-# local_instruments = pyblp.build_differentiation_instruments(
-#     pyblp.Formulation('0 + quality + satellite + wired'),
-#     product_data
-# )
-# 
-# demand_instruments = local_instruments[:,3]
-# demand_instruments.reshape((len(demand_instruments),1))
-# product_data['demand_instruments0'] = demand_instruments
-
-# In[35]:
-
-
 product_data.head()
-
-
-# In[36]:
-
-
 product_data.describe()
-
-
-# In[58]:
-
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
-# intergration
+# integration
 integration = pyblp.Integration('product', size= 17)
 problem = pyblp.Problem(product_formulations, product_data, integration=integration)
-
-# optimization
 opti = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-20})
-
-# estimate the model
 results = problem.solve(sigma=1*np.eye(2), optimization=opti)
 print(results)
-
-'''
-# In[59]:
-
 
 # update the results with optimal instruments
 instrument_results = results.compute_optimal_instruments(method='approximate')
@@ -119,27 +66,19 @@ updated_results = updated_problem.solve(
 print(updated_results)
 results = updated_results
 
-
+'''
 # #### (b) When estimating jointly with supply
-
-# In[7]:
-
 
 # instruments
 local_instruments = pyblp.build_differentiation_instruments(
     pyblp.Formulation('1 + obs_cost'),
     product_data
 )
-
 # pd.DataFrame(local_instruments).describe()
 
 supply_instruments = local_instruments[:,3]
 supply_instruments.reshape((len(demand_instruments),1))
 product_data['supply_instruments0'] = supply_instruments
-
-
-# In[8]:
-
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
@@ -154,7 +93,6 @@ problem = pyblp.Problem(product_formulations, product_data, integration=mc_integ
 
 initial_sigma = np.diag([1, 1])
 
-
 # estimate the model
 results_supply = problem.solve(
     initial_sigma,
@@ -163,10 +101,6 @@ results_supply = problem.solve(
     initial_update=True
 )
 print(results_supply)
-
-
-# In[9]:
-
 
 # update the results with optimal instruments
 instrument_results = results_supply.compute_optimal_instruments(method='approximate')
@@ -179,12 +113,10 @@ updated_results_supply = problem.solve(
     initial_update=True
 )
 print(updated_results_supply)
+'''
 
-
+'''
 # ### 5 (9)
-
-# In[ ]:
-
 
 # estimated own price elasticity
 elasticities = results.compute_elasticities(name = 'prices')
