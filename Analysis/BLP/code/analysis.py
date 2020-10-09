@@ -43,7 +43,7 @@ product_data.head()
 product_data.describe()
 
 # product_formulation
-X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
+X1_formulation = pyblp.Formulation('0 + quality + prices')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
@@ -57,7 +57,6 @@ print(results)
 # update the results with optimal instruments
 instrument_results = results.compute_optimal_instruments(method='approximate')
 updated_problem = instrument_results.to_problem()
-
 updated_results = updated_problem.solve(
     results.sigma,
     optimization=opti,
@@ -66,6 +65,7 @@ updated_results = updated_problem.solve(
 print(updated_results)
 results = updated_results
 
+'''
 # #### (b) When estimating jointly with supply
 
 # instruments
@@ -100,6 +100,7 @@ results_supply = problem.solve(
     initial_update=True
 )
 print(results_supply)
+'''
 
 '''
 # update the results with optimal instruments
@@ -143,11 +144,7 @@ diversion_estimated = pd.DataFrame({'D1': d[:,0], 'D2': d[:,1], 'D3': d[:,2], 'D
 print("estimated diversion ratio:")
 print(diversion_estimated)
 
-
 # ### 6(11) simulation of merger between 1 and 2
-
-# In[ ]:
-
 
 # assume unchanged marginal costs
 costs = results.compute_costs()
@@ -161,11 +158,7 @@ changed_prices_12 = results.compute_prices(
 )
 changed_prices_12 = changed_prices_12.reshape((2400,))
 
-
 # ### 6(12) simulation of merger between 1 and 3
-
-# In[ ]:
-
 
 product_data['merger_ids_13'] = product_data['firm_ids'].replace(3, 1)
 # post-merger equilibrium prices 
@@ -193,11 +186,7 @@ merger_price['merge 1 and 3'] = average_price
 
 print(merger_price)
 
-
 # ### 6(14) Merger with cost reduction
-
-# In[ ]:
-
 
 # marginal costs of product 1 and 2 reduced by 15%
 costs = results.compute_costs()
@@ -212,10 +201,6 @@ price_postmerger = results.compute_prices(
     costs=costs_reduced
 )
 price_postmerger = price_postmerger.reshape((2400,))
-
-
-# In[ ]:
-
 
 # pre-merger consumer surplus
 cs_pre = results.compute_consumer_surpluses()
