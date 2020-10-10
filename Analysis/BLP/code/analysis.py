@@ -11,7 +11,9 @@ pyblp.options.verbose = False
 
 # Globals
 
-SIGMA0 = 0.5*np.eye(2)
+SIGMA0 = np.eye(2)
+SIGMA_BOUNDS = ([[-1e3, 0], [0, -1e3]], [[1e3, 0], [0, 1e3]])
+BETA_BOUNDS = ([1e-3, 4e-3, 4e-3, -2e3], [1e3, 4e3, 4e3, -2e-3])
 INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
@@ -32,7 +34,7 @@ product_data['firm_ids'] = product_data['product_ids']
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 1
-demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data, version = 'quadratic')
+demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data, version = 'local')
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
@@ -61,7 +63,7 @@ product_formulations = (X1_formulation, X2_formulation)
 
 # integration
 problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRATION)
-blp_results = problem.solve(sigma=SIGMA0, optimization=OPTI)
+blp_results = problem.solve(sigma = SIGMA0, optimization=OPTI, sigma_bounds = SIGMA_BOUNDS, beta_bounds = BETA_BOUNDS)
 print(blp_results)
 print("Sigma squared: ")
 print(blp_results.sigma_squared)
@@ -74,7 +76,9 @@ updated_problem = instrument_results.to_problem()
 optim_results = updated_problem.solve(
     blp_results.sigma,
     optimization=OPTI,
-    method='1s'
+    method='1s', 
+    sigma_bounds = SIGMA_BOUNDS, 
+    beta_bounds = BETA_BOUNDS
 )
 print(optim_results)
 print("Sigma squared: ")
@@ -93,7 +97,9 @@ problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRAT
 supply_results = problem.solve(
     blp_results.sigma,
     beta= blp_results.beta,
-    costs_bounds=(1e-4, None)
+    costs_bounds=(1e-4, None),
+    sigma_bounds = SIGMA_BOUNDS, 
+    beta_bounds = BETA_BOUNDS
 )
 print(supply_results)
 print("Sigma squared: ")
