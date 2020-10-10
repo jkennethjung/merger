@@ -57,7 +57,7 @@ X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
-integration = pyblp.Integration('product', size = 5)
+integration = pyblp.Integration('product', size = 9)
 problem = pyblp.Problem(product_formulations, product_data, integration=integration)
 # play with these: can also try l-bfgs-b
 opti = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
@@ -70,7 +70,7 @@ updated_problem = instrument_results.to_problem()
 updated_results = updated_problem.solve(
     results.sigma,
     optimization=opti,
-    method='1s'
+    method='2s'
 )
 print(updated_results)
 results = updated_results
