@@ -12,7 +12,7 @@ pyblp.options.verbose = False
 # Globals
 
 SIGMA0 = 0.5*np.eye(2)
-INTEGRATION = pyblp.Integration('product', size = 9)
+INTEGRATION = pyblp.Integration('product', size = 17)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
 
