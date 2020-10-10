@@ -22,7 +22,7 @@ Problem Results Summary:
 GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Weighting Matrix  Covariance Matrix
 Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares   Condition Number  Condition Number 
 ----  ---------  -------------  ---------------  ---------------  -------  ----------------  -----------------
- 2    +1.2E-20     +2.2E-09        -2.8E-04         +2.1E-03         0         +1.4E+02          +6.8E+17     
+ 2    +7.6E-21     +7.1E-10        +1.5E-04         +1.3E-03         0         +1.5E+02          +2.0E+17     
 ==============================================================================================================
 
 Cumulative Statistics:
@@ -30,33 +30,33 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:22       Yes          0             4          4302         13851   
+ 00:00:15       Yes          0             4          3798         12386   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
-============================================================================
- Sigma:    satellite     wired     |  Sigma Squared:  satellite     wired   
----------  ----------  ----------  |  --------------  ----------  ----------
-satellite   +1.0E+00               |    satellite      +1.0E+00    +1.0E+00 
-           (+3.3E-01)              |                  (+6.6E-01)  (+6.1E-01)
-                                   |                                        
-  wired     +1.0E+00    +1.0E+00   |      wired        +1.0E+00    +2.0E+00 
-           (+2.8E-01)  (+2.6E-02)  |                  (+6.1E-01)  (+5.1E-01)
-============================================================================
+=================================
+ Sigma:    satellite     wired   
+---------  ----------  ----------
+satellite   +5.0E-01             
+           (+2.8E-01)            
+                                 
+  wired     +0.0E+00    +5.0E-01 
+                       (+9.1E-01)
+=================================
 
 Beta Estimates (Robust SEs in Parentheses):
 ==============================================
  quality      prices    satellite     wired   
 ----------  ----------  ----------  ----------
- +9.4E-01    -1.8E+00    +3.7E+00    +3.6E+00 
-(+3.6E-02)  (+4.7E-02)  (+3.9E-02)  (+2.3E-02)
+ +7.3E-01    +8.4E-02    -1.4E+00    -1.4E+00 
+(+7.4E-02)  (+1.0E+00)  (+2.7E+00)  (+2.8E+00)
 ==============================================
 Problem Results Summary:
 ==============================================================================================================
 GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Weighting Matrix  Covariance Matrix
 Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares   Condition Number  Condition Number 
 ----  ---------  -------------  ---------------  ---------------  -------  ----------------  -----------------
- 1    +1.5E+00     +3.9E-07        +5.1E-01         +2.4E+01         0         +7.5E+06          +1.4E+19     
+ 1    +2.2E-16     +6.2E-08        +9.4E+00         +2.2E+01         0         +4.0E+05          +4.4E+05     
 ==============================================================================================================
 
 Cumulative Statistics:
@@ -64,33 +64,33 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:56       Yes          18           24         100912       310975   
+ 00:00:25       Yes          7            11          43735       134487   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
-============================================================================
- Sigma:    satellite     wired     |  Sigma Squared:  satellite     wired   
----------  ----------  ----------  |  --------------  ----------  ----------
-satellite   +7.1E-01               |    satellite      +5.1E-01    -2.9E-01 
-           (+4.0E-01)              |                  (+5.7E-01)  (+3.2E-01)
-                                   |                                        
-  wired     -4.1E-01    +5.4E-07   |      wired        -2.9E-01    +1.7E-01 
-           (+4.6E-01)  (+1.9E-05)  |                  (+3.2E-01)  (+3.8E-01)
-============================================================================
+=================================
+ Sigma:    satellite     wired   
+---------  ----------  ----------
+satellite   +9.8E-01             
+           (+3.6E-01)            
+                                 
+  wired     +0.0E+00    +6.4E-01 
+                       (+4.2E-01)
+=================================
 
 Beta Estimates (Robust SEs in Parentheses):
 ==============================================
  quality      prices    satellite     wired   
 ----------  ----------  ----------  ----------
- +6.7E-01    +9.3E-01    -3.8E+00    -3.7E+00 
-(+1.2E-01)  (+1.4E+00)  (+3.6E+00)  (+3.7E+00)
+ +7.6E-01    +4.9E-02    -1.4E+00    -1.3E+00 
+(+1.2E-01)  (+1.1E+00)  (+3.0E+00)  (+3.0E+00)
 ==============================================
 Problem Results Summary:
 =======================================================================================================================
 GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Clipped  Weighting Matrix  Covariance Matrix
 Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares    Costs   Condition Number  Condition Number 
 ----  ---------  -------------  ---------------  ---------------  -------  -------  ----------------  -----------------
- 2    +1.2E-21     +5.8E-09        -3.6E-07         +4.4E+04         0        0         +2.8E+20          +3.5E+14     
+ 2    +1.3E-03     +4.4E-08        +4.9E-04         +3.1E+04         0        0         +5.3E+19          +1.0E+21     
 =======================================================================================================================
 
 Cumulative Statistics:
@@ -98,32 +98,32 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:07:45       Yes          97           120        461019       1429652  
+ 00:15:17       No          182           320        900279       2812000  
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
-============================================================================
- Sigma:    satellite     wired     |  Sigma Squared:  satellite     wired   
----------  ----------  ----------  |  --------------  ----------  ----------
-satellite   +9.9E-01               |    satellite      +9.8E-01    +9.9E-01 
-           (+3.1E-01)              |                  (+6.2E-01)  (+5.9E-01)
-                                   |                                        
-  wired     +1.0E+00    +7.4E-01   |      wired        +9.9E-01    +1.5E+00 
-           (+2.8E-01)  (+8.0E-01)  |                  (+5.9E-01)  (+1.1E+00)
-============================================================================
+=================================
+ Sigma:    satellite     wired   
+---------  ----------  ----------
+satellite   +1.2E-23             
+           (+2.9E-12)            
+                                 
+  wired     +0.0E+00    +1.3E-08 
+                       (+1.1E-08)
+=================================
 
 Beta Estimates (Robust SEs in Parentheses):
 ==============================================
  quality      prices    satellite     wired   
 ----------  ----------  ----------  ----------
- +9.3E-01    -1.8E+00    +3.8E+00    +3.7E+00 
-(+4.4E-02)  (+5.9E-02)  (+2.0E-01)  (+3.2E-01)
+ +7.1E-01    +1.0E-01    -1.4E+00    -1.4E+00 
+(+9.9E-02)  (+1.1E+00)  (+2.8E+00)  (+2.8E+00)
 ==============================================
 
 Gamma Estimates (Robust SEs in Parentheses):
 ======================
     1        obs_cost 
 ----------  ----------
- +4.7E-01    +2.5E-01 
-(+4.6E-02)  (+1.7E-02)
+ +2.8E+00    -5.3E-02 
+(+8.9E+00)  (+4.3E-01)
 ======================
