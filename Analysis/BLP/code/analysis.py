@@ -12,8 +12,8 @@ pyblp.options.verbose = False
 # Globals
 
 SIGMA0 = np.eye(2)
-SIGMA_BOUNDS = ([[-1e3, 0], [0, -1e3]], [[1e3, 0], [0, 1e3]])
-BETA_BOUNDS = ([1e-3, 4e-3, 4e-3, -2e3], [1e3, 4e3, 4e3, -2e-3])
+SIGMA_BOUNDS = ([[-1e1, 0], [0, -1e1]], [[1e1, 0], [0, 1e1]])
+BETA_BOUNDS = ([1e-1, 4e-1, 4e-1, -2e1], [1e1, 4e1, 4e1, -2e-1])
 INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
