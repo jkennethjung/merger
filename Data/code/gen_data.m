@@ -42,6 +42,8 @@ df = simulate('fsolve', '../output/fsolve_500.csv');
 n_draw = 1e3;
 df = simulate('fsolve', '../output/fsolve_1000.csv');
 df = simulate('zeta', '../output/zeta_1000.csv');
+n_draw = 5e3;
+df = simulate('zeta', '../output/zeta_5000.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
