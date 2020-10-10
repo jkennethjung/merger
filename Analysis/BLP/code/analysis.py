@@ -11,8 +11,8 @@ pyblp.options.verbose = False
 
 # Globals
 
-SIGMA0 = np.eye(2)
-SIGMA_BOUNDS = ([[-1e1, 0], [0, -1e1]], [[1e1, 0], [0, 1e1]])
+SIGMA0 = np.ones([2,2])
+SIGMA_BOUNDS = ([[-1e1, -1e1], [-1e1, -1e1]], [[1e1, 1e1], [1e1, 1e1]])
 BETA_BOUNDS = ([1e-1, 4e-1, 4e-1, -2e1], [1e1, 4e1, 4e1, -2e-1])
 INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
@@ -34,7 +34,7 @@ product_data['firm_ids'] = product_data['product_ids']
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 1
-demand_instruments = pyblp.build_blp_instruments(pyblp.Formulation('0 + quality'), product_data)
+demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data)
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
