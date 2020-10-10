@@ -54,14 +54,13 @@ for j in range(0, n_ZS):
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
-X3_formulation = pyblp.Formulation('1 + obs_cost')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
 integration = pyblp.Integration('product', size = 5)
 problem = pyblp.Problem(product_formulations, product_data, integration=integration)
 # play with these: can also try l-bfgs-b
-opti = pyblp.Optimization('bfgs', {'gtol': 1e-6})
+opti = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 results = problem.solve(sigma=np.ones([2,2]), optimization=opti)
 print(results)
 
