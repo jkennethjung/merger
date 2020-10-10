@@ -32,7 +32,7 @@ product_data['firm_ids'] = product_data['product_ids']
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 1
-demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data)
+demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data, version = 'quadratic')
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
