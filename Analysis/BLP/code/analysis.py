@@ -9,6 +9,12 @@ from matplotlib import pyplot as plt
 pyblp.options.digits = 2
 pyblp.options.verbose = False 
 
+# Globals
+
+SIGMA0 = np.ones([2,2])
+INTEGRATION = pyblp.Integration('product', size = 9)
+OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
+
 
 # ### Loading the simulated data
 
@@ -39,7 +45,6 @@ demand_instruments = demand_instruments[:, n_ZD:(2*n_ZD)]
 for j in range(0, n_ZD):
     product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
-'''
 # SUPPLY INSTRUMENTS
 n_ZS = 2
 supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
@@ -49,7 +54,6 @@ for j in range(0, n_ZS):
 supply_instruments = supply_instruments[:, n_ZS:(2*n_ZS)]
 for j in range(0, n_ZS):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
-'''
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
@@ -57,11 +61,9 @@ X2_formulation = pyblp.Formulation('0 + satellite + wired')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
-integration = pyblp.Integration('product', size = 9)
-problem = pyblp.Problem(product_formulations, product_data, integration=integration)
-# play with these: can also try l-bfgs-b
-opti = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
-results = problem.solve(sigma=np.ones([2,2]), optimization=opti)
+problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRATION)
+results = problem.solve(sigma=SIGMA0, optimization=OPTI)
+blp_results = results
 print(results)
 
 # update the results with optimal instruments
@@ -69,33 +71,25 @@ instrument_results = results.compute_optimal_instruments(method='approximate')
 updated_problem = instrument_results.to_problem()
 updated_results = updated_problem.solve(
     results.sigma,
-    optimization=opti,
-    method='2s'
+    optimization=OPTI,
+    method='1s'
 )
 print(updated_results)
-results = updated_results
 
 # #### (b) When estimating jointly with supply
 
-'''
 # product_formulation
-X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
-X2_formulation = pyblp.Formulation('0 + satellite + wired')
 X3_formulation = pyblp.Formulation('1 + obs_cost')
 product_formulations = (X1_formulation, X2_formulation, X3_formulation)
-problem = pyblp.Problem(product_formulations, product_data, integration=integration, costs_type='log')
-
-initial_sigma = np.diag([1, 1])
+problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRATION, costs_type='log')
 
 # estimate the model
 results_supply = problem.solve(
-    initial_sigma,
-    beta = results.beta, # use the estimates from above as the initial value
-    costs_bounds=(0.001, None),
-    initial_update=True
+    SIGMA0,
+    beta= blp_results.beta,
+    costs_bounds=(1e-4, None)
 )
 print(results_supply)
-'''
 
 '''
 # update the results with optimal instruments
@@ -103,7 +97,7 @@ instrument_results = results_supply.compute_optimal_instruments(method='approxim
 updated_problem = instrument_results.to_problem()
 
 updated_results_supply = problem.solve(
-    initial_sigma,
+    SIGMA0,
     beta = results.beta, # use the estimates from above as the initial value
     costs_bounds=(0.001, None),
     initial_update=True
