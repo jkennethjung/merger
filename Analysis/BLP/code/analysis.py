@@ -12,9 +12,8 @@ pyblp.options.verbose = False
 # Globals
 
 SIGMA0 = 0.5*np.eye(2)
-INTEGRATION = pyblp.Integration('product', size = 17)
+INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
-
 
 # ### Loading the simulated data
 
@@ -64,6 +63,10 @@ product_formulations = (X1_formulation, X2_formulation)
 problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRATION)
 blp_results = problem.solve(sigma=SIGMA0, optimization=OPTI)
 print(blp_results)
+print("Sigma squared: ")
+print(blp_results.sigma_squared)
+print("Standard errors: ")
+print(blp_results.sigma_squared_se)
 
 # update the results with optimal instruments
 instrument_results = blp_results.compute_optimal_instruments(method='approximate')
@@ -74,6 +77,10 @@ optim_results = updated_problem.solve(
     method='1s'
 )
 print(optim_results)
+print("Sigma squared: ")
+print(optim_results.sigma_squared)
+print("Standard errors: ")
+print(optim_results.sigma_squared_se)
 
 # #### (b) When estimating jointly with supply
 
@@ -89,6 +96,10 @@ supply_results = problem.solve(
     costs_bounds=(1e-4, None)
 )
 print(supply_results)
+print("Sigma squared: ")
+print(supply_results.sigma_squared)
+print("Standard errors: ")
+print(supply_results.sigma_squared_se)
 
 '''
 # update the results with optimal instruments
