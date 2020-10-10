@@ -11,7 +11,7 @@ pyblp.options.verbose = False
 
 # Globals
 
-SIGMA0 = np.ones([2,2])
+SIGMA0 = np.eye(2)
 #SIGMA_BOUNDS = ([[-1e1, -1e1], [-1e1, -1e1]], [[1e1, 1e1], [1e1, 1e1]])
 #BETA_BOUNDS = ([1e-1, 4e-1, 4e-1, -2e1], [1e1, 4e1, 4e1, -2e-1])
 INTEGRATION = pyblp.Integration('product', size = 9)
