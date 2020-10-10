@@ -30,7 +30,7 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:21       Yes          0             4          4304         13860   
+ 00:00:22       Yes          0             4          4304         13860   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
@@ -64,7 +64,7 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:40       Yes          15           19          79233       244379   
+ 00:00:41       Yes          15           19          79233       244379   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):

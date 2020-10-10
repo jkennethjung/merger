@@ -39,6 +39,7 @@ demand_instruments = demand_instruments[:, n_ZD:(2*n_ZD)]
 for j in range(0, n_ZD):
     product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
+'''
 # SUPPLY INSTRUMENTS
 n_ZS = 2
 supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
@@ -48,6 +49,7 @@ for j in range(0, n_ZS):
 supply_instruments = supply_instruments[:, n_ZS:(2*n_ZS)]
 for j in range(0, n_ZS):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
+'''
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
