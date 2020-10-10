@@ -34,7 +34,7 @@ product_data['firm_ids'] = product_data['product_ids']
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 1
-demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data, version = 'local')
+demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality'), product_data, version = 'quadratic')
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
@@ -88,6 +88,7 @@ print(optim_results.sigma_squared_se)
 
 # #### (b) When estimating jointly with supply
 
+'''
 # product_formulation
 X3_formulation = pyblp.Formulation('1 + obs_cost')
 product_formulations = (X1_formulation, X2_formulation, X3_formulation)
@@ -107,6 +108,7 @@ print(supply_results.sigma_squared)
 print("Standard errors: ")
 print(supply_results.sigma_squared_se)
 
+'''
 '''
 # update the results with optimal instruments
 instrument_results = results_supply.compute_optimal_instruments(method='approximate')
