@@ -23,7 +23,7 @@ product_data['firm_ids'] = product_data['product_ids']
 # ### 5 (8) Report a table with the estimates of the demand parameters and standard error
 # #### (a) When estimating demand alone
 
-# blp instrument
+# DEMAND INSTRUMENTS
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 1
@@ -39,10 +39,14 @@ demand_instruments = demand_instruments[:, n_ZD:(2*n_ZD)]
 for j in range(0, n_ZD):
     product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
-n_ZS = 2
-supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
+# SUPPLY INSTRUMENTS
+n_ZS = 1
+supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('0 + obs_cost'), product_data)
 assert( n_ZS * 2 == len(supply_instruments[0]))
-for j in range(0, 2*n_ZD):
+for j in range(0, n_ZS):
+    assert(sum(supply_instruments[:,j]) == 0)
+supply_instruments = supply_instruments[:, n_ZD:(2*n_ZD)]
+for j in range(0, n_ZS):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
 product_data.head()
 product_data.describe()
@@ -50,6 +54,7 @@ product_data.describe()
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
+X3_formulation = pyblp.Formulation('1 + obs_cost')
 product_formulations = (X1_formulation, X2_formulation)
 
 # integration
@@ -71,30 +76,14 @@ updated_results = updated_problem.solve(
 print(updated_results)
 results = updated_results
 
-'''
 # #### (b) When estimating jointly with supply
-
-# instruments
-local_instruments = pyblp.build_differentiation_instruments(
-    pyblp.Formulation('1 + obs_cost'),
-    product_data
-)
-# pd.DataFrame(local_instruments).describe()
-
-supply_instruments = local_instruments[:,3]
-supply_instruments.reshape((len(demand_instruments),1))
-product_data['supply_instruments0'] = supply_instruments
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
 X3_formulation = pyblp.Formulation('1 + obs_cost')
 product_formulations = (X1_formulation, X2_formulation, X3_formulation)
-
-mc_integration = pyblp.Integration('monte_carlo', size=300, specification_options={'seed': 0})
-
-problem = pyblp.Problem(product_formulations, product_data, integration=mc_integration, 
-                        costs_type='log')
+problem = pyblp.Problem(product_formulations, product_data, integration=integration, costs_type='log')
 
 initial_sigma = np.diag([1, 1])
 
@@ -106,7 +95,6 @@ results_supply = problem.solve(
     initial_update=True
 )
 print(results_supply)
-'''
 
 '''
 # update the results with optimal instruments
