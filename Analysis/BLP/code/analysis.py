@@ -48,8 +48,6 @@ for j in range(0, n_ZS):
 supply_instruments = supply_instruments[:, n_ZD:(2*n_ZD)]
 for j in range(0, n_ZS):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
-product_data.head()
-product_data.describe()
 
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
@@ -59,7 +57,7 @@ product_formulations = (X1_formulation, X2_formulation)
 
 # integration
 integration = pyblp.Integration('product', size = 5)
-problem = pyblp.Problem(product_formulations, product_data, integration=integration, costs_type = 'log')
+problem = pyblp.Problem(product_formulations, product_data, integration=integration)
 # play with these: can also try l-bfgs-b
 opti = pyblp.Optimization('bfgs', {'gtol': 1e-6})
 results = problem.solve(sigma=np.ones([2,2]), optimization=opti)
@@ -78,6 +76,7 @@ results = updated_results
 
 # #### (b) When estimating jointly with supply
 
+'''
 # product_formulation
 X1_formulation = pyblp.Formulation('0 + quality + prices + satellite + wired')
 X2_formulation = pyblp.Formulation('0 + satellite + wired')
@@ -95,6 +94,7 @@ results_supply = problem.solve(
     initial_update=True
 )
 print(results_supply)
+'''
 
 '''
 # update the results with optimal instruments

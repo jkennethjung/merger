@@ -64,7 +64,7 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:40       Yes          15           19          79233       244379   
+ 00:00:46       Yes          15           19          79233       244379   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
@@ -85,45 +85,3 @@ Beta Estimates (Robust SEs in Parentheses):
  +6.7E-01    +9.2E-01    -3.7E+00    -3.7E+00 
 (+1.2E-01)  (+1.4E+00)  (+3.6E+00)  (+3.7E+00)
 ==============================================
-Problem Results Summary:
-=======================================================================================================================
-GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Clipped  Weighting Matrix  Covariance Matrix
-Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares    Costs   Condition Number  Condition Number 
-----  ---------  -------------  ---------------  ---------------  -------  -------  ----------------  -----------------
- 2    +2.6E+01     +7.5E-09        +1.2E-01         +1.8E+04         0        0         +2.1E+04          +3.7E+21     
-=======================================================================================================================
-
-Cumulative Statistics:
-===========================================================================
-Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
-   Time      Converged   Iterations   Evaluations  Iterations   Evaluations
------------  ---------  ------------  -----------  -----------  -----------
- 00:05:15       No           59           115        227965       723076   
-===========================================================================
-
-Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
-=================================
- Sigma:    satellite     wired   
----------  ----------  ----------
-satellite   +2.0E-15             
-              (NAN)              
-                                 
-  wired     +0.0E+00    +4.2E-19 
-                       (+1.0E-11)
-=================================
-
-Beta Estimates (Robust SEs in Parentheses):
-==============================================
- quality      prices    satellite     wired   
-----------  ----------  ----------  ----------
- +4.3E-01    +3.3E+00    -1.0E+01    -1.0E+01 
-(+1.8E-01)  (+1.9E+00)  (+5.0E+00)  (+4.9E+00)
-==============================================
-
-Gamma Estimates (Robust SEs in Parentheses):
-======================
-    1        obs_cost 
-----------  ----------
- +1.0E+00    +1.3E-01 
-(+8.1E-02)  (+1.5E-02)
-======================
