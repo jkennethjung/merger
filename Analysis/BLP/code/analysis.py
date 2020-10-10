@@ -12,8 +12,8 @@ pyblp.options.verbose = False
 # Globals
 
 SIGMA0 = np.ones([2,2])
-SIGMA_BOUNDS = ([[-1e1, -1e1], [-1e1, -1e1]], [[1e1, 1e1], [1e1, 1e1]])
-BETA_BOUNDS = ([1e-1, 4e-1, 4e-1, -2e1], [1e1, 4e1, 4e1, -2e-1])
+#SIGMA_BOUNDS = ([[-1e1, -1e1], [-1e1, -1e1]], [[1e1, 1e1], [1e1, 1e1]])
+#BETA_BOUNDS = ([1e-1, 4e-1, 4e-1, -2e1], [1e1, 4e1, 4e1, -2e-1])
 INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
@@ -63,7 +63,7 @@ product_formulations = (X1_formulation, X2_formulation)
 
 # integration
 problem = pyblp.Problem(product_formulations, product_data, integration=INTEGRATION)
-blp_results = problem.solve(sigma = SIGMA0, optimization=OPTI, sigma_bounds = SIGMA_BOUNDS, beta_bounds = BETA_BOUNDS)
+blp_results = problem.solve(sigma = SIGMA0, optimization=OPTI)
 print(blp_results)
 print("Sigma squared: ")
 print(blp_results.sigma_squared)
@@ -77,8 +77,6 @@ optim_results = updated_problem.solve(
     blp_results.sigma,
     optimization=OPTI,
     method='1s', 
-    sigma_bounds = SIGMA_BOUNDS, 
-    beta_bounds = BETA_BOUNDS
 )
 print(optim_results)
 print("Sigma squared: ")
@@ -98,8 +96,6 @@ supply_results = problem.solve(
     blp_results.sigma,
     beta= blp_results.beta,
     costs_bounds=(1e-4, None),
-    sigma_bounds = SIGMA_BOUNDS, 
-    beta_bounds = BETA_BOUNDS
 )
 print(supply_results)
 print("Sigma squared: ")

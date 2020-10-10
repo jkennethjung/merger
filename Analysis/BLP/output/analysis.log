@@ -62,7 +62,7 @@ Problem Results Summary:
 GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Weighting Matrix  Covariance Matrix
 Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares   Condition Number  Condition Number 
 ----  ---------  -------------  ---------------  ---------------  -------  ----------------  -----------------
- 1    +4.0E-11     +3.6E-05        +3.4E+00         +6.1E+01         0         +1.5E+07          +1.4E+06     
+ 1    +3.4E-15     +3.0E-07        +3.4E+00         +6.1E+01         0         +1.5E+07          +1.4E+06     
 ==============================================================================================================
 
 Cumulative Statistics:
@@ -70,7 +70,7 @@ Cumulative Statistics:
 Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
    Time      Converged   Iterations   Evaluations  Iterations   Evaluations
 -----------  ---------  ------------  -----------  -----------  -----------
- 00:00:34       Yes          10           13          57281       176060   
+ 00:00:36       Yes          12           15          64310       197495   
 ===========================================================================
 
 Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
@@ -92,8 +92,56 @@ Beta Estimates (Robust SEs in Parentheses):
 (+3.0E-01)  (+2.6E+00)  (+7.1E+00)  (+7.2E+00)
 ==============================================
 Sigma squared: 
-[[4.06712492 2.25965275]
- [2.25965275 2.276577  ]]
+[[4.06713295 2.25965536]
+ [2.25965536 2.27658042]]
 Standard errors: 
-[[3.15867886 2.20196094]
- [2.20196094 2.01642172]]
+[[3.15868332 2.20196374]
+ [2.20196374 2.01642405]]
+Problem Results Summary:
+=======================================================================================================================
+GMM   Objective    Projected    Reduced Hessian  Reduced Hessian  Clipped  Clipped  Weighting Matrix  Covariance Matrix
+Step    Value    Gradient Norm  Min Eigenvalue   Max Eigenvalue   Shares    Costs   Condition Number  Condition Number 
+----  ---------  -------------  ---------------  ---------------  -------  -------  ----------------  -----------------
+ 2    +3.7E-21     +9.7E-10        -2.5E-08         +5.6E+03         0        0         +1.1E+22          +8.3E+12     
+=======================================================================================================================
+
+Cumulative Statistics:
+===========================================================================
+Computation  Optimizer  Optimization   Objective   Fixed Point  Contraction
+   Time      Converged   Iterations   Evaluations  Iterations   Evaluations
+-----------  ---------  ------------  -----------  -----------  -----------
+ 00:18:28       Yes         187           251        1244804      3815687  
+===========================================================================
+
+Nonlinear Coefficient Estimates (Robust SEs in Parentheses):
+============================================================================
+ Sigma:    satellite     wired     |  Sigma Squared:  satellite     wired   
+---------  ----------  ----------  |  --------------  ----------  ----------
+satellite   +2.7E+00               |    satellite      +7.1E+00    +6.6E+00 
+           (+1.9E+00)              |                  (+1.0E+01)  (+7.4E+00)
+                                   |                                        
+  wired     +2.5E+00    +7.1E+00   |      wired        +6.6E+00    +5.6E+01 
+           (+1.3E+00)  (+2.1E+00)  |                  (+7.4E+00)  (+2.3E+01)
+============================================================================
+
+Beta Estimates (Robust SEs in Parentheses):
+==============================================
+ quality      prices    satellite     wired   
+----------  ----------  ----------  ----------
+ +2.2E+00    -7.8E+00    +2.0E+01    +1.8E+01 
+(+2.2E-01)  (+2.6E-01)  (+3.4E-01)  (+8.1E-01)
+==============================================
+
+Gamma Estimates (Robust SEs in Parentheses):
+======================
+    1        obs_cost 
+----------  ----------
+ +7.5E-01    +1.9E-01 
+(+1.1E-02)  (+5.2E-03)
+======================
+Sigma squared: 
+[[ 7.08005949  6.60858072]
+ [ 6.60858072 56.10777223]]
+Standard errors: 
+[[10.21802124  7.39101191]
+ [ 7.39101191 23.49161683]]
