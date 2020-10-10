@@ -40,12 +40,12 @@ for j in range(0, n_ZD):
     product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
 # SUPPLY INSTRUMENTS
-n_ZS = 1
-supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('0 + obs_cost'), product_data)
+n_ZS = 2
+supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
 assert( n_ZS * 2 == len(supply_instruments[0]))
 for j in range(0, n_ZS):
     assert(sum(supply_instruments[:,j]) == 0)
-supply_instruments = supply_instruments[:, n_ZD:(2*n_ZD)]
+supply_instruments = supply_instruments[:, n_ZS:(2*n_ZS)]
 for j in range(0, n_ZS):
     product_data['supply_instruments' + str(j)] = supply_instruments[:,j]
 
