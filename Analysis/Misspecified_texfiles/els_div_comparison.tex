@@ -1,0 +1,123 @@
+\documentclass[letter, 12pt, dvipdfmx]{article}
+
+
+\usepackage{amsmath,amssymb,amsthm,ascmac}
+\usepackage{float}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{subcaption}
+\usepackage{here}
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{comment}
+
+\usepackage{url}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc, intersections,angles}	
+
+\usepackage{tkz-euclide}
+
+\usepackage{pgfplots}
+\pgfplotsset{width=7cm, compat=1.10}
+
+
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+
+
+\usepackage{setspace}
+\setstretch{1.5} 
+
+
+\usepackage[top=25truemm,bottom=25truemm,left=20truemm,right=20truemm]{geometry}
+
+\newcommand{\MARU}[1]{{\ooalign{\hfil#1\/\hfil\crcr\raise.167ex\hbox{\mathhexbox20D}}}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem*{assumption*}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem*{example*}{Example}
+\newcommand{\argmin}{\mathop{\rm argmin}\limits}
+\newcommand{\argmax}{\mathop{\rm argmax}\limits}
+\newcommand{\interior}{\mathop{\rm int}\limits}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
+
+\begin{document}
+
+\vspace*{-1.5cm}
+\begin{comment}
+	\vspace*{-2.5cm}
+	\begin{flushright}
+	{Econ 511, Spring 2020}
+	\end{flushright}
+	\vspace*{-0.7cm}
+	\begin{flushright}
+	{\small \today}
+	\end{flushright}
+\end{comment}
+	
+	\begin{center}
+	
+	\begin{table}
+	\scalebox{0.8}{
+	\begin{tabular}{c||c|cccc|c|cccc|}
+		&    \multicolumn{5}{c|}{True Model}  &   \multicolumn{5}{c|}{Nested Logit Model}   \\
+		\hline
+		& Own Price& \multicolumn{4}{c|}{Diversion Ratio} & Own Price & \multicolumn{4}{c|}{Diversion Ratio}  \\
+		& Elasticity & 1 & 2 & 3 & 4 & Elasticity & 1 & 2 & 3 & 4 \\
+		\hline
+		1 & -4.1466 & -1 & 0.31898 & 0.1784 & 0.1782 & 311.4135 & -1 & 0.16035 & -0.0028012 & -0.0028265 \\ 
+		2 & -4.1051 & 0.32268 & -1 & 0.17515 & 0.17908 & 102.3441 & -1.6561 & -1 & -0.0086649 & -0.0087046 \\ 
+		3 & -4.1401 & 0.1808 & 0.17568 & -1 & 0.3182 & -2.089 & 0.42014 & 0.45988 & -1 & 0.27393 \\ 
+		4 & -4.1234 & 0.1804 & 0.17967 & 0.31393 & -1 & -2.0824 & 0.42072 & 0.47781 & 0.27754 & -1 \\ 		
+		\hline
+	%
+	\end{tabular}
+	}
+	\caption{Average of own-price elasticities and diversion ratio\\ (LEFT: true values/ RIGHT: Nested logit estimates)}
+	\end{table}
+
+	\end{center}
+
+	\begin{center}
+		\begin{table}
+		\scalebox{0.8}{
+			\begin{tabular}{c||c|cccc|c|cccc|}
+				&    \multicolumn{5}{c|}{Correlation Coefficients}  &   \multicolumn{5}{c|}{Max Deviation}   \\
+				\hline
+				& Own Price& \multicolumn{4}{c|}{Diversion Ratio} & Own Price & \multicolumn{4}{c|}{Diversion Ratio}  \\
+				& Elasticity & 1 & 2 & 3 & 4 & Elasticity & 1 & 2 & 3 & 4 \\
+				\hline
+				1 & -0.65881 & NaN & -0.11317 & -0.94009 & -0.93599 & 528.0928 & 0 & 0.66759 & 0.67111 & 0.70404 \\ 
+				2 & -0.082893 & -0.95249 & NaN & -0.76868 & -0.77236 & 205.2363 & 4.6133 & 0 & 0.66456 & 0.61086 \\ 
+				3 & 0.8906 & 0.89345 & 0.87915 & NaN & 0.70208 & 4.4513 & 1.7209 & 2.2093 & 0 & 2.5879 \\ 
+				4 & 0.89017 & 0.89961 & 0.86085 & 0.76525 & NaN & 4.6117 & 1.7374 & 2.5774 & 2.1494 & 0 \\ 
+				\hline
+			\end{tabular}
+		}
+		\caption{Correlation coefficients and maximum deviation between the true and NL estimates of own-price elasticities and diversion ratio}
+	\end{table}
+	\end{center}
+
+
+\end{document}
