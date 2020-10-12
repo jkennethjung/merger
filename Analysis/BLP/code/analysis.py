@@ -5,22 +5,20 @@ import pyblp
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-
-pyblp.options.digits = 2
 pyblp.options.verbose = False 
 
 # Globals
 
 SIGMA0 = np.eye(2)
-SIGMA_BOUNDS = ([[-1e1, -1e1], [-1e1, -1e1]], [[1e1, 1e1], [1e1, 1e1]])
-BETA_BOUNDS = ([1e-1, -2e1, 4e-1, 4e-1], [1e1, -2e-1, 4e1, 4e1])
+SIGMA_BOUNDS = ([[-1e2, -1e2], [-1e2, -1e2]], [[1e2, 1e2], [1e2, 1e2]])
+BETA_BOUNDS = ([1e-2, -2e2, 4e-2, 4e-2], [1e2, -2e-2, 4e2, 4e2])
 INTEGRATION = pyblp.Integration('product', size = 9)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
 # ### Loading the simulated data
 
 import csv
-data = list(csv.reader(open('../temp/zeta_5000.csv')))
+data = list(csv.reader(open('../temp/zeta_1000.csv')))
 column_name = ['product_ids', 'market_ids', 'quality', 'satellite', 'wired', 'prices', 'obs_cost','unobs_demand','unobs_cost','shares', 'marginal_cost','price_elasticity','D1','D2','D3','D4']
 product_data = pd.DataFrame(data, columns = column_name)
 product_data = product_data.astype('float')
@@ -107,19 +105,23 @@ print(supply_results.sigma_squared)
 print("Standard errors: ")
 print(supply_results.sigma_squared_se)
 
-'''
 # update the results with optimal instruments
-instrument_results = results_supply.compute_optimal_instruments(method='approximate')
+instrument_results = supply_results.compute_optimal_instruments(method='approximate')
 updated_problem = instrument_results.to_problem()
 
 updated_results_supply = problem.solve(
     SIGMA0,
-    beta = results.beta, # use the estimates from above as the initial value
+    beta = supply_results.beta, 
     costs_bounds=(0.001, None),
-    initial_update=True
+    initial_update=True,
+    sigma_bounds = SIGMA_BOUNDS,
+    beta_bounds = BETA_BOUNDS 
 )
 print(updated_results_supply)
-'''
+print("Sigma squared: ")
+print(updated_results_supply.sigma_squared)
+print("Standard errors: ")
+print(updated_results_supply.sigma_squared_se)
 
 '''
 # ### 5 (9)
