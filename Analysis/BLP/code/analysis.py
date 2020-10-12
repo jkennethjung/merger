@@ -105,29 +105,10 @@ print(supply_results.sigma_squared)
 print("Standard errors: ")
 print(supply_results.sigma_squared_se)
 
-# update the results with optimal instruments
-instrument_results = supply_results.compute_optimal_instruments(method='approximate')
-updated_problem = instrument_results.to_problem()
-
-updated_results_supply = problem.solve(
-    SIGMA0,
-    beta = supply_results.beta, 
-    costs_bounds=(0.001, None),
-    initial_update=True,
-    sigma_bounds = SIGMA_BOUNDS,
-    beta_bounds = BETA_BOUNDS 
-)
-print(updated_results_supply)
-print("Sigma squared: ")
-print(updated_results_supply.sigma_squared)
-print("Standard errors: ")
-print(updated_results_supply.sigma_squared_se)
-
-'''
 # ### 5 (9)
 
 # estimated own price elasticity
-elasticities = results.compute_elasticities(name = 'prices')
+elasticities = supply_results.compute_elasticities(name = 'prices')
 e_estimated = np.empty(2400,)
 for i in range(600):
     e_estimated[4*i:4*i+4] = np.diag(elasticities[4*i:4*i+4, :]);
@@ -146,7 +127,7 @@ print("true diversion ratio:")
 print(diversion_true)
 
 # estimated diversion
-d = results.compute_diversion_ratios(name='prices') 
+d = supply_results.compute_diversion_ratios(name='prices') 
 diversion_estimated = pd.DataFrame({'D1': d[:,0], 'D2': d[:,1], 'D3': d[:,2], 'D4': d[:,3]})
 print("estimated diversion ratio:")
 print(diversion_estimated)
@@ -154,12 +135,12 @@ print(diversion_estimated)
 # ### 6(11) simulation of merger between 1 and 2
 
 # assume unchanged marginal costs
-costs = results.compute_costs()
+costs = supply_results.compute_costs()
 costs = costs.reshape((2400,))
 
 product_data['merger_ids_12'] = product_data['firm_ids'].replace(2, 1)
 # post-merger equilibrium prices
-changed_prices_12 = results.compute_prices(
+changed_prices_12 = supply_results.compute_prices(
     firm_ids=product_data['merger_ids_12'],
     costs=costs
 )
@@ -169,7 +150,7 @@ changed_prices_12 = changed_prices_12.reshape((2400,))
 
 product_data['merger_ids_13'] = product_data['firm_ids'].replace(3, 1)
 # post-merger equilibrium prices 
-changed_prices_13 = results.compute_prices(
+changed_prices_13 = supply_results.compute_prices(
     firm_ids=product_data['merger_ids_13'],
     costs=costs
 )
@@ -196,23 +177,22 @@ print(merger_price)
 # ### 6(14) Merger with cost reduction
 
 # marginal costs of product 1 and 2 reduced by 15%
-costs = results.compute_costs()
+costs = supply_results.compute_costs()
 costs_reduced = costs.reshape((600,4))
 costs_reduced[:,0] = 0.85*costs_reduced[:,0]
 costs_reduced[:,1] = 0.85*costs_reduced[:,1]
 costs_reduced = costs_reduced.reshape((2400,1))
 
 # post-merger equilibrium prices with cost change
-price_postmerger = results.compute_prices(
+price_postmerger = supply_results.compute_prices(
     firm_ids=product_data['merger_ids_12'],
     costs=costs_reduced
 )
 price_postmerger = price_postmerger.reshape((2400,))
 
 # pre-merger consumer surplus
-cs_pre = results.compute_consumer_surpluses()
-cs_post = results.compute_consumer_surpluses(price_postmerger)
+cs_pre = supply_results.compute_consumer_surpluses()
+cs_post = supply_results.compute_consumer_surpluses(price_postmerger)
 plt.hist(cs_post - cs_pre, bins=50);
 plt.legend(["Consumer Surplus Changes"]);
 
-'''
