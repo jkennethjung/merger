@@ -11,8 +11,8 @@ pyblp.options.verbose = False
 
 SIGMA0 = np.eye(2)
 SIGMA_BOUNDS = ([[-1e2, -1e2], [-1e2, -1e2]], [[1e2, 1e2], [1e2, 1e2]])
-BETA_BOUNDS = ([1e-2, -2e2, 4e-2, 4e-2], [1e2, -2e-2, 4e2, 4e2])
-INTEGRATION = pyblp.Integration('product', size = 9)
+BETA_BOUNDS = ([1e-2, -1e2, 1e-2, 1e-2], [1e2, -1e-2, 1e2, 1e2])
+INTEGRATION = pyblp.Integration('product', size = 17)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
 # ### Loading the simulated data
@@ -45,8 +45,8 @@ for j in range(0, n_ZD):
     product_data['demand_instruments' + str(j)] = demand_instruments[:,j]
 
 # SUPPLY INSTRUMENTS
-n_ZS = 2
-supply_instruments = pyblp.build_blp_instruments(pyblp.Formulation('1 + obs_cost'), product_data)
+n_ZS = 1
+supply_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + obs_cost'), product_data)
 assert( n_ZS * 2 == len(supply_instruments[0]))
 for j in range(0, n_ZS):
     assert(sum(supply_instruments[:,j]) == 0)
