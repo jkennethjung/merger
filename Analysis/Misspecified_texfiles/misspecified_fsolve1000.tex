@@ -1,0 +1,112 @@
+\documentclass[a4paper, 12pt]{article}
+
+
+\usepackage{amsmath,amssymb,amsthm,ascmac}
+\usepackage{float}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{subcaption}
+\usepackage{here}
+\usepackage{pifont}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+
+
+\usepackage{setspace}
+\setstretch{1.3} 
+
+
+\usepackage[top=25truemm,bottom=25truemm,left=15truemm,right=15truemm]{geometry}
+
+\newcommand{\MARU}[1]{{\ooalign{\hfil#1\/\hfil\crcr\raise.167ex\hbox{\mathhexbox20D}}}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem*{assumption*}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem*{example*}{Example}
+\newcommand{\argmin}{\mathop{\rm argmin}\limits}
+\newcommand{\argmax}{\mathop{\rm argmax}\limits}
+\newcommand{\interior}{\mathop{\rm int}\limits}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+
+
+\begin{document}
+
+\vspace*{-2.5cm}
+\begin{flushright}
+	{Microeconomics I}
+\end{flushright}
+\vspace*{-0.7cm}
+\begin{flushright}
+	{\small \today}
+\end{flushright}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\begin{center}
+	\vspace*{2truept}
+	{\LARGE HW10}\\ % タイトル
+	\vspace*{10truept}
+	{\large Kenjiro Asami\footnote{kenjiro817@gmail.com}}
+\end{center}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+\begin{table}[htbp]\centering
+	\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+	\caption{Regression table (fsolve\_1000.csv)\label{tab1}}
+	\begin{tabular}{l*{4}{c}}
+		\hline\hline
+		&\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}\\
+		&\multicolumn{1}{c}{delta}&\multicolumn{1}{c}{delta}&\multicolumn{1}{c}{delta}&\multicolumn{1}{c}{delta}\\
+		\hline
+		x                   &       0.791\sym{***}&       0.879\sym{***}&       0.812\sym{***}&       0.811\sym{***}\\
+		&     (28.01)         &     (28.26)         &     (22.01)         &     (16.60)         \\
+		[1em]
+		sat                 &       1.223\sym{***}&       3.795\sym{***}&       3.530\sym{***}&       4.480\sym{***}\\
+		&      (9.81)         &     (20.08)         &     (18.81)         &      (4.96)         \\
+		[1em]
+		wire                &       1.212\sym{***}&       3.776\sym{***}&       3.511\sym{***}&       2.774\sym{***}\\
+		&      (9.75)         &     (20.04)         &     (18.76)         &      (3.87)         \\
+		[1em]
+		price               &      -0.875\sym{***}&      -1.838\sym{***}&      -1.674\sym{***}&      -1.731\sym{***}\\
+		&    (-19.44)         &    (-26.46)         &    (-20.56)         &    (-14.47)         \\
+		[1em]
+		lnwgs               &                     &                     &       0.146\sym{**} &                     \\
+		&                     &                     &      (2.78)         &                     \\
+		[1em]
+		lnwgs\_sat           &                     &                     &                     &       1.031         \\
+		&                     &                     &                     &      (1.27)         \\
+		[1em]
+		lnwgs\_wire          &                     &                     &                     &      -0.854         \\
+		&                     &                     &                     &     (-0.93)         \\
+		\hline
+		Observations        &        2400         &        2400         &        2400         &        2400         \\
+		\hline\hline
+		\multicolumn{5}{l}{\footnotesize \textit{t} statistics in parentheses}\\
+		\multicolumn{5}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+	\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+\end{document}

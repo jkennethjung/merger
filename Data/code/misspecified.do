@@ -55,7 +55,7 @@ quietly {
  
 /*  output tex code for the table of estimated coefficients
 
-esttab using misspecified.tex, label title(Regression table\label{tab1})
+esttab using ../output/misspecified.tex, label title(Regression table\label{tab1}) replace
 
 */
 
