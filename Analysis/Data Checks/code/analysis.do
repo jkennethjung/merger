@@ -2,8 +2,8 @@ set more off
 clear
 log using ../output/analysis.log, replace
 
-foreach file in fsolve_200 fsolve_500 fsolve_1000 zeta_1000 data_fei {
-    import delimited using ../temp/output_1006/`file'.csv, clear
+foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
+    import delimited using ../temp/`file'.csv, clear
     rename v1 j
     rename v2 t
     rename v3 x
@@ -23,11 +23,14 @@ foreach file in fsolve_200 fsolve_500 fsolve_1000 zeta_1000 data_fei {
     save ../temp/`file'.dta, replace
 }
 
+use ../temp/fsolve_200.dta, clear
+rename p p_f100
+rename s s_f100
+drop dr*
 merge 1:1 j t x using ../temp/fsolve_200.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_f200
 rename s s_f200
-drop dr*
 merge 1:1 j t x using ../temp/fsolve_500.dta, assert(3) keep(3) ///
     keepusing(p s) nogen
 rename p p_f500
@@ -41,14 +44,6 @@ merge 1:1 j t x using ../temp/zeta_1000.dta, assert(3) keep(3) ///
 rename p p_z1000
 rename s s_z1000
 rename dr* dr*_z1000
-merge 1:1 j t x using ../temp/data_fei.dta, assert(3) keep(3) ///
-    keepusing(p s dr*) nogen
-rename p p_fei
-rename s s_fei
-rename dr1 dr1_fei
-rename dr2 dr2_fei
-rename dr3 dr3_fei
-rename dr4 dr4_fei
 
 foreach v in x sat wire w xi omega mc {
     sum `v'
@@ -110,17 +105,7 @@ graph export ../output/hist_s.pdf, replace
 twoway scatter p_z1000 mc 
 graph export ../output/p_mc.pdf, replace
 
-foreach v in dr1 dr2 dr3 dr4 {
-    di "Diversion ratio correlation:"
-    corr `v'_fei `v'_z1000
-    gen d`v'= abs(`v'_fei - `v'_z1000)
-    di "Diversion ratio absolute difference, summary statistics:"
-    summ d`v'
-    drop d`v'
-}
-
 collapse (mean) dr*, by(j)
-list *_fei
 list *_z1000
 
 
