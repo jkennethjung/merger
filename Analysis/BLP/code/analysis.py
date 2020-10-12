@@ -18,7 +18,7 @@ OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 # ### Loading the simulated data
 
 import csv
-data = list(csv.reader(open('../temp/zeta_1000.csv')))
+data = list(csv.reader(open('../temp/zeta_5000.csv')))
 column_name = ['product_ids', 'market_ids', 'quality', 'satellite', 'wired', 'prices', 'obs_cost','unobs_demand','unobs_cost','shares', 'marginal_cost','price_elasticity','D1','D2','D3','D4']
 product_data = pd.DataFrame(data, columns = column_name)
 product_data = product_data.astype('float')
