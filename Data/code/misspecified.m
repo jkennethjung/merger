@@ -32,11 +32,6 @@ writetable(tbl, "../output/data_misspecified.csv");
 %%% Estimation of Misspecified Models (I DID THIS PART WITH STATA TOO. JUST IGNORE THIS PART.)
 
 %Nested Logit 2 (allow correlation to be different across groups)
-NL1 = fitlm(tbl, 'price~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
-phat_NL = predict(NL1,tbl);
-phat_NL = array2table(phat_NL, 'VariableNames',{'phat_NL'});
-tbl3 = [tbl, phat_NL];
-
 NL4 = fitlm(tbl, 'lnwgs_sat~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 ls_new = predict(NL4,tbl);
 ls_new = array2table(ls_new, 'VariableNames',{'ls_hat'});
