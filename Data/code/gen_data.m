@@ -35,11 +35,18 @@ gamma1 = 0.25;
 % 2. Generate endogenous data
 ZETA_TOL = 1e-10;
 
+n_draw = 1e2;
+disp("Beginning dataset creation, N =");
+disp(n_draw);
+df = simulate('fsolve', '../output/fsolve_100.csv');
+n_draw = 2e2;
+disp("Beginning dataset creation, N =");
+disp(n_draw);
+df = simulate('fsolve', '../output/fsolve_200.csv');
 n_draw = 5e2;
 disp("Beginning dataset creation, N =");
 disp(n_draw);
 df = simulate('fsolve', '../output/fsolve_500.csv');
-
 n_draw = 1e3;
 disp("Beginning dataset creation, N =");
 disp(n_draw);
@@ -47,16 +54,6 @@ df = simulate('fsolve', '../output/fsolve_1000.csv');
 disp("Beginning dataset creation, N =");
 disp(n_draw);
 df = simulate('zeta', '../output/zeta_1000.csv');
-
-n_draw = 2e3;
-disp("Beginning dataset creation, N =");
-disp(n_draw);
-df = simulate('zeta', '../output/zeta_2000.csv');
-
-n_draw = 5e3;
-disp("Beginning dataset creation, N =");
-disp(n_draw);
-df = simulate('zeta', '../output/zeta_5000.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
