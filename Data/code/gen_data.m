@@ -35,11 +35,18 @@ gamma1 = 0.25;
 % 2. Generate endogenous data
 ZETA_TOL = 1e-10;
 
+n_draw = 1e2;
+disp("Beginning dataset creation, N =");
+disp(n_draw);
+df = simulate('fsolve', '../output/fsolve_100.csv');
+n_draw = 2e2;
+disp("Beginning dataset creation, N =");
+disp(n_draw);
+df = simulate('fsolve', '../output/fsolve_200.csv');
 n_draw = 5e2;
 disp("Beginning dataset creation, N =");
 disp(n_draw);
 df = simulate('fsolve', '../output/fsolve_500.csv');
-
 n_draw = 1e3;
 disp("Beginning dataset creation, N =");
 disp(n_draw);
@@ -47,16 +54,6 @@ df = simulate('fsolve', '../output/fsolve_1000.csv');
 disp("Beginning dataset creation, N =");
 disp(n_draw);
 df = simulate('zeta', '../output/zeta_1000.csv');
-
-n_draw = 2e3;
-disp("Beginning dataset creation, N =");
-disp(n_draw);
-df = simulate('zeta', '../output/zeta_2000.csv');
-
-n_draw = 5e3;
-disp("Beginning dataset creation, N =");
-disp(n_draw);
-df = simulate('zeta', '../output/zeta_5000.csv');
 diary off;
 
 function full_data_mat = simulate(PRICING, save_as)
@@ -99,7 +96,7 @@ function full_data_mat = simulate(PRICING, save_as)
     ds_dp_own = diag(ds_dp);
     own_price_e = ds_dp_own ./s .* p;
     div_ratio = repmat([0], 1, J);
-    ds0_dj = sum(ds_dp, 2); 
+    ds0_dj = - sum(ds_dp, 2); 
     Dj0 = - ds0_dj ./ diag(ds_dp);
     for t = 1:T
         mkt_rows = (data_mat(:, 2) == t);
@@ -224,4 +221,3 @@ function [s_t, sigma_t] = mkt_shares(t_mat, theta, n_draw)
     end
     s_t = mean(sigma_t, 2);
 end
-

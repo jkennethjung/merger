@@ -32,17 +32,20 @@ writetable(tbl, "../output/data_misspecified.csv");
 %%% Estimation of Misspecified Models (I DID THIS PART WITH STATA TOO. JUST IGNORE THIS PART.)
 
 %Nested Logit 2 (allow correlation to be different across groups)
+NL = fitlm(tbl, 'price~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
+p_new = predict(NL,tbl);
+p_new = array2table(p_new, 'VariableNames',{'p_hat'});
+
 NL4 = fitlm(tbl, 'lnwgs_sat~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 ls_new = predict(NL4,tbl);
 ls_new = array2table(ls_new, 'VariableNames',{'ls_hat'});
 
-
 NL5 = fitlm(tbl, 'lnwgs_wire~x+w+sat+wire+x_opp+w_opp', 'Intercept',false);
 lw_new = predict(NL5,tbl);
 lw_new = array2table(lw_new, 'VariableNames',{'lw_hat'});
-tbl5 = [tbl3, ls_new, lw_new];
+tbl5 = [tbl, p_new, ls_new, lw_new];
 
-NL6 = fitlm(tbl5, 'delta~x+sat+wire+phat_NL+ls_hat + lw_hat', 'Intercept',false);
+NL6 = fitlm(tbl5, 'delta~x+sat+wire+p_hat+ls_hat + lw_hat', 'Intercept',false);
 
 beta = NL6.Coefficients.Estimate;
 
@@ -141,7 +144,7 @@ function output = price_elasticities(tmat, beta)
     for j = 1:J_t
         for k = 1:J_t
             if j == k
-                div_ratio_t(j,k) = - sum(dst_dpt(j,:)) / dst_dpt(j,j);
+                div_ratio_t(j,k) =  sum(dst_dpt(j,:)) / dst_dpt(j,j);
             else
                 div_ratio_t(j,k) = - dst_dpt(j,k) / dst_dpt(j,j);
             end
