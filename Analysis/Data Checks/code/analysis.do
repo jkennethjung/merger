@@ -64,6 +64,10 @@ foreach suff in f200 f500 f1000 z1000 {
     }
 }
 
+summ mu_z1000
+matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
+matrix endog_stats = endog_stats, col
+
 matrix bottom = 1 \ 1 \ 1
 matrix bottom = bottom, bottom
 foreach v in p s {
@@ -84,7 +88,7 @@ foreach v in p s {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p s {
+foreach v in p s mu {
     corr `v'_z1000 `v'_f1000
     matrix col = r(rho)  
     gen d`v'= abs(`v'_z1000 - `v'_f1000)
@@ -97,7 +101,7 @@ foreach v in p s {
 matrix endog_stats = endog_stats \ bottom
 matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 matrix colnames endog_stats = Price Share Price Share ///
-  Price Share Price Share  
+  Price Share Price Share Markup 
 outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
 histogram s_z1000
