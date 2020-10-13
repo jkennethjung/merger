@@ -57,7 +57,7 @@ outtable using ../output/exog_stats, mat(exog_stats) ///
 
 foreach suff in f200 f500 f1000 z1000 {
     gen mu_`suff' = p_`suff' - mc
-    foreach v in p mu s {
+    foreach v in p s {
         summ `v'_`suff'
         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
         matrix endog_stats = nullmat(endog_stats), col
@@ -65,8 +65,8 @@ foreach suff in f200 f500 f1000 z1000 {
 }
 
 matrix bottom = 1 \ 1 \ 1
-matrix bottom = bottom, bottom, bottom
-foreach v in p mu s {
+matrix bottom = bottom, bottom
+foreach v in p s {
     corr `v'_f500 `v'_f200
     matrix col = r(rho)  
     gen d`v'= abs(`v'_f500 - `v'_f200)
@@ -75,7 +75,7 @@ foreach v in p mu s {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p mu s {
+foreach v in p s {
     corr `v'_f1000 `v'_f500
     matrix col = r(rho)  
     gen d`v'= abs(`v'_f1000 - `v'_f500)
@@ -84,7 +84,7 @@ foreach v in p mu s {
     matrix bottom = bottom, col
     drop d`v'
 }
-foreach v in p mu s {
+foreach v in p s {
     corr `v'_z1000 `v'_f1000
     matrix col = r(rho)  
     gen d`v'= abs(`v'_z1000 - `v'_f1000)
@@ -96,8 +96,8 @@ foreach v in p mu s {
 
 matrix endog_stats = endog_stats \ bottom
 matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
-matrix colnames endog_stats = Price Markup Share Price Markup Share ///
-  Price Markup Share Price Markup Share  
+matrix colnames endog_stats = Price Share Price Share ///
+  Price Share Price Share  
 outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
 histogram s_z1000

@@ -3,7 +3,7 @@
        log:  /gpfs/loomis/home.grace/jkj32/merger/Analysis/Data Checks/code/../
 > output/analysis.log
   log type:  text
- opened on:  12 Oct 2020, 20:56:02
+ opened on:  13 Oct 2020, 15:47:23
 
 . 
 . foreach file in fsolve_100 fsolve_200 fsolve_500 fsolve_1000 zeta_1000 {
@@ -150,7 +150,7 @@ file ../temp/zeta_1000.dta saved
 . 
 . foreach suff in f200 f500 f1000 z1000 {
   2.     gen mu_`suff' = p_`suff' - mc
-  3.     foreach v in p mu s {
+  3.     foreach v in p s {
   4.         summ `v'_`suff'
   5.         matrix col = r(mean) \ r(sd) \ r(min) \ r(max)
   6.         matrix endog_stats = nullmat(endog_stats), col
@@ -163,19 +163,11 @@ file ../temp/zeta_1000.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-     mu_f200 |      2,400    .6863085    .1581363   .5010605   1.652358
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
       s_f200 |      2,400     .186055    .1241636   .0011036   .6771971
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
       p_f500 |      2,400    2.736167    .3896751   1.849624   4.610445
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-     mu_f500 |      2,400    .6912163    .1588906   .5011215   1.646176
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -187,10 +179,6 @@ file ../temp/zeta_1000.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_f1000 |      2,400    .6943496    .1608491   .5011706   1.654471
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
      s_f1000 |      2,400    .1851841    .1217747   .0012142   .6750922
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -199,18 +187,14 @@ file ../temp/zeta_1000.dta saved
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-    mu_z1000 |      2,400    .6896866    .1583495   .5011401   1.641283
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
      s_z1000 |      2,400    .1853774    .1234382   .0012373   .6747691
 
 . 
 . matrix bottom = 1 \ 1 \ 1
 
-. matrix bottom = bottom, bottom, bottom
+. matrix bottom = bottom, bottom
 
-. foreach v in p mu s {
+. foreach v in p s {
   2.     corr `v'_f500 `v'_f200
   3.     matrix col = r(rho)  
   4.     gen d`v'= abs(`v'_f500 - `v'_f200)
@@ -232,17 +216,6 @@ file ../temp/zeta_1000.dta saved
           dp |      2,400    .0051185    .0043988   2.38e-06   .0231683
 (obs=2,400)
 
-             |  mu_f500  mu_f200
--------------+------------------
-     mu_f500 |   1.0000
-     mu_f200 |   0.9996   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .0051185    .0043988   2.38e-06   .0231683
-(obs=2,400)
-
              |   s_f500   s_f200
 -------------+------------------
       s_f500 |   1.0000
@@ -253,7 +226,7 @@ file ../temp/zeta_1000.dta saved
 -------------+---------------------------------------------------------
           ds |      2,400    .0023462     .002386   1.12e-08   .0120816
 
-. foreach v in p mu s {
+. foreach v in p s {
   2.     corr `v'_f1000 `v'_f500
   3.     matrix col = r(rho)  
   4.     gen d`v'= abs(`v'_f1000 - `v'_f500)
@@ -275,17 +248,6 @@ file ../temp/zeta_1000.dta saved
           dp |      2,400    .0033956    .0031517   4.53e-06    .021853
 (obs=2,400)
 
-             | mu_f1000  mu_f500
--------------+------------------
-    mu_f1000 |   1.0000
-     mu_f500 |   0.9998   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .0033956    .0031517   4.53e-06    .021853
-(obs=2,400)
-
              |  s_f1000   s_f500
 -------------+------------------
      s_f1000 |   1.0000
@@ -296,7 +258,7 @@ file ../temp/zeta_1000.dta saved
 -------------+---------------------------------------------------------
           ds |      2,400    .0016436    .0016706   1.43e-06   .0116972
 
-. foreach v in p mu s {
+. foreach v in p s {
   2.     corr `v'_z1000 `v'_f1000
   3.     matrix col = r(rho)  
   4.     gen d`v'= abs(`v'_z1000 - `v'_f1000)
@@ -318,17 +280,6 @@ file ../temp/zeta_1000.dta saved
           dp |      2,400    .0047072     .003999   4.77e-06   .0303357
 (obs=2,400)
 
-             | mu_z1000 mu_f1000
--------------+------------------
-    mu_z1000 |   1.0000
-    mu_f1000 |   0.9998   1.0000
-
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
-         dmu |      2,400    .0047072     .003999   4.77e-06   .0303357
-(obs=2,400)
-
              |  s_z1000  s_f1000
 -------------+------------------
      s_z1000 |   1.0000
@@ -344,8 +295,8 @@ file ../temp/zeta_1000.dta saved
 
 . matrix rownames endog_stats = Mean SD Min Max Correlation MeanDiff MaxDiff 
 
-. matrix colnames endog_stats = Price Markup Share Price Markup Share ///
->   Price Markup Share Price Markup Share  
+. matrix colnames endog_stats = Price Share Price Share ///
+>   Price Share Price Share  
 
 . outtable using ../output/endog_stats, mat(endog_stats) format(%9.2fc) nobox
 
