@@ -96,7 +96,7 @@ function full_data_mat = simulate(PRICING, save_as)
     ds_dp_own = diag(ds_dp);
     own_price_e = ds_dp_own ./s .* p;
     div_ratio = repmat([0], 1, J);
-    ds0_dj = sum(ds_dp, 2); 
+    ds0_dj = - sum(ds_dp, 2); 
     Dj0 = - ds0_dj ./ diag(ds_dp);
     for t = 1:T
         mkt_rows = (data_mat(:, 2) == t);
@@ -221,4 +221,3 @@ function [s_t, sigma_t] = mkt_shares(t_mat, theta, n_draw)
     end
     s_t = mean(sigma_t, 2);
 end
-
