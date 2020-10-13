@@ -11,14 +11,14 @@ pyblp.options.verbose = False
 
 SIGMA0 = np.eye(2)
 SIGMA_BOUNDS = ([[-1e2, -1e2], [-1e2, -1e2]], [[1e2, 1e2], [1e2, 1e2]])
-BETA_BOUNDS = ([1e-2, -1e2, 1e-2, 1e-2], [1e2, -1e-2, 1e2, 1e2])
+BETA_BOUNDS = ([1e-3, -1e2, 1e-3, 1e-3], [1e2, -1e-3, 1e2, 1e2])
 INTEGRATION = pyblp.Integration('product', size = 17)
 OPTI = pyblp.Optimization('l-bfgs-b', {'gtol': 1e-6})
 
 # ### Loading the simulated data
 
 import csv
-data = list(csv.reader(open('../temp/zeta_5000.csv')))
+data = list(csv.reader(open('../temp/zeta_1000.csv')))
 column_name = ['product_ids', 'market_ids', 'quality', 'satellite', 'wired', 'prices', 'obs_cost','unobs_demand','unobs_cost','shares', 'marginal_cost','price_elasticity','D1','D2','D3','D4']
 product_data = pd.DataFrame(data, columns = column_name)
 product_data = product_data.astype('float')
@@ -32,7 +32,7 @@ product_data['firm_ids'] = product_data['product_ids']
 short_df = product_data[['firm_ids', 'market_ids', 'quality', 'satellite', 'wired']].head(8)
 print(short_df)
 n_ZD = 2
-demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality + obs_cost'), product_data)
+demand_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + quality + obs_cost'), product_data, version = 'quadratic')
 print(demand_instruments[0:10,:])
 
 # own characteristics will be collinear with X1 because each firm only has one 
@@ -46,7 +46,7 @@ for j in range(0, n_ZD):
 
 # SUPPLY INSTRUMENTS
 n_ZS = 1
-supply_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + obs_cost'), product_data)
+supply_instruments = pyblp.build_differentiation_instruments(pyblp.Formulation('0 + obs_cost'), product_data, version = 'quadratic')
 assert( n_ZS * 2 == len(supply_instruments[0]))
 for j in range(0, n_ZS):
     assert(sum(supply_instruments[:,j]) == 0)
