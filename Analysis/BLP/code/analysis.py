@@ -387,13 +387,11 @@ changed_shares = results.compute_shares(price_postmerger)
 profits_post = results.compute_profits(price_postmerger, changed_shares, costs_reduced)
 profits_post = profits_post.reshape((600,4)).sum(axis=1).reshape((600,1))
 
+dcs = cs_post - cs_pre
 changed_totalwelfare = profits_post + cs_post - profits_pre - cs_pre
 plt.hist(changed_totalwelfare, bins=50);
 plt.legend(["Total Welfare Changes"]);
 
-
-# In[ ]:
-
-
-
+print(dcs.sum())
+print(changed_totalwelfare.sum())
 
